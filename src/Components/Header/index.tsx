@@ -8,7 +8,7 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import Logo from "../../assets/Logos/Freteminhacidade.png";
+import Logo from "../../assets/Logos/freteminhacidade.svg";
 import Logo2 from "../../assets/Logos/logo.svg";
 import Star from "../../assets/star.png";
 import { Dialog } from "@mui/material";
@@ -45,14 +45,14 @@ export default function Header() {
     onClose: onCloseDialog,
   } = useDisclosure();
   return (
-    <div className="grid grid-cols-11 px-4 py-4 sm:py-8 sm:px-8 border-b-[1px] border-black/10">
+    <div className="grid grid-cols-11 px-4 py-4 sm:py-6 sm:px-8 border-b-[1px] border-black/10 bg-white">
       <div className="col-span-1 sm:col-span-2 self-center">
         <img className="hidden sm:flex w-[500px]" src={Logo} />
         <img className="flex sm:hidden " src={Logo2} />
       </div>
       {/* <div className="col-span-1" /> */}
       <div className="col-span-9 sm:col-span-5 grid grid-cols-2 sm:mx-10 justify-self-center">
-        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-black rounded-l-full py-2 px-3 shadow-lg hover:shadow-md ">
+        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-black rounded-l-full py-2 px-3 shadow-sm hover:shadow-md ">
           <div className="bg-black p-2 rounded-full">
             <MagnifyingGlass className="text-white" size={15} weight="bold" />
           </div>
@@ -77,7 +77,7 @@ export default function Header() {
             />
           )}
           {openDropDownCity && (
-            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster">
+            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster scrollbar-hide">
               <div className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
@@ -125,7 +125,7 @@ export default function Header() {
             </div>
           )}
         </div>
-        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-y-2 border-r-2 border-black  rounded-r-full py-2 px-3 shadow-lg hover:shadow-md ">
+        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-y-2 border-r-2 border-black  rounded-r-full py-2 px-3 shadow-sm hover:shadow-md ">
           <div className="bg-black p-2 rounded-full">
             <Truck className="text-white" size={15} weight="bold" />
           </div>
@@ -150,7 +150,7 @@ export default function Header() {
             />
           )}
           {openDropDownSize && (
-            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster">
+            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster scrollbar-hide">
               <div className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
@@ -436,7 +436,7 @@ export default function Header() {
         </Dialog>
       </div>
       <div className="sm:col-span-3 hidden sm:block mr-3">
-        <button className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-full border-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-lg hover:shadow-xl ">
+        <button className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-full border-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
           <p>Anuncie seu frete no Site</p>
           <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
             <p className="text-[#005A09] leading-none">Free</p>
@@ -451,7 +451,7 @@ export default function Header() {
         </button> */}
         <button
           onMouseEnter={onOpenAccount}
-          className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 sm:shadow-lg hover:shadow-xl"
+          className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 shadow-sm hover:shadow-md"
         >
           <List size={30} weight="bold" />
           <UserCircle className="hidden sm:flex" size={30} weight="fill" />
