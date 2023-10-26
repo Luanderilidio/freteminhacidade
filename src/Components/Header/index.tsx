@@ -28,10 +28,15 @@ import {
 import { useState } from "react";
 import "animate.css";
 import { Transition } from "../../utils/transition";
+import { useBoolean } from "react-hooks-shareable";
+import Login from "../Login";
 
 export default function Header() {
   const [openDropDownCity, setOpenDropDownCity] = useState(false);
   const [openDropDownSize, setOpenDropDownSize] = useState(false);
+
+  const [isDialogLogin, openDialogLogin, closeDialogLogin, toggleDialogLogin] = useBoolean(true);
+
 
   const {
     isOpen: isOpenAccount,
@@ -215,42 +220,6 @@ export default function Header() {
             <p className="font-bold text-sm">Médio</p>
           </div>
         </button>
-        {/* <Modal size="full" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title luander</ModalHeader>
-              <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal> */}
 
         <Dialog
           fullScreen
@@ -428,7 +397,11 @@ export default function Header() {
                 onClick={onCloseDialog}
                 className="flex items-center gap-2 font-semibold text-white bg-blue-500 px-3 py-2 rounded-md shadow-md transition ease-in-out active:scale-95"
               >
-                <MagnifyingGlass className="text-white" size={20} weight="bold" />
+                <MagnifyingGlass
+                  className="text-white"
+                  size={20}
+                  weight="bold"
+                />
                 Filtrar
               </button>
             </div>
@@ -463,14 +436,21 @@ export default function Header() {
           >
             <div className="flex justify-between items-center py-3 px-5 border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer">
               <div
-                onClick={onCloseAccount}
+                onClick={() => {
+                  onCloseAccount();
+                  toggleDialogLogin()
+                }}
                 className="w-full flex justify-start items-center  gap-2 "
               >
                 <UserCirclePlus size={20} weight="bold" />
                 <p className="w-full text-sm font-bold ">Cadastrar-se</p>
               </div>
 
-              <XCircle onClick={onCloseAccount} size={25} className="sm:hidden text-red-500" />
+              <XCircle
+                onClick={onCloseAccount}
+                size={25}
+                className="sm:hidden text-red-500"
+              />
             </div>
             <div
               onClick={onCloseAccount}
@@ -507,6 +487,7 @@ export default function Header() {
           </div>
         )}
       </div>
+      <Login isDialog={isDialogLogin}  closeDialog={closeDialogLogin} />
     </div>
   );
 }
