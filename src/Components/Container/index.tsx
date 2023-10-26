@@ -68,7 +68,7 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
         {scrollPosition < documentHeight - windowHeight - 200 && (
           <button
             ref={buttonRef}
-            className="flex items-center justify-center gap-2 py-2 px-4 w-fit text-white bg-black rounded-full font-semibold fixed z-50 bottom-3 sm:bottom-7 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-none drop-shadow-xl transition ease-in-out hover:scale-110 active:scale-95"
+            className="flex items-center justify-center gap-2 py-2 px-4 w-fit text-white bg-custon-black rounded-full font-semibold fixed z-50 bottom-3 sm:bottom-7 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-none drop-shadow-xl transition ease-in-out hover:scale-110 active:scale-95"
           >
             Abrir no mapa
             <MapTrifold size={30} weight="bold" />

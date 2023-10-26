@@ -105,7 +105,7 @@ export default function Freight() {
         <div className="flex gap-2">
           <div className="relative h-fit">
             <img
-              className="!w-12 !h-12 object-cover rounded-full border-3 border-black "
+              className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
               src="https://img.freepik.com/fotos-gratis/trabalhador-de-uniforme-homem-conserta-um-caminhao-homem-com-ferramentas_1157-46527.jpg?w=360&t=st=1697401143~exp=1697401743~hmac=91ef1b4968e8d715dcf787b402c18b992b688a1f51477bc5007126980ecc8af2"
             />
             <img className="absolute bottom-0 right-0" src={Verifiqued} />
@@ -130,7 +130,7 @@ export default function Freight() {
         </div>
         <div className="flex flex-col justify-start items-end gap-2">
           <div className="w-fit flex items-center gap-1">
-            <p className="font-bold text-sm italic">4.5</p>
+            <p className="text-custon-black font-bold text-sm italic">4.5</p>
             <Star className="text-yellow-500" weight="fill" />
           </div>
           <div className="flex flex-col items-end gap-1">
@@ -177,7 +177,7 @@ export default function Freight() {
           >
             <div
               onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
             >
               <div className="flex justify-start items-center  gap-2">
                 <img src={Instagram} className="w-4" />
@@ -186,7 +186,7 @@ export default function Freight() {
             </div>
             <div
               onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
             >
               <div className="flex justify-start items-center  gap-2">
                 <img src={Facebook} className="w-4" />
@@ -197,7 +197,7 @@ export default function Freight() {
             </div>
             <div
               onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
             >
               <div className="flex justify-start items-center  gap-2">
                 <img src={Linkedin} className="w-4" />
@@ -208,7 +208,7 @@ export default function Freight() {
             </div>
             <div
               onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
             >
               <div className="flex justify-start items-center  gap-2">
                 <img src={Tiktok} className="w-4" />
@@ -217,7 +217,7 @@ export default function Freight() {
             </div>
           </Menu>
         </div>
-        <button className="col-span-8  font-bold flex items-center justify-center gap-2 rounded-full text-xs leading-none py-3 text-white border-2 border-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30">
+        <button className="col-span-8  font-bold flex items-center justify-center gap-2 rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30">
           <img src={Whatsapp} />
           Chamar no Whatsapp
         </button>
