@@ -49,6 +49,11 @@ export default function Home() {
       <Freight />
       <Freight />
       <Freight />
+      <Freight />
+      <Freight />
+      <Freight />
+      <Freight />
+      <Freight />
 
       
     </Container>

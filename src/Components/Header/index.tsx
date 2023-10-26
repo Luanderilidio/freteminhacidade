@@ -45,7 +45,7 @@ export default function Header() {
     onClose: onCloseDialog,
   } = useDisclosure();
   return (
-    <div className="grid grid-cols-11 px-4 py-4 sm:py-6 sm:px-8 border-b-[1px] border-black/10 bg-white">
+    <div className="grid grid-cols-11 px-4 py-4 sm:py-6 sm:px-8 border-b-[1px] border-black/10 bg-white fixed">
       <div className="col-span-1 sm:col-span-2 self-center">
         <img className="hidden sm:flex w-[500px]" src={Logo} />
         <img className="flex sm:hidden " src={Logo2} />

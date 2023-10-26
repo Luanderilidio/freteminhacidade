@@ -11,6 +11,9 @@ module.exports = {
         Roboto: ["Roboto", "sans-serif"],
         Inter: ["Inter", "sans-serif"],
       },
+      colors: {
+        'custon-black': '#222222'
+      }
     },
   },
   darkMode: "class",
