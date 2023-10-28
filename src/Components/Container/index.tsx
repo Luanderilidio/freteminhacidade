@@ -4,12 +4,12 @@ import Footer from "../Footer";
 import { MapTrifold } from "phosphor-react";
 import { useBoolean } from "react-hooks-shareable";
 
-
 interface ContainerProps {
   children: React.ReactNode;
+  padding: boolean;
 }
 
-const Container: React.FC<ContainerProps> = ({ children }) => {
+const Container: React.FC<ContainerProps> = ({ children, padding }) => {
   const buttonRef = useRef(null);
 
   const [isButton, openButton, closeButton, toggleButton] = useBoolean(true);
@@ -63,9 +63,12 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
       <div className="col-span-12 z-50 relative">
         <Header />
       </div>
-      <div className="col-span-12 grid grid-cols-12 px-4 py-4 sm:py-8 sm:px-8 gap-8 relative mt-20 sm:mt-28">
+      <div
+        className={`col-span-12 grid grid-cols-12 ${
+          padding && "px-4 py-4 sm:py-8 sm:px-8 mt-20 sm:mt-28 gap-8"
+        } relative`}
+      >
         {children}
-       
         {scrollPosition < documentHeight - windowHeight - 200 && (
           <button
             ref={buttonRef}

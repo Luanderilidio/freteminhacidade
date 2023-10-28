@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { CaretDown, ChatDots, CrownSimple, Heart, ShareNetwork, Star } from "phosphor-react";
+import {
+  CaretDown,
+  ChatDots,
+  CrownSimple,
+  Heart,
+  ShareNetwork,
+  Star,
+} from "phosphor-react";
 import { AvatarGroup, useDisclosure } from "@nextui-org/react";
 import { Avatar, Menu } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -31,15 +38,16 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./styles.css";
 
-import {  Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { useBoolean } from "react-hooks-shareable";
+import { useNavigate } from "react-router-dom";
 
-export default function Freight() {
+export default function Freight(props: any): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
-  const [isHeart, openHeart, closeHeart, toggleHeart] = useBoolean(false)
-  const [isShare, openShare, closeShare, toggleShare] = useBoolean(false)
-
+  const [isHeart, openHeart, closeHeart, toggleHeart] = useBoolean(false);
+  const [isShare, openShare, closeShare, toggleShare] = useBoolean(false);
 
   const socialMedia = Boolean(anchorEl);
   const clickOpenSocialMdia = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,8 +59,15 @@ export default function Freight() {
 
   let number = faker.helpers.arrayElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
+  let name = faker.name.fullName();
+
+  let truck = faker.image.transport();
+
   return (
-    <div className="col-span-12 sm:col-span-3">
+    <div
+      onClick={() => navigate(`/details/${props.id}`)}
+      className="col-span-12 sm:col-span-3"
+    >
       <div className="h-60  rounded-2xl drop-shadow-xl relative">
         <Swiper
           spaceBetween={10}
@@ -63,41 +78,55 @@ export default function Freight() {
           className="mySwiper"
         >
           <SwiperSlide className="rounded-2xl">
-          <div className="h-60 overflow-hidden rounded-2xl">
-            <img
-              className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
-              src="https://img.freepik.com/fotos-gratis/veiculo-de-caminhao-com-reboques-no-fundo_342744-1297.jpg?w=740&t=st=1697400727~exp=1697401327~hmac=9aa0ed1bcd8e357782f2b17737bb0099704f07d1b0eb68559fd3f0c442448dab"
-            />
-          </div>
+            <div className="h-60 overflow-hidden rounded-2xl">
+              <img
+                className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
+                src={truck}
+              />
+            </div>
           </SwiperSlide>
           <SwiperSlide className="rounded-2xl">
-          <div className="h-60 overflow-hidden rounded-2xl">
-            <img
-              className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
-              src="https://img.freepik.com/fotos-gratis/veiculo-de-caminhao-com-reboques-no-fundo_342744-1297.jpg?w=740&t=st=1697400727~exp=1697401327~hmac=9aa0ed1bcd8e357782f2b17737bb0099704f07d1b0eb68559fd3f0c442448dab"
-            />
-          </div>
+            <div className="h-60 overflow-hidden rounded-2xl">
+              <img
+                className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
+                src={truck}
+              />
+            </div>
           </SwiperSlide>
         </Swiper>
         <div className="absolute top-3 right-2 z-50 ">
-          <button onClick={toggleHeart} className={` ${isHeart ? 'text-red-500' : 'text-white'} transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}>
+          <button
+            onClick={toggleHeart}
+            className={` ${
+              isHeart ? "text-red-500" : "text-white"
+            } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
+          >
             <Heart size={20} weight="fill" className="" />
-            <p className="font-semibold text-xs cursor-pointer">+54k</p>
+            <p className="font-semibold text-xs cursor-pointer">
+              +{faker.datatype.number(100)}k
+            </p>
           </button>
-          <button onClick={toggleShare} className={`mt-2 ${isShare ? 'text-black' : 'text-white'} transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}>
+          <button
+            onClick={toggleShare}
+            className={`mt-2 ${
+              isShare ? "text-black" : "text-white"
+            } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
+          >
             <ShareNetwork size={20} weight="fill" className=" " />
-            <p className="font-semibold text-xs cursor-pointer">+54k</p>
+            <p className="font-semibold text-xs cursor-pointer">
+              +{faker.datatype.number(100)}k
+            </p>
           </button>
         </div>
         <p className="absolute bottom-3 right-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.6rem] font-semibold bg-[#25D366]/90 text-[#005A09] shadow-sm shadow-[#005A09]/50">
           Cáceres - MT
         </p>
-        <p className="flex items-center justify-center gap-1 absolute top-3 left-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.7rem] font-bold bg-yellow-400 shadow-md shadow-yellow-400/50 text-white">
-        <CrownSimple size={13}  weight="fill" />
-
-
-          Premium
-        </p>
+        {faker.datatype.boolean() && (
+          <p className="flex items-center justify-center gap-1 absolute top-3 left-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.7rem] font-bold bg-yellow-400 shadow-md shadow-yellow-400/50 text-white">
+            <CrownSimple size={13} weight="fill" />
+            Premium
+          </p>
+        )}
         <img className="w-14 bottom-3 left-3 z-50 absolute" src={Size_3} />
       </div>
 
@@ -106,14 +135,12 @@ export default function Freight() {
           <div className="relative h-fit">
             <img
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
-              src="https://img.freepik.com/fotos-gratis/trabalhador-de-uniforme-homem-conserta-um-caminhao-homem-com-ferramentas_1157-46527.jpg?w=360&t=st=1697401143~exp=1697401743~hmac=91ef1b4968e8d715dcf787b402c18b992b688a1f51477bc5007126980ecc8af2"
+              src={faker.image.avatar()}
             />
             <img className="absolute bottom-0 right-0" src={Verifiqued} />
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-semibold opacity-90">
-              Luander Ilidio de Arruda{" "}
-            </p>
+            <p className="text-sm font-semibold opacity-90">{name}</p>
             <div className="flex justify-start gap-1 mt-1">
               <img src={GoogleMapsIcon} className="mr-[2.5px]" />
               <p className="text-xs font-medium underline decoration-solid decoration-black/70 opacity-70">
@@ -138,26 +165,26 @@ export default function Freight() {
               <Avatar
                 sx={{ width: 10, height: 10 }}
                 alt="Travis Howard"
-                src="https://mui.com/static/images/avatar/3.jpg"
+                src={faker.image.avatar()}
               />
               <Avatar
                 sx={{ width: 10, height: 10 }}
                 alt="Cindy Baker"
-                src="https://mui.com/static/images/avatar/3.jpg"
+                src={faker.image.avatar()}
               />
               <Avatar
                 sx={{ width: 10, height: 10 }}
                 alt="Agnes Walker"
-                src="https://mui.com/static/images/avatar/3.jpg"
+                src={faker.image.avatar()}
               />
               <Avatar
                 sx={{ width: 10, height: 10 }}
                 alt="Trevor Henderson"
-                src="https://mui.com/static/images/avatar/3.jpg"
+                src={faker.image.avatar()}
               />
             </AvatarGroup>
             <p className="underline text-[0.6rem] opacity-70 decoration-black/70 font-semibold">
-              +134
+              +{faker.datatype.number(100)}
             </p>
           </div>
         </div>

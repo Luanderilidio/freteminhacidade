@@ -29,15 +29,23 @@ import { useState } from "react";
 import "animate.css";
 import { Transition } from "../../utils/transition";
 import { useBoolean } from "react-hooks-shareable";
+import SignIn from "../SignIn";
 import Login from "../Login";
 
 export default function Header() {
   const [openDropDownCity, setOpenDropDownCity] = useState(false);
   const [openDropDownSize, setOpenDropDownSize] = useState(false);
 
-  const [isDialogLogin, openDialogLogin, closeDialogLogin, toggleDialogLogin] = useBoolean(true);
+  const [isDialogLogin, openDialogLogin, closeDialogLogin, toggleDialogLogin] =
+    useBoolean(false);
+  const [
+    isDialogSignIn,
+    openDialogSignIn,
+    closeDialogSignIn,
+    toggleDialogSignIn,
+  ] = useBoolean(false);
 
-
+  SignIn;
   const {
     isOpen: isOpenAccount,
     onOpen: onOpenAccount,
@@ -438,7 +446,7 @@ export default function Header() {
               <div
                 onClick={() => {
                   onCloseAccount();
-                  toggleDialogLogin()
+                  toggleDialogSignIn();
                 }}
                 className="w-full flex justify-start items-center  gap-2 "
               >
@@ -453,7 +461,10 @@ export default function Header() {
               />
             </div>
             <div
-              onClick={onCloseAccount}
+              onClick={() => {
+                onCloseAccount();
+                toggleDialogLogin();
+              }}
               className="flex justify-between items-center py-3 px-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
             >
               <div className="flex justify-start items-center  gap-2">
@@ -487,7 +498,8 @@ export default function Header() {
           </div>
         )}
       </div>
-      <Login isDialog={isDialogLogin}  closeDialog={closeDialogLogin} />
+      <SignIn isDialog={isDialogSignIn} closeDialog={closeDialogSignIn} />
+      <Login isDialog={isDialogLogin} closeDialog={closeDialogLogin} />
     </div>
   );
 }
