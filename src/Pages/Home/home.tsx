@@ -11,7 +11,7 @@ import Icon from "../../assets/Icon.png";
 import Whater from "../../assets/whater.svg";
 import { SetStateAction, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { useQuery } from "react-query";
 import Container from "../../Components/Container";
 import Freight from "../../Components/Freight";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,33 +23,23 @@ import "../../Components/Freight/styles.css";
 import FreightSimple from "../../Components/FreightSimple";
 import isMobile from "../../utils/isMobile";
 import { IconButton } from "@mui/material";
+import axios from "axios";
 
 export default function Home() {
-  const [dailyGoal, setDailyGoal] = useState(1000);
-  const [timer, setTimer] = useState(10);
-  const [qtdTimer, setQtdTimer] = useState(
-    calcularQuantidadeAgua(dailyGoal, timer)
-  );
+  const { data, isLoading, isError, error } = useQuery("freights", async () => {
+    return axios
+      .get("http://localhost:3000/estudants")
+      .then((response) => response.data);
+  });
 
-  function calcularQuantidadeAgua(dailyGoal: number, timer: number) {
-    const horasPorDia = 24;
-    const intervaloHoras = timer / 60;
-    const numeroIntervalos = horasPorDia / intervaloHoras;
-
-    return dailyGoal / numeroIntervalos;
+  if (isLoading) {
+    return (
+      <Container padding={true}>
+        <div>Carregando</div>
+      </Container>
+    );
   }
 
-  const changeDailyGoal = (event: any) => {
-    setDailyGoal(event.target.value);
-  };
-
-  const changeQtdTimer = (event: any) => {
-    setQtdTimer(event.target.value);
-  };
-
-  const changeTimer = (event: any) => {
-    setTimer(event.target.value);
-  };
 
   return (
     <Container padding={true}>
@@ -77,72 +67,38 @@ export default function Home() {
             </IconButton>
           </div>
         </div>
+
         <Swiper
           autoplay={{
             delay: 3000,
             disableOnInteraction: false,
           }}
-          slidesPerView={isMobile() ? 1 : 4}
+          slidesPerView={4}
           spaceBetween={10}
           modules={[Autoplay]}
           className="mySwiper h-fit"
         >
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
-          <SwiperSlide className="rounded-2xl">
-            <FreightSimple />
-          </SwiperSlide>
+          {data.map((e: any, index: number) => (
+            <SwiperSlide key={index} className="rounded-2xl">
+              <FreightSimple />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
 
-
       <div className="col-span-12 flex items-center justify-between gap-2">
-          <p className="whitespace-nowrap font-semibold text-xs opacity-60">
-            Encontre o frete da sua preferência
-          </p>
-          <div className="w-full h-[1px] bg-gray-500/5" />
+        <p className="whitespace-nowrap font-semibold text-xs opacity-60">
+          Encontre o frete da sua preferência
+        </p>
+        <div className="w-full h-[1px] bg-gray-500/5" />
 
-            <IconButton>
-              <Funnel size={15} className="opacity-60" weight="bold" />
-            </IconButton>
-        </div>
-      <Freight id={uuidv4()} />
-      <Freight id={uuidv4()} />
-      <Freight id={uuidv4()} />
-      <Freight id={uuidv4()} />
-      <Freight id={uuidv4()} />
-      <Freight id={uuidv4()} />
+        <IconButton>
+          <Funnel size={15} className="opacity-60" weight="bold" />
+        </IconButton>
+      </div>
+      {data.map((e: any, index: number) => (
+        <Freight key={index} id={uuidv4()} />
+      ))}
     </Container>
   );
 }

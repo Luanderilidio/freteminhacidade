@@ -12,7 +12,6 @@ import "../../Components/Freight/styles.css";
 
 
 export default function FreightSimple() {
-  let truck = faker.image.transport();
 
   return (
     <div className="flex justify-between w-96 h-36 border-1 border-black/10 gap-3 p-3 mb-2 rounded-2xl shadow-md">
@@ -64,14 +63,14 @@ export default function FreightSimple() {
             <SwiperSlide className="rounded-lg">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-lg "
-                src={truck}
+                src={faker.image.transport()}
               />
             </SwiperSlide>
 
             <SwiperSlide className="rounded-lg">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-lg "
-                src={truck}
+                src={faker.image.transport()}
               />
             </SwiperSlide>
           </Swiper>

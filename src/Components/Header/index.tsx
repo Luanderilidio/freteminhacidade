@@ -45,18 +45,11 @@ export default function Header() {
     toggleDialogSignIn,
   ] = useBoolean(false);
 
-  SignIn;
-  const {
-    isOpen: isOpenAccount,
-    onOpen: onOpenAccount,
-    onClose: onCloseAccount,
-  } = useDisclosure();
+  const [isOpenAccount, onOpenAccount, onCloseAccount, toggleAccount] =
+    useBoolean(false);
 
-  const {
-    isOpen: isOpenDialog,
-    onOpen: onOpenDialog,
-    onClose: onCloseDialog,
-  } = useDisclosure();
+  const [isOpenDialog, onOpenDialog, onCloseDialog, toggleDialog] =
+    useBoolean(false);
   return (
     <div className="grid grid-cols-11 px-4 py-4 sm:py-6 sm:px-8 border-b-[1px] border-custon-black/10 bg-white fixed">
       <div className="col-span-1 sm:col-span-2 self-center">
@@ -434,9 +427,7 @@ export default function Header() {
           onMouseEnter={onOpenAccount}
           className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-custon-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 "
         >
-          <IconButton>
-            <List size={30} weight="bold" className="text-black" />
-          </IconButton>
+          <List size={30} weight="bold" className="" />
           <UserCircle className="hidden sm:flex" size={30} weight="fill" />
         </button>
         {isOpenAccount && (
