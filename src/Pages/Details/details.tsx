@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { AvatarGroup, Rating } from "@mui/material";
 import { Avatar } from "@nextui-org/react";
 import { useBoolean } from "react-hooks-shareable";
-import { ChatDots, Heart, ShareNetwork } from "phosphor-react";
+import { ArrowLeft, ChatDots, Heart, ShareNetwork } from "phosphor-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 
@@ -17,6 +17,8 @@ import Linkedin from "../../assets/SocialMedia/Linkedin.png";
 
 import Twitter from "../../assets/SocialMedia/Twitter.png";
 import Gmail from "../../assets/SocialMedia/Gmail.png";
+import Size_4 from "../../assets/Sizes/size_4.png";
+
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -24,6 +26,8 @@ import "../../Components/Freight/styles.css";
 
 export default function Details() {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [value, setValue] = useState<number | null>(2);
 
@@ -68,6 +72,17 @@ export default function Details() {
           <Heart size={20} weight="fill" className="" />
           <p className="font-semibold text-xs cursor-pointer">+54k</p>
         </button>
+        <button
+          onClick={() => navigate("/")}
+          className="text-white transition ease-in-out active:scale-150 duration-100 cursor-pointer absolute  left-5  !z-50 bottom-40"
+        >
+          <ArrowLeft size={40} weight="bold" className="" />
+        </button>
+        <img
+        src={Size_4}
+          onClick={() => navigate("/")}
+          className="w-14 transition ease-in-out active:scale-150 duration-100 cursor-pointer absolute  right-5  !z-50 bottom-2"
+        />
       </div>
       <div className="col-span-12 grid grid-cols-12 gap-3 border p-5">
         <div className="col-span-2 relative">

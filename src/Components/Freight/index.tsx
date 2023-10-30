@@ -64,12 +64,10 @@ export default function Freight(props: any): JSX.Element {
   let truck = faker.image.transport();
 
   return (
-    <div
-      onClick={() => navigate(`/details/${props.id}`)}
-      className="col-span-12 sm:col-span-3"
-    >
-      <div className="h-60  rounded-2xl drop-shadow-xl relative">
+    <div className="col-span-12 sm:col-span-3 cursor-pointer">
+      <div className=" rounded-2xl drop-shadow-xl relative ">
         <Swiper
+          onClick={() => navigate(`/details/${props.id}`)}
           spaceBetween={10}
           pagination={{
             dynamicBullets: true,
@@ -78,7 +76,7 @@ export default function Freight(props: any): JSX.Element {
           className="mySwiper"
         >
           <SwiperSlide className="rounded-2xl">
-            <div className="h-60 overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
                 src={truck}
@@ -86,9 +84,9 @@ export default function Freight(props: any): JSX.Element {
             </div>
           </SwiperSlide>
           <SwiperSlide className="rounded-2xl">
-            <div className="h-60 overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl">
               <img
-                className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
+                className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-2xl "
                 src={truck}
               />
             </div>
@@ -124,7 +122,7 @@ export default function Freight(props: any): JSX.Element {
         {faker.datatype.boolean() && (
           <p className="flex items-center justify-center gap-1 absolute top-3 left-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.7rem] font-bold bg-yellow-400 shadow-md shadow-yellow-400/50 text-white">
             <CrownSimple size={13} weight="fill" />
-            Premium
+            Recomendado
           </p>
         )}
         <img className="w-14 bottom-3 left-3 z-50 absolute" src={Size_3} />
@@ -134,20 +132,21 @@ export default function Freight(props: any): JSX.Element {
         <div className="flex gap-2">
           <div className="relative h-fit">
             <img
+             onClick={() => navigate(`/details/${props.id}`)}
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
               src={faker.image.avatar()}
             />
             <img className="absolute bottom-0 right-0" src={Verifiqued} />
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-semibold opacity-90">{name}</p>
+            <p  onClick={() => navigate(`/details/${props.id}`)} className="text-sm font-semibold opacity-90">{name}</p>
             <div className="flex justify-start gap-1 mt-1">
               <img src={GoogleMapsIcon} className="mr-[2.5px]" />
               <p className="text-xs font-medium underline decoration-solid decoration-black/70 opacity-70">
                 Cavalhada II, Cáceres - MT
               </p>
             </div>
-            <div className="flex justify-start gap-1 mt-[2px]">
+            <div  onClick={() => navigate(`/details/${props.id}`)} className="flex justify-start gap-1 mt-[2px]">
               <ChatDots className="opacity-70" weight="fill" size={12} />
               <p className="text-xs font-medium opacity-70">
                 Faço frete na cidade e região
@@ -155,7 +154,7 @@ export default function Freight(props: any): JSX.Element {
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-start items-end gap-2">
+        <div  onClick={() => navigate(`/details/${props.id}`)} className="flex flex-col justify-start items-end gap-2">
           <div className="w-fit flex items-center gap-1">
             <p className="text-custon-black font-bold text-sm italic">4.5</p>
             <Star className="text-yellow-500" weight="fill" />

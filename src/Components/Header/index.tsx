@@ -11,7 +11,7 @@ import {
 import Logo from "../../assets/Logos/freteminhacidade.svg";
 import Logo2 from "../../assets/Logos/logo.svg";
 import Star from "../../assets/star.png";
-import { Dialog } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 import {
   CaretDown,
   CaretUp,
@@ -432,9 +432,11 @@ export default function Header() {
         </button> */}
         <button
           onMouseEnter={onOpenAccount}
-          className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-custon-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 shadow-sm hover:shadow-md"
+          className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-custon-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 "
         >
-          <List size={30} weight="bold" />
+          <IconButton>
+            <List size={30} weight="bold" className="text-black" />
+          </IconButton>
           <UserCircle className="hidden sm:flex" size={30} weight="fill" />
         </button>
         {isOpenAccount && (
