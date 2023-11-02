@@ -85,14 +85,14 @@ export default function SignIn({
             )}
           </div>
           <button className="flex items-center justify-between font-bold text-lg bg-custon-black text-white py-3 px-5 rounded-full drop-shadow-xl transition ease-in-out hover:scale-105 active:scale-95">
-            <div />
+          <ArrowRight size={25} className="invisible" weight="bold" />
+
             <p>Continuar</p>
             <ArrowRight size={25} weight="bold" />
           </button>
           <p className="text-[.7rem] leading-none text-justify">Ao clicar no botão, você concorda com nossos <span className="font-bold">Termos de Serviço</span> e <span className="font-bold">Política de Privacidade</span>.</p>
-        </form>
+        </form> 
         <Divider>ou</Divider>
-
         <button className="flex items-center justify-between sm:mx-5 border-1 hover:border-2 p-3 rounded-md">
           <img className="w-5" src={IconGoogle} />
           <p className="font-semibold">Sign in with Google</p>

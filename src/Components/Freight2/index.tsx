@@ -8,7 +8,16 @@ import {
   Star,
 } from "phosphor-react";
 import { AvatarGroup, useDisclosure } from "@nextui-org/react";
-import { Avatar, Menu } from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Link,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Menu,
+} from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { faker } from "@faker-js/faker";
 
@@ -41,6 +50,7 @@ import "./styles.css";
 import { Pagination } from "swiper/modules";
 import { useBoolean } from "react-hooks-shareable";
 import { useNavigate } from "react-router-dom";
+import { Phone, WhatsApp } from "@mui/icons-material";
 
 interface FreightProps {
   id: string;
@@ -53,19 +63,41 @@ interface FreightProps {
   instagram: string;
 }
 
-function Freight(props: any): JSX.Element {
+function Freight2({
+  id,
+  name,
+  address,
+  description,
+  phone_number_one,
+  phone_number_two,
+  facebook,
+  instagram,
+}: FreightProps): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
 
   const [isHeart, openHeart, closeHeart, toggleHeart] = useBoolean(false);
   const [isShare, openShare, closeShare, toggleShare] = useBoolean(false);
 
   const socialMedia = Boolean(anchorEl);
+  const whatsappButton = Boolean(anchorEl2);
+
   const clickOpenSocialMdia = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const closeSocialMedia = () => {
     setAnchorEl(null);
+  };
+
+  const clickOpenWhatsappButton = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const closeWhatsappButton = () => {
+    setAnchorEl2(null);
   };
 
   let number = faker.helpers.arrayElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -78,7 +110,7 @@ function Freight(props: any): JSX.Element {
     <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
       <div className=" rounded-2xl drop-shadow-xl relative ">
         <Swiper
-          onClick={() => navigate(`/details/${props.id}`)}
+          onClick={() => navigate(`/details/${id}`)}
           spaceBetween={10}
           pagination={{
             dynamicBullets: true,
@@ -143,7 +175,7 @@ function Freight(props: any): JSX.Element {
         <div className="flex gap-2">
           <div className="relative h-fit">
             <img
-              onClick={() => navigate(`/details/${props.id}`)}
+              onClick={() => navigate(`/details/${id}`)}
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
               src={faker.image.avatar()}
             />
@@ -151,30 +183,28 @@ function Freight(props: any): JSX.Element {
           </div>
           <div className="flex flex-col">
             <p
-              onClick={() => navigate(`/details/${props.id}`)}
+              onClick={() => navigate(`/details/${id}`)}
               className="text-sm font-semibold opacity-90"
             >
-              {name1}
+              {name}
             </p>
             <div className="flex justify-start gap-1 mt-1">
               <img src={GoogleMapsIcon} className="mr-[2.5px]" />
               <p className="text-xs font-medium underline decoration-solid decoration-black/70 opacity-70">
-                Cavalhada II, Cáceres - MT
+                {address}
               </p>
             </div>
             <div
-              onClick={() => navigate(`/details/${props.id}`)}
+              onClick={() => navigate(`/details/${id}`)}
               className="flex justify-start gap-1 mt-[2px]"
             >
               <ChatDots className="opacity-70" weight="fill" size={12} />
-              <p className="text-xs font-medium opacity-70">
-                Faço frete na cidade e região
-              </p>
+              <p className="text-xs font-medium opacity-70">{description}</p>
             </div>
           </div>
         </div>
         <div
-          onClick={() => navigate(`/details/${props.id}`)}
+          onClick={() => navigate(`/details/${id}`)}
           className="flex flex-col justify-start items-end gap-2"
         >
           <div className="w-fit flex items-center gap-1">
@@ -223,55 +253,143 @@ function Freight(props: any): JSX.Element {
             open={socialMedia}
             onClose={closeSocialMedia}
           >
-            <div
-              onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
-            >
-              <div className="flex justify-start items-center  gap-2">
-                <img src={Instagram} className="w-4" />
-                <p className="text-xs font-semibold opacity-80">@luander</p>
-              </div>
-            </div>
-            <div
-              onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
-            >
-              <div className="flex justify-start items-center  gap-2">
-                <img src={Facebook} className="w-4" />
-                <p className="text-xs font-semibold opacity-80">
-                  luanderarruda
-                </p>
-              </div>
-            </div>
-            <div
-              onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
-            >
-              <div className="flex justify-start items-center  gap-2">
-                <img src={Linkedin} className="w-4" />
-                <p className="text-xs font-semibold opacity-80">
-                  luanderilidio
-                </p>
-              </div>
-            </div>
-            <div
-              onClick={closeSocialMedia}
-              className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
-            >
-              <div className="flex justify-start items-center  gap-2">
-                <img src={Tiktok} className="w-4" />
-                <p className="text-xs font-semibold opacity-80">luander</p>
-              </div>
-            </div>
+            {instagram && (
+              <Link
+                target="_blank"
+                rel="noreferrer"
+                underline="none"
+                href={instagram}
+              >
+                <div
+                  onClick={closeSocialMedia}
+                  className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+                >
+                  <div className="flex justify-start items-center  gap-2">
+                    <img src={Instagram} className="w-4" />
+                    <p className="text-xs font-semibold opacity-80 !text-custon-black">
+                      Instagram
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            )}
+            {facebook && (
+              <Link
+                target="_blank"
+                rel="noreferrer"
+                underline="none"
+                href={facebook}
+              >
+                <div
+                  onClick={closeSocialMedia}
+                  className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	"
+                >
+                  <div className="flex justify-start items-center  gap-2">
+                    <img src={Facebook} className="w-4" />
+                    <p className="text-xs font-semibold opacity-80 !text-custon-black">
+                      Facebook
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            )}
           </Menu>
         </div>
-        <button className="col-span-8  font-bold flex items-center justify-center gap-2 rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30">
-          <img src={Whatsapp} />
-          Chamar no Whatsapp
+        <button
+          onClick={(event) => {
+            if (phone_number_two) {
+              clickOpenWhatsappButton(event);
+            } else {
+              window.open(
+                "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
+                "_blank"
+              );
+            }
+          }}
+          className="col-span-8  font-bold flex items-center justify-evenly gap-2 rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30"
+        >
+          <CaretDown className="invisible" size={10} weight="bold" />
+
+          <div className="flex items-center justify-center gap-2">
+            <img src={Whatsapp} />
+            Chamar no Whatsapp
+          </div>
+          <CaretDown
+            className={phone_number_two ? "block" : "invisible"}
+            size={10}
+            weight="bold"
+          />
         </button>
+        <Menu
+          anchorEl={anchorEl2}
+          open={whatsappButton}
+          onClose={closeWhatsappButton}
+        >
+          <List>
+            <ListItem
+              className="!cursor-pointer"
+              secondaryAction={
+                <IconButton edge="end" aria-label="delete">
+                  <WhatsApp fontSize="small" />
+                </IconButton>
+              }
+            >
+              <ListItemAvatar>
+                <Phone fontSize="small" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <p
+                    onClick={() =>
+                      window.open(
+                        "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
+                        "_blank"
+                      )
+                    }
+                    className="text-xs font-semibold opacity-80 !text-custon-black"
+                  >
+                    WhatsApp Principal
+                  </p>
+                }
+                secondary={
+                  <p className="text-xs font-normal opacity-80 !text-custon-black">
+                    {phone_number_one.substring(0, 14)}***
+                  </p>
+                }
+              />
+            </ListItem>
+            <ListItem
+              onClick={window.open(
+                "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
+                "_blank"
+              )}
+              secondaryAction={
+                <IconButton edge="end" aria-label="delete">
+                  <WhatsApp fontSize="small" />
+                </IconButton>
+              }
+            >
+              <ListItemAvatar>
+                <Phone fontSize="small" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <p className="text-xs font-semibold opacity-80 !text-custon-black">
+                    WhatsApp Secundário
+                  </p>
+                }
+                secondary={
+                  <p className="text-xs font-normal opacity-80 !text-custon-black">
+                    {phone_number_one.substring(0, 14)}***
+                  </p>
+                }
+              />
+            </ListItem>
+          </List>
+        </Menu>
       </div>
     </div>
   );
 }
 
-export default memo(Freight);
+export default memo(Freight2);

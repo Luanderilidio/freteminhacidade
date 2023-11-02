@@ -7,39 +7,40 @@ import {
   MapPin,
   MapTrifold,
 } from "phosphor-react";
-import Icon from "../../assets/Icon.png";
-import Whater from "../../assets/whater.svg";
-import { SetStateAction, useState } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useQuery } from "react-query";
 import Container from "../../Components/Container";
-import Freight from "../../Components/Freight";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
+import { FixedSizeList } from "react-window";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "../../Components/Freight/styles.css";
-import FreightSimple from "../../Components/FreightSimple";
 import isMobile from "../../utils/isMobile";
 import { IconButton } from "@mui/material";
 import axios from "axios";
 
+const FreightSimple = lazy(() => import("../../Components/FreightSimple"));
+const Freight = lazy(() => import("../../Components/Freight"));
+
 export default function Home() {
-  const { data, isLoading, isError, error } = useQuery("freights", async () => {
-    return axios
-      .get("http://localhost:3000/estudants")
-      .then((response) => response.data);
-  });
+  
 
-  if (isLoading) {
-    return (
-      <Container padding={true}>
-        <div>Carregando</div>
-      </Container>
-    );
-  }
 
+  const { data, isLoading, isError, error } = useQuery(
+    "freights",
+    async () => {
+      return axios
+        .get("http://localhost:3000/estudants")
+        .then((response) => response.data);
+    },
+    {
+      retry: 3,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <Container padding={true}>
@@ -73,16 +74,18 @@ export default function Home() {
             delay: 3000,
             disableOnInteraction: false,
           }}
-          slidesPerView={4}
+          slidesPerView={isMobile() ? 1 : 4}
           spaceBetween={10}
           modules={[Autoplay]}
           className="mySwiper h-fit"
         >
-          {data.map((e: any, index: number) => (
-            <SwiperSlide key={index} className="rounded-2xl">
-              <FreightSimple />
-            </SwiperSlide>
-          ))}
+          <Suspense fallback={<p>Loading</p>}>
+            {data?.map((e: any, index: number) => (
+              <SwiperSlide key={index} className="rounded-2xl">
+                <FreightSimple />
+              </SwiperSlide>
+            ))}
+          </Suspense>
         </Swiper>
       </div>
 
@@ -96,9 +99,11 @@ export default function Home() {
           <Funnel size={15} className="opacity-60" weight="bold" />
         </IconButton>
       </div>
-      {data.map((e: any, index: number) => (
-        <Freight key={index} id={uuidv4()} />
-      ))}
+      <Suspense fallback={<p>Loading</p>}>
+        {data?.map((e: any, index: number) => (
+          <Freight key={index} id={uuidv4()} />
+        ))}
+      </Suspense>
     </Container>
   );
 }
