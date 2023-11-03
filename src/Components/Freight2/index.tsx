@@ -56,7 +56,9 @@ interface FreightProps {
   id: string;
   name: string;
   address: string;
+  cityUF: string;
   description: string;
+  typeWorkBody: number;
   phone_number_one: string;
   phone_number_two: string;
   facebook: string;
@@ -68,6 +70,8 @@ function Freight2({
   name,
   address,
   description,
+  cityUF,
+  typeWorkBody,
   phone_number_one,
   phone_number_two,
   facebook,
@@ -160,7 +164,7 @@ function Freight2({
           </button>
         </div>
         <p className="absolute bottom-3 right-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.6rem] font-semibold bg-[#25D366]/90 text-[#005A09] shadow-sm shadow-[#005A09]/50">
-          Cáceres - MT
+          {cityUF}
         </p>
         {faker.datatype.boolean() && (
           <p className="flex items-center justify-center gap-1 absolute top-3 left-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.7rem] font-bold bg-yellow-400 shadow-md shadow-yellow-400/50 text-white">
@@ -168,7 +172,9 @@ function Freight2({
             Recomendado
           </p>
         )}
-        <img className="w-14 bottom-3 left-3 z-50 absolute" src={Size_3} />
+        {typeWorkBody === 1 && (
+          <img className="w-14 bottom-3 left-3 z-50 absolute" src={Size_3} />
+        )}
       </div>
 
       <div className="flex justify-between gap-2 mt-5">
@@ -190,9 +196,12 @@ function Freight2({
             </p>
             <div className="flex justify-start gap-1 mt-1">
               <img src={GoogleMapsIcon} className="mr-[2.5px]" />
-              <p className="text-xs font-medium underline decoration-solid decoration-black/70 opacity-70">
-                {address}
-              </p>
+
+              <a href={address} target="_blank">
+                <p className="text-xs font-medium underline decoration-solid decoration-black/70 opacity-70">
+                  Ver no Google Maps
+                </p>
+              </a>
             </div>
             <div
               onClick={() => navigate(`/details/${id}`)}
@@ -301,7 +310,7 @@ function Freight2({
               clickOpenWhatsappButton(event);
             } else {
               window.open(
-                "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
+                `https://wa.me/+55${phone_number_one}?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F`,
                 "_blank"
               );
             }
@@ -327,6 +336,12 @@ function Freight2({
         >
           <List>
             <ListItem
+              onClick={() =>
+                window.open(
+                  `https://wa.me/+55${phone_number_two}?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F`,
+                  "_blank"
+                )
+              }
               className="!cursor-pointer"
               secondaryAction={
                 <IconButton edge="end" aria-label="delete">
@@ -339,15 +354,7 @@ function Freight2({
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <p
-                    onClick={() =>
-                      window.open(
-                        "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
-                        "_blank"
-                      )
-                    }
-                    className="text-xs font-semibold opacity-80 !text-custon-black"
-                  >
+                  <p className="text-xs font-semibold opacity-80 !text-custon-black">
                     WhatsApp Principal
                   </p>
                 }
@@ -359,10 +366,12 @@ function Freight2({
               />
             </ListItem>
             <ListItem
-              onClick={window.open(
-                "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
-                "_blank"
-              )}
+              onClick={() =>
+                window.open(
+                  "https://wa.me/5554996635840?text=Ol%C3%A1%2C+est%C3%A1+disponivel+para+frete%3F",
+                  "_blank"
+                )
+              }
               secondaryAction={
                 <IconButton edge="end" aria-label="delete">
                   <WhatsApp fontSize="small" />

@@ -1,21 +1,24 @@
 import { faker } from "@faker-js/faker";
 import {
+  Autocomplete,
   Avatar,
   Badge,
   Breadcrumbs,
   Button,
   Container,
   Divider,
-  FormControl,
   IconButton,
   InputAdornment,
   InputLabel,
   Link,
   MenuItem,
   OutlinedInput,
+  OutlinedTextFieldProps,
   Select,
   SelectChangeEvent,
+  StandardTextFieldProps,
   TextField,
+  TextFieldVariants,
   Typography,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -29,36 +32,109 @@ import {
   PencilSimpleLine,
   PresentationChart,
   WhatsappLogo,
+  X,
 } from "phosphor-react";
-import Freight from "../Freight";
-import { useState } from "react";
-import MaskedInput from "react-text-mask";
 
-import WhatshotIcon from "@mui/icons-material/Whatshot";
-import GrainIcon from "@mui/icons-material/Grain";
+import { ChangeEvent, useState } from "react";
+import MaskedInput from "react-text-mask";
+import { v4 as uuidv4 } from "uuid";
 
 import "react-phone-input-2/lib/material.css";
 
-import GoogleMapsIcon from "../../assets/google-maps_icon.svg";
-import Youtube from "../../assets/SocialMedia/Youtube.png";
-import Linkedin from "../../assets/SocialMedia/Linkedin.png";
 import Instagram from "../../assets/SocialMedia/Instagram.png";
-import Tiktok from "../../assets/SocialMedia/TikTok.png";
-import Twitter from "../../assets/SocialMedia/twiter.svg";
-import Whatsapp from "../../assets/SocialMedia/whatsapp.svg";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
 import { WhatsApp } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import Freight2 from "../Freight2";
+import axios from "axios";
+
+interface Endereco {
+  cep: string;
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+}
+
+interface Bodywork {
+  id: number;
+  bodywork: string;
+}
+
+const bodyworks: Bodywork[] = [
+  { id: 1, bodywork: "Baú" },
+  { id: 2, bodywork: "Munck" },
+  { id: 3, bodywork: "Grade baixa – Carga seca" },
+  { id: 4, bodywork: "Grade alta – Graneleira" },
+  { id: 5, bodywork: "Caçamba" },
+  { id: 6, bodywork: "Prancha" },
+  { id: 7, bodywork: "Plataforma" },
+  { id: 8, bodywork: "Carroceria fechada" },
+  { id: 9, bodywork: "Baú frigorífico" },
+  { id: 10, bodywork: "Sider" },
+  { id: 11, bodywork: "Carroceria especial" },
+  { id: 12, bodywork: "Caçamba basculante" },
+  { id: 13, bodywork: "Canavieira" },
+  { id: 14, bodywork: "Florestal" },
+  { id: 15, bodywork: "Boiadeira" },
+  { id: 16, bodywork: "Tanque" },
+  { id: 17, bodywork: "Poliguindaste" },
+];
 
 export default function NewFreight() {
-  const [sizeFreight, setSizeFreight] = useState("");
-
   const navigate = useNavigate();
 
-  const handleChangeSize = (event: SelectChangeEvent) => {
-    setSizeFreight(event.target.value as string);
+  const [value, setValue] = useState<Bodywork | null>(null);
+  const [inputValue, setInputValue] = useState("");
+
+  const [cep, setCep] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [phoneOne, setPhoneOne] = useState<string>("");
+  const [phoneTwo, setPhoneTwo] = useState<string>("");
+  const [linkFacebook, setLinkFacebook] = useState<string>("");
+  const [linkInstagram, setLinkInstagram] = useState<string>("");
+
+  const [endereco, setEndereco] = useState<Endereco>({
+    cep: "",
+    logradouro: "",
+    bairro: "",
+    localidade: "",
+    uf: "",
+  });
+
+  const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newCep = event.target.value;
+    console.log(newCep);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://viacep.com.br/ws/${newCep}/json/`
+        );
+        if (response.status === 200) {
+          setEndereco({
+            cep: response.data.cep,
+            logradouro: response.data.logradouro,
+            bairro: response.data.bairro,
+            localidade: response.data.localidade,
+            uf: response.data.uf,
+          });
+        }
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    setCep(newCep);
   };
+
+  const googleMapsLink = `https://www.google.com/maps/place/${endereco.logradouro}+-+${endereco.bairro},+${endereco.localidade}+-+${endereco.uf},+${endereco.cep}/`;
+
+  const cityUF = `${endereco.localidade} - ${endereco.uf}`;
 
   return (
     <Container>
@@ -91,6 +167,7 @@ export default function NewFreight() {
         <div className="col-span-12 ">
           <p className="font-semibold text-3xl opacity-80">Novo frete</p>
         </div>
+
         <div className="col-span-12 sm:col-span-6 grid grid-cols-12">
           <div className="col-span-12 flex flex-col  gap-3">
             <div className="w-full flex items-center justify-center mb-5">
@@ -110,29 +187,45 @@ export default function NewFreight() {
                 />
               </div>
             </div>
-
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">Como localizar</p>
             </Divider>
-
             <TextField
               required
               fullWidth
               label="Nome"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               placeholder="Nome completo"
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setName("")}>
+                      <CloseIcon
+                        className={`!text-black/30 ${
+                          name ? "block" : "invisible"
+                        }`}
+                      />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+            78200-069
             <MaskedInput
+              value={cep}
+              onBlur={handleCepChange}
               mask={[
-                /[1-9]/,
-                /[1-9]/,
-                /[1-9]/,
-                /[1-9]/,
-                /[1-9]/,
-                "-",
-                /[1-9]/,
-                /[1-9]/,
-                /[1-9]/,
+                /[0-9]/,
+                /[0-9]/,
+                /[0-9]/,
+                /[0-9]/,
+                /[0-9]/,
+                // "-",
+                /[0-9]/,
+                /[0-9]/,
+                /[0-9]/,
               ]}
               render={(innerRef, props) => (
                 <TextField
@@ -141,54 +234,101 @@ export default function NewFreight() {
                   required
                   {...props}
                   inputRef={innerRef}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton onClick={() => setCep("")}>
+                          <CloseIcon
+                            className={`!text-black/30 ${
+                              cep ? "block" : "invisible"
+                            }`}
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               )}
             />
+            <div className="grid grid-cols-11 gap-2">
+              <TextField
+                disabled
+                value={endereco?.localidade}
+                className="col-span-3"
+                label="Cidade"
+                size="small"
+              />
+              <TextField
+                disabled
+                value={endereco?.bairro}
+                className="col-span-3"
+                label="Bairro"
+                size="small"
+              />
+              <TextField
+                disabled
+                value={endereco?.logradouro}
+                className="col-span-3"
+                label="Rua"
+                size="small"
+              />
+              <TextField
+                disabled
+                value={endereco?.uf}
+                className="col-span-2"
+                label="UF"
+                size="small"
+              />
+            </div>
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">Sobre o Frete</p>
             </Divider>
-
             <TextField
               required
               multiline
               rows={2}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
               fullWidth
               label="Descrição"
               placeholder="Ex: faço frete na cidade e região"
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setDescription("")}>
+                      <CloseIcon
+                        className={`!text-black/30 ${
+                          description ? "block" : "invisible"
+                        }`}
+                      />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
-            <FormControl required fullWidth>
-              <InputLabel>Tipo de carroceria</InputLabel>
-              <Select
-                value={sizeFreight}
-                label="Tipo de carroceria"
-                onChange={handleChangeSize}
-              >
-                <MenuItem value={30}>Baú</MenuItem>
-                <MenuItem value={30}>Munck</MenuItem>
-                <MenuItem value={10}>Grade baixa – Carga seca</MenuItem>
-                <MenuItem value={20}>Grade alta – Graneleira</MenuItem>
-                <MenuItem value={30}>Caçamba</MenuItem>
-                <MenuItem value={30}>Prancha</MenuItem>
-                <MenuItem value={30}>Plataforma</MenuItem>
-                <MenuItem value={30}>Carroceria fechada</MenuItem>
-                <MenuItem value={30}>Baú frigorífico</MenuItem>
-                <MenuItem value={30}>Sider</MenuItem>
-                <MenuItem value={30}>Carroceria especial</MenuItem>
-                <MenuItem value={30}>Caçamba basculante</MenuItem>
-                <MenuItem value={30}>Canavieira</MenuItem>
-                <MenuItem value={30}>Florestal</MenuItem>
-                <MenuItem value={30}>Boiadeira</MenuItem>
-                <MenuItem value={30}>Tanque</MenuItem>
-                <MenuItem value={30}>Poliguindaste</MenuItem>
-              </Select>
-            </FormControl>
-
+            <Autocomplete
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              options={bodyworks}
+              getOptionLabel={(option) => option.bodywork}
+              renderInput={(params) => (
+                <TextField {...params} label="Tipo de Carroceria" />
+              )}
+            />
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">Melhor contato</p>
             </Divider>
             <div className="w-full flex flex-col sm:flex-row gap-4">
               <MaskedInput
+                value={phoneOne}
+                onChange={(event) => setPhoneOne(event.target.value)}
                 mask={[
                   "(",
                   /[1-9]/,
@@ -233,6 +373,8 @@ export default function NewFreight() {
                 )}
               />
               <MaskedInput
+                value={phoneTwo}
+                onChange={(event) => setPhoneTwo(event.target.value)}
                 mask={[
                   "(",
                   /[1-9]/,
@@ -297,6 +439,8 @@ export default function NewFreight() {
               </p>
             </Divider>
             <TextField
+              value={linkFacebook}
+              onChange={(event) => setLinkFacebook(event.target.value)}
               fullWidth
               label="Link do Facebook"
               placeholder="facebook.com/username"
@@ -307,10 +451,23 @@ export default function NewFreight() {
                     <img className="w-6" src={Facebook} />
                   </InputAdornment>
                 ),
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setLinkFacebook("")}>
+                      <CloseIcon
+                        className={`!text-black/30 ${
+                          linkFacebook ? "block" : "invisible"
+                        }`}
+                      />
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
             <TextField
               fullWidth
+              value={linkInstagram}
+              onChange={(event) => setLinkInstagram(event.target.value)}
               label="Link do Instagram"
               placeholder="instagram.com/username"
               variant="outlined"
@@ -318,6 +475,17 @@ export default function NewFreight() {
                 startAdornment: (
                   <InputAdornment position="start">
                     <img className="w-6" src={Instagram} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => setLinkInstagram("")}>
+                      <CloseIcon
+                        className={`!text-black/30 ${
+                          linkInstagram ? "block" : "invisible"
+                        }`}
+                      />
+                    </IconButton>
                   </InputAdornment>
                 ),
               }}
@@ -332,14 +500,16 @@ export default function NewFreight() {
         </div>
         <div className="col-span-12 sm:col-span-6">
           <Freight2
-            id="1"
-            name="Nome da Transportadora"
-            address="Endereço da Transportadora"
-            description="Descrição da Transportadora"
-            phone_number_one="(65) 99663 - 5840"
-            phone_number_two="(65) 99663 - 5840"
-            facebook="https://facebook.com/transportadora"
-            instagram="https://instagram.com/transportadora"
+            id={uuidv4()}
+            name={name ? name : "Seu nome aqui"}
+            address={googleMapsLink}
+            cityUF={endereco.localidade ? cityUF : ""}
+            typeWorkBody={value !== null ? value.id : 2}
+            description={description ? description : "Descrição do seu frete"}
+            phone_number_one={phoneOne.replace(/[\(\)\s\-]/g, '')}
+            phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, '')}
+            facebook={linkFacebook}
+            instagram={linkInstagram}
           />
         </div>
       </div>
