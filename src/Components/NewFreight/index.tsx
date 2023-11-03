@@ -21,7 +21,8 @@ import {
   TextFieldVariants,
   Typography,
 } from "@mui/material";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+
+import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 
 import {
@@ -30,9 +31,11 @@ import {
   FolderSimplePlus,
   Image,
   PencilSimpleLine,
+  UploadSimple,
   PresentationChart,
   WhatsappLogo,
   X,
+  PencilLine,
 } from "phosphor-react";
 
 import { ChangeEvent, useState } from "react";
@@ -82,11 +85,26 @@ const bodyworks: Bodywork[] = [
   { id: 17, bodywork: "Poliguindaste" },
 ];
 
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
 export default function NewFreight() {
   const navigate = useNavigate();
 
   const [value, setValue] = useState<Bodywork | null>(null);
   const [inputValue, setInputValue] = useState("");
+  const [avatarImage, setAvatarImage] = useState<string | null>(null);
+  const [truckImageOne, setTruckImageOne] = useState<string | null>(null);
+  const [truckImageTwo, setTruckImageTwo] = useState<string | null>(null);
 
   const [cep, setCep] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -136,6 +154,45 @@ export default function NewFreight() {
 
   const cityUF = `${endereco.localidade} - ${endereco.uf}`;
 
+  const handleImageChangeAvatar = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          setAvatarImage(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageChangeTruckOne = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          setTruckImageOne(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageChangeTruckTwo = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          setTruckImageTwo(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Container>
       <div className="grid grid-cols-12 gap-5">
@@ -170,22 +227,37 @@ export default function NewFreight() {
 
         <div className="col-span-12 sm:col-span-6 grid grid-cols-12">
           <div className="col-span-12 flex flex-col  gap-3">
-            <div className="w-full flex items-center justify-center mb-5">
-              <div className="w-fit relative">
-                <div className="absolute -bottom-2 right-2 z-50  rounded-full bg-custon-black">
-                  <IconButton>
-                    <PencilSimpleLine
-                      size={12}
-                      className="text-white"
-                      weight="bold"
-                    />
-                  </IconButton>
-                </div>
-                <Avatar
-                  src={faker.image.avatar()}
-                  className="!w-28 !h-28 drop-shadow-xl"
+            <div className="w-full flex flex-col gap-2 items-center justify-center mb-5">
+              <Avatar
+                src={avatarImage || faker.image.avatar()}
+                className="!w-28 !h-28 drop-shadow-xl border-5 border-custon-black"
+              />
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={
+                  <PencilSimpleLine
+                    size={12}
+                    className="text-white"
+                    weight="bold"
+                  />
+                }
+                endIcon={
+                  <UploadSimple
+                    size={12}
+                    className="text-white"
+                    weight="bold"
+                  />
+                }
+              >
+                Foto de perfil
+                <VisuallyHiddenInput
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChangeAvatar}
+                  id="image-upload"
                 />
-              </div>
+              </Button>
             </div>
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">Como localizar</p>
@@ -319,7 +391,7 @@ export default function NewFreight() {
               options={bodyworks}
               getOptionLabel={(option) => option.bodywork}
               renderInput={(params) => (
-                <TextField {...params} label="Tipo de Carroceria" />
+                <TextField required {...params} label="Tipo de Carroceria" />
               )}
             />
             <Divider textAlign="left" className="!mt-8">
@@ -331,23 +403,23 @@ export default function NewFreight() {
                 onChange={(event) => setPhoneOne(event.target.value)}
                 mask={[
                   "(",
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                   ")",
                   " ",
-                  /[1-9]/,
+                  /[0-9]/,
                   " ",
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                   " ",
                   "-",
                   " ",
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                 ]}
                 render={(innerRef, props) => (
                   <TextField
@@ -377,23 +449,23 @@ export default function NewFreight() {
                 onChange={(event) => setPhoneTwo(event.target.value)}
                 mask={[
                   "(",
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                   ")",
                   " ",
-                  /[1-9]/,
+                  /[0-9]/,
                   " ",
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                   " ",
                   "-",
                   " ",
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
-                  /[1-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
                 ]}
                 render={(innerRef, props) => (
                   <TextField
@@ -422,15 +494,105 @@ export default function NewFreight() {
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">Foto do frete</p>
             </Divider>
-            <div className="flex gap-5">
-              <button className="w-full h-36 border rounded-xl flex flex-col items-center justify-center bg-slate-300/30 transition ease-in-out hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
-                <Image size={25} weight="bold" />
-                <p className="text-xs font-semibold">Upload </p>
-              </button>
-              <button className="w-full h-36 border rounded-xl flex flex-col items-center justify-center bg-slate-300/30 transition ease-in-out hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
-                <Image size={25} weight="bold" />
-                <p className="text-xs font-semibold">Upload </p>
-              </button>
+            <div className="grid grid-cols-2 gap-5">
+              {truckImageOne ? (
+                <div>
+                  <img
+                    className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
+                    src={truckImageOne}
+                  />
+                  <div className="flex justify-evenly mt-2">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      component="label"
+                      startIcon={<PencilLine size={15} weight="bold" />}
+                    >
+                      <VisuallyHiddenInput
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChangeTruckOne}
+                        id="image-upload"
+                      />
+
+                      <p className="text-xs font-semibold">Mudar</p>
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => setTruckImageOne(null)}
+                      color="error"
+                      variant="outlined"
+                      startIcon={<X size={15} />}
+                    >
+                      Retirar
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  variant="outlined"
+                  component="label"
+                  className="w-full h-36 flex flex-col "
+                >
+                  <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChangeTruckOne}
+                    id="image-upload"
+                  />
+                  <Image size={25} weight="bold" />
+                  <p className="text-xs font-semibold">Upload </p>
+                </Button>
+              )}
+              {truckImageTwo ? (
+                <div>
+                  <img
+                    className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
+                    src={truckImageTwo}
+                  />
+                  <div className="flex justify-evenly mt-2">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      component="label"
+                      startIcon={<PencilLine size={15} weight="bold" />}
+                    >
+                      <VisuallyHiddenInput
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChangeTruckTwo}
+                        id="image-upload"
+                      />
+
+                      <p className="text-xs font-semibold">Mudar</p>
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => setTruckImageTwo(null)}
+                      color="error"
+                      variant="outlined"
+                      startIcon={<X size={15} />}
+                    >
+                      Retirar
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  variant="outlined"
+                  component="label"
+                  className="w-full h-36 flex flex-col "
+                >
+                  <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChangeTruckTwo}
+                    id="image-upload"
+                  />
+                  <Image size={25} weight="bold" />
+                  <p className="text-xs font-semibold">Upload </p>
+                </Button>
+              )}
             </div>
             <Divider textAlign="left" className="!mt-8">
               <p className="text-sm font-semibold opacity-50">
@@ -501,13 +663,22 @@ export default function NewFreight() {
         <div className="col-span-12 sm:col-span-6">
           <Freight2
             id={uuidv4()}
+            avatar={avatarImage ? avatarImage : faker.image.avatar()}
             name={name ? name : "Seu nome aqui"}
             address={googleMapsLink}
             cityUF={endereco.localidade ? cityUF : ""}
+            hateHeart={0}
+            hateShare={0}
+            imageTruckOne={
+              truckImageOne ? truckImageOne : faker.image.transport()
+            }
+            imageTruckTwo={
+              truckImageTwo ? truckImageTwo : faker.image.transport()
+            }
             typeWorkBody={value !== null ? value.id : 2}
             description={description ? description : "Descrição do seu frete"}
-            phone_number_one={phoneOne.replace(/[\(\)\s\-]/g, '')}
-            phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, '')}
+            phone_number_one={phoneOne.replace(/[\(\)\s\-]/g, "")}
+            phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, "")}
             facebook={linkFacebook}
             instagram={linkInstagram}
           />

@@ -54,11 +54,16 @@ import { Phone, WhatsApp } from "@mui/icons-material";
 
 interface FreightProps {
   id: string;
+  avatar: string;
   name: string;
   address: string;
   cityUF: string;
+  hateHeart: number;
+  hateShare: number;
   description: string;
   typeWorkBody: number;
+  imageTruckOne: string;
+  imageTruckTwo: string;
   phone_number_one: string;
   phone_number_two: string;
   facebook: string;
@@ -67,11 +72,16 @@ interface FreightProps {
 
 function Freight2({
   id,
+  avatar,
   name,
   address,
   description,
   cityUF,
+  hateHeart,
+  hateShare,
   typeWorkBody,
+  imageTruckOne,
+  imageTruckTwo,
   phone_number_one,
   phone_number_two,
   facebook,
@@ -112,7 +122,7 @@ function Freight2({
 
   return (
     <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
-      <div className=" rounded-2xl drop-shadow-xl relative ">
+      <div className=" rounded-2xl drop-shadow-xl relative h-[400px]">
         <Swiper
           onClick={() => navigate(`/details/${id}`)}
           spaceBetween={10}
@@ -120,21 +130,21 @@ function Freight2({
             dynamicBullets: true,
           }}
           modules={[Pagination]}
-          className="mySwiper"
+          className="mySwiper border-2 "
         >
           <SwiperSlide className="rounded-2xl">
-            <div className="overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl w-full h-[400px]">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
-                src={truck}
+                src={imageTruckOne}
               />
             </div>
           </SwiperSlide>
           <SwiperSlide className="rounded-2xl">
-            <div className="overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl w-full h-[400px]  ">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-2xl "
-                src={truck}
+                src={imageTruckTwo}
               />
             </div>
           </SwiperSlide>
@@ -147,9 +157,7 @@ function Freight2({
             } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
           >
             <Heart size={20} weight="fill" className="" />
-            <p className="font-semibold text-xs cursor-pointer">
-              +{faker.datatype.number(100)}k
-            </p>
+            <p className="font-semibold text-xs cursor-pointer">{hateHeart}</p>
           </button>
           <button
             onClick={toggleShare}
@@ -158,9 +166,7 @@ function Freight2({
             } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
           >
             <ShareNetwork size={20} weight="fill" className=" " />
-            <p className="font-semibold text-xs cursor-pointer">
-              +{faker.datatype.number(100)}k
-            </p>
+            <p className="font-semibold text-xs cursor-pointer">{hateShare}</p>
           </button>
         </div>
         <p className="absolute bottom-3 right-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.6rem] font-semibold bg-[#25D366]/90 text-[#005A09] shadow-sm shadow-[#005A09]/50">
@@ -183,7 +189,7 @@ function Freight2({
             <img
               onClick={() => navigate(`/details/${id}`)}
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
-              src={faker.image.avatar()}
+              src={avatar}
             />
             <img className="absolute bottom-0 right-0" src={Verifiqued} />
           </div>
