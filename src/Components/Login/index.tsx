@@ -1,15 +1,11 @@
 import { Dialog, Divider } from "@mui/material";
 import {
   ArrowRight,
-  EnvelopeSimple,
   Eye,
-  EyeClosed,
   EyeSlash,
-  Image,
+  Info,
   Lock,
-  MagnifyingGlass,
   Phone,
-  UserCircle,
   X,
 } from "phosphor-react";
 import InputMask from "react-input-mask";
@@ -17,6 +13,8 @@ import IconGoogle from "../../assets/Logos/IconGoogle.png";
 
 import { useBoolean } from "react-hooks-shareable";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Login({
   isDialog,
@@ -26,8 +24,36 @@ export default function Login({
 }: any) {
   const [viewPass, openViewPass, closeViewPass, togglePass] = useBoolean(false);
 
+  const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(false);
+
   const navigate = useNavigate();
 
+  const [phone, setPhone] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleLogin = () => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/users?phone_number=55${phone.replace(
+            /[\(\)\s\-]/g,
+            ""
+          )}&password=${password}`
+        );
+        console.log(response.data);
+
+        if (response.data.length > 0) {
+          navigate("/panel");
+        } else {
+          toggleStatus()
+          console.log('usuario não existe')
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  };
   return (
     <Dialog onClose={closeDialog} open={isDialog}>
       <div className="p-5 flex flex-col gap-5 ">
@@ -46,15 +72,28 @@ export default function Login({
             Bem-vindo de volta a Plataforma
           </p>
         </div>
+        {isStatus && (
+          <div className="flex items-center justify-center text-red-500 gap-2">
+            <Info size={20} weight="bold" />
+            <p className="text-md text-center font-semibold leading-none">
+              Usuário não existe
+            </p>
+          </div>
+        )}
         <form className="flex flex-col gap-3 sm:mx-5">
           <div className="w-full relative flex items-center gap-2 border-2 border-custon-black rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
             <div className="bg-custon-black p-2 rounded-full">
-              <EnvelopeSimple className="text-white" size={15} weight="fill" />
+              <Phone className="text-white" size={15} weight="fill" />
             </div>
 
-            <input
-              placeholder="Email"
+            <InputMask
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              mask="(99) 9 9999 - 9999"
+              placeholder="(99) 9 9999 - 9999"
+              id="phone"
               className="w-full focus:outline-none font-semibold "
+              name="phone"
             />
           </div>
 
@@ -65,6 +104,8 @@ export default function Login({
 
             <input
               placeholder="Senha"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               type={viewPass ? "text" : "password"}
               className="w-full focus:outline-none font-semibold"
             />
@@ -85,7 +126,8 @@ export default function Login({
             )}
           </div>
           <button
-            onClick={() => navigate("/panel")}
+            type="button"
+            onClick={handleLogin}
             className="flex items-center justify-between font-bold text-lg bg-custon-black text-white py-3 px-5 rounded-full drop-shadow-xl transition ease-in-out hover:scale-105 active:scale-95"
           >
             <ArrowRight size={25} className="invisible" weight="bold" />

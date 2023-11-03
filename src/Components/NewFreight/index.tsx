@@ -38,7 +38,7 @@ import {
   PencilLine,
 } from "phosphor-react";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import MaskedInput from "react-text-mask";
 import { v4 as uuidv4 } from "uuid";
 
@@ -52,7 +52,7 @@ import { useNavigate } from "react-router-dom";
 import Freight2 from "../Freight2";
 import axios from "axios";
 
-interface Endereco {
+interface address {
   cep: string;
   logradouro: string;
   bairro: string;
@@ -61,29 +61,29 @@ interface Endereco {
 }
 
 interface Bodywork {
-  id: number;
+  id: string;
   bodywork: string;
 }
 
-const bodyworks: Bodywork[] = [
-  { id: 1, bodywork: "Baú" },
-  { id: 2, bodywork: "Munck" },
-  { id: 3, bodywork: "Grade baixa – Carga seca" },
-  { id: 4, bodywork: "Grade alta – Graneleira" },
-  { id: 5, bodywork: "Caçamba" },
-  { id: 6, bodywork: "Prancha" },
-  { id: 7, bodywork: "Plataforma" },
-  { id: 8, bodywork: "Carroceria fechada" },
-  { id: 9, bodywork: "Baú frigorífico" },
-  { id: 10, bodywork: "Sider" },
-  { id: 11, bodywork: "Carroceria especial" },
-  { id: 12, bodywork: "Caçamba basculante" },
-  { id: 13, bodywork: "Canavieira" },
-  { id: 14, bodywork: "Florestal" },
-  { id: 15, bodywork: "Boiadeira" },
-  { id: 16, bodywork: "Tanque" },
-  { id: 17, bodywork: "Poliguindaste" },
-];
+// const bodyworks: Bodywork[] = [
+//   { id: 1, bodywork: "Baú" },
+//   { id: 2, bodywork: "Munck" },
+//   { id: 3, bodywork: "Grade baixa – Carga seca" },
+//   { id: 4, bodywork: "Grade alta – Graneleira" },
+//   { id: 5, bodywork: "Caçamba" },
+//   { id: 6, bodywork: "Prancha" },
+//   { id: 7, bodywork: "Plataforma" },
+//   { id: 8, bodywork: "Carroceria fechada" },
+//   { id: 9, bodywork: "Baú frigorífico" },
+//   { id: 10, bodywork: "Sider" },
+//   { id: 11, bodywork: "Carroceria especial" },
+//   { id: 12, bodywork: "Caçamba basculante" },
+//   { id: 13, bodywork: "Canavieira" },
+//   { id: 14, bodywork: "Florestal" },
+//   { id: 15, bodywork: "Boiadeira" },
+//   { id: 16, bodywork: "Tanque" },
+//   { id: 17, bodywork: "Poliguindaste" },
+// ];
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -100,6 +100,8 @@ const VisuallyHiddenInput = styled("input")({
 export default function NewFreight() {
   const navigate = useNavigate();
 
+  const [bodyworks, setBodyworks] = useState<Bodywork[]>([]);
+
   const [value, setValue] = useState<Bodywork | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [avatarImage, setAvatarImage] = useState<string | null>(null);
@@ -114,7 +116,7 @@ export default function NewFreight() {
   const [linkFacebook, setLinkFacebook] = useState<string>("");
   const [linkInstagram, setLinkInstagram] = useState<string>("");
 
-  const [endereco, setEndereco] = useState<Endereco>({
+  const [address, setAddress] = useState<address>({
     cep: "",
     logradouro: "",
     bairro: "",
@@ -124,7 +126,6 @@ export default function NewFreight() {
 
   const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCep = event.target.value;
-    console.log(newCep);
 
     const fetchData = async () => {
       try {
@@ -132,7 +133,7 @@ export default function NewFreight() {
           `https://viacep.com.br/ws/${newCep}/json/`
         );
         if (response.status === 200) {
-          setEndereco({
+          setAddress({
             cep: response.data.cep,
             logradouro: response.data.logradouro,
             bairro: response.data.bairro,
@@ -140,7 +141,6 @@ export default function NewFreight() {
             uf: response.data.uf,
           });
         }
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -150,9 +150,9 @@ export default function NewFreight() {
     setCep(newCep);
   };
 
-  const googleMapsLink = `https://www.google.com/maps/place/${endereco.logradouro}+-+${endereco.bairro},+${endereco.localidade}+-+${endereco.uf},+${endereco.cep}/`;
+  const googleMapsLink = `https://www.google.com/maps/place/${address.logradouro}+-+${address.bairro},+${address.localidade}+-+${address.uf},+${address.cep}/`;
 
-  const cityUF = `${endereco.localidade} - ${endereco.uf}`;
+  const cityUF = `${address.localidade} - ${address.uf}`;
 
   const handleImageChangeAvatar = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -192,6 +192,52 @@ export default function NewFreight() {
       reader.readAsDataURL(file);
     }
   };
+
+  const postFreitch = () => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/estudants",
+          {
+            id: uuidv4(),
+            avatar: faker.image.avatar(),
+            name: name,
+            address: googleMapsLink,
+            cityUF: cityUF,
+            hateHeart: faker.datatype.number(100),
+            hateShare: faker.datatype.number(100),
+            description: description,
+            typeWorkBody: 1,
+            imageTruckOne: faker.image.transport(),
+            imageTruckTwo: faker.image.transport(),
+            phone_number_one: phoneOne.replace(/[\(\)\s\-]/g, ""),
+            phone_number_two: phoneTwo.replace(/[\(\)\s\-]/g, ""),
+            facebook: linkFacebook,
+            instagram: linkInstagram,
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/workbody");
+        if (response.status === 200) {
+          setBodyworks(response.data);
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -235,6 +281,7 @@ export default function NewFreight() {
               <Button
                 component="label"
                 variant="contained"
+                size="small"
                 startIcon={
                   <PencilSimpleLine
                     size={12}
@@ -325,28 +372,28 @@ export default function NewFreight() {
             <div className="grid grid-cols-11 gap-2">
               <TextField
                 disabled
-                value={endereco?.localidade}
+                value={address?.localidade}
                 className="col-span-3"
                 label="Cidade"
                 size="small"
               />
               <TextField
                 disabled
-                value={endereco?.bairro}
+                value={address?.bairro}
                 className="col-span-3"
                 label="Bairro"
                 size="small"
               />
               <TextField
                 disabled
-                value={endereco?.logradouro}
+                value={address?.logradouro}
                 className="col-span-3"
                 label="Rua"
                 size="small"
               />
               <TextField
                 disabled
-                value={endereco?.uf}
+                value={address?.uf}
                 className="col-span-2"
                 label="UF"
                 size="small"
@@ -654,7 +701,7 @@ export default function NewFreight() {
             />
             <div className="flex items-center justify-between">
               <Button color="info">Cancelar</Button>
-              <Button variant="contained" color="inherit">
+              <Button onClick={postFreitch} variant="contained" color="inherit">
                 Publicar frete
               </Button>
             </div>
@@ -666,7 +713,7 @@ export default function NewFreight() {
             avatar={avatarImage ? avatarImage : faker.image.avatar()}
             name={name ? name : "Seu nome aqui"}
             address={googleMapsLink}
-            cityUF={endereco.localidade ? cityUF : ""}
+            cityUF={address.localidade ? cityUF : ""}
             hateHeart={0}
             hateShare={0}
             imageTruckOne={
@@ -675,7 +722,7 @@ export default function NewFreight() {
             imageTruckTwo={
               truckImageTwo ? truckImageTwo : faker.image.transport()
             }
-            typeWorkBody={value !== null ? value.id : 2}
+            typeWorkBody={1}
             description={description ? description : "Descrição do seu frete"}
             phone_number_one={phoneOne.replace(/[\(\)\s\-]/g, "")}
             phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, "")}
