@@ -61,6 +61,8 @@ interface FreightProps {
   hateHeart: number;
   hateShare: number;
   description: string;
+  hate: number;
+  comments: number,
   typeWorkBody: number;
   imageTruckOne: string;
   imageTruckTwo: string;
@@ -76,6 +78,8 @@ function Freight2({
   name,
   address,
   description,
+  hate,
+  comments,
   cityUF,
   hateHeart,
   hateShare,
@@ -122,7 +126,7 @@ function Freight2({
 
   return (
     <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
-      <div className=" rounded-2xl drop-shadow-xl relative h-[400px]">
+      <div className=" rounded-2xl drop-shadow-xl relative ">
         <Swiper
           onClick={() => navigate(`/details/${id}`)}
           spaceBetween={10}
@@ -130,10 +134,10 @@ function Freight2({
             dynamicBullets: true,
           }}
           modules={[Pagination]}
-          className="mySwiper border-2 "
+          className="mySwiper"
         >
           <SwiperSlide className="rounded-2xl">
-            <div className="overflow-hidden rounded-2xl w-full h-[400px]">
+            <div className="overflow-hidden rounded-2xl w-full ">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-2xl "
                 src={imageTruckOne}
@@ -141,7 +145,7 @@ function Freight2({
             </div>
           </SwiperSlide>
           <SwiperSlide className="rounded-2xl">
-            <div className="overflow-hidden rounded-2xl w-full h-[400px]  ">
+            <div className="overflow-hidden rounded-2xl w-full  ">
               <img
                 className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-2xl "
                 src={imageTruckTwo}
@@ -223,7 +227,7 @@ function Freight2({
           className="flex flex-col justify-start items-end gap-2"
         >
           <div className="w-fit flex items-center gap-1">
-            <p className="text-custon-black font-bold text-sm italic">4.5</p>
+            <p className="text-custon-black font-bold text-sm italic">{hate}</p>
             <Star className="text-yellow-500" weight="fill" />
           </div>
           <div className="flex flex-col items-end gap-1">
@@ -250,7 +254,7 @@ function Freight2({
               />
             </AvatarGroup>
             <p className="underline text-[0.6rem] opacity-70 decoration-black/70 font-semibold">
-              +{faker.datatype.number(100)}
+              +{comments}
             </p>
           </div>
         </div>
@@ -321,7 +325,7 @@ function Freight2({
               );
             }
           }}
-          className="col-span-8  font-bold flex items-center justify-evenly gap-2 rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30"
+          className="col-span-8  font-bold flex items-center justify-evenly  rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30"
         >
           <CaretDown className="invisible" size={10} weight="bold" />
 

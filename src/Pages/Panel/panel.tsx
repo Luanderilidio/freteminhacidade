@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -9,7 +8,7 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -22,9 +21,15 @@ import {
   Stack,
   Eye,
 } from "phosphor-react";
-import { Avatar, Badge } from "@mui/material";
+import { Avatar, Badge, Menu, MenuItem } from "@mui/material";
 import NewFreight from "../../Components/NewFreight";
 import { faker } from "@faker-js/faker";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ViewFreight from "../../Components/ViewFreight";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useAuth } from "../../context/userLogin";
 
 const drawerWidth = 240;
 
@@ -78,10 +83,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [page, setPage] = useState(0);
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(true);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const openMenu = Boolean(anchorEl);
+  const clickOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const clickCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,6 +107,35 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+    const { data, isLoading, isError, error } = useQuery(
+      "freights",
+      async () => {
+        return axios
+          .get(`http://localhost:3000/estudants?id_user=${user?.id}`)
+          .then((response) => response.data);
+      },
+      {
+        retry: 3,
+        refetchOnWindowFocus: false,
+      }
+    );
+
+    console.log("lenght",data.length)
+
+  function PageToggle(page: number) {
+    switch (page) {
+      case 0:
+        return <NewFreight />;
+        break;
+      case 1:
+        return <ViewFreight />;
+
+      default:
+        break;
+    }
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -108,7 +154,28 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Painel do Freteiro
           </Typography>
-          <Avatar  src={faker.image.avatar()} />
+          <IconButton onClick={clickOpenMenu}>
+            <Avatar src={faker.image.avatar()} />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={clickCloseMenu}
+          >
+            <MenuItem
+              onClick={() => {
+                clickCloseMenu();
+                navigate("/");
+              }}
+            >
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Sair</ListItemText>
+              <Typography variant="body2" color="text.secondary"></Typography>
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -134,7 +201,8 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List>
           <ListItem
-          className="!cursor-pointer"
+            onClick={() => setPage(0)}
+            className="!cursor-pointer"
             disablePadding
             secondaryAction={
               <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
@@ -158,7 +226,8 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem
-          className="!cursor-pointer"
+            onClick={() => setPage(1)}
+            className="!cursor-pointer"
             disablePadding
             secondaryAction={
               <Eye size={25} className="opacity-30" weight="bold" />
@@ -166,7 +235,7 @@ export default function PersistentDrawerLeft() {
           >
             <ListItemButton>
               <ListItemIcon>
-                <Badge color="secondary" overlap="circular" badgeContent={2}>
+                <Badge color="secondary" overlap="circular" badgeContent={data?.length}>
                   <Stack size={25} height="bold" />
                 </Badge>
               </ListItemIcon>
@@ -177,12 +246,11 @@ export default function PersistentDrawerLeft() {
               />
             </ListItemButton>
           </ListItem>
-        
         </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <NewFreight />
+        {PageToggle(page)}
       </Main>
     </Box>
   );

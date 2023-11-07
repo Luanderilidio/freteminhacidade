@@ -15,6 +15,7 @@ import { useBoolean } from "react-hooks-shareable";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/userLogin";
 
 export default function Login({
   isDialog,
@@ -22,6 +23,8 @@ export default function Login({
   closeDialog,
   toggleDialog,
 }: any) {
+  const { setUser } = useAuth();
+
   const [viewPass, openViewPass, closeViewPass, togglePass] = useBoolean(false);
 
   const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(false);
@@ -40,13 +43,21 @@ export default function Login({
             ""
           )}&password=${password}`
         );
-        console.log(response.data);
+
+        
+
+        setUser({
+          id: response.data[0].id,
+          name: response.data[0].name,
+          avatar: response.data[0].avatar ? response.data[0].avatar : "",
+          phone: response.data[0].phone_number,
+        });
 
         if (response.data.length > 0) {
           navigate("/panel");
         } else {
-          toggleStatus()
-          console.log('usuario não existe')
+          toggleStatus();
+          console.log("usuario não existe");
         }
       } catch (error) {
         console.log(error);

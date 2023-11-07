@@ -19,6 +19,7 @@ import { useBoolean } from "react-hooks-shareable";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/userLogin";
 
 export default function SignIn({
   isDialog,
@@ -26,6 +27,8 @@ export default function SignIn({
   closeDialog,
   toggleDialog,
 }: any) {
+  const { setUser } = useAuth();
+
   const navigate = useNavigate();
   const [viewPass, openViewPass, closeViewPass, togglePass] = useBoolean(false);
   const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(false);
@@ -58,10 +61,21 @@ export default function SignIn({
           phone_number: `55${phone.replace(/[\(\)\s\-]/g, "")}`,
           password: password,
         });
+
+        console.log(response.data)
+
+       
+        setUser({
+          id: response.data.id,
+          name: response.data.name,
+          avatar: "",
+          phone: response.data.phone_number,
+        });
       } catch (error) {
         console.log(error);
       }
     };
+    
     fetchData();
   };
 

@@ -6,6 +6,11 @@ import {
   Breadcrumbs,
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   IconButton,
   InputAdornment,
@@ -36,6 +41,7 @@ import {
   WhatsappLogo,
   X,
   PencilLine,
+  CheckCircle,
 } from "phosphor-react";
 
 import { ChangeEvent, useEffect, useState } from "react";
@@ -51,6 +57,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import Freight2 from "../Freight2";
 import axios from "axios";
+import { useAuth } from "../../context/userLogin";
+import { useBoolean } from "react-hooks-shareable";
 
 interface address {
   cep: string;
@@ -65,26 +73,6 @@ interface Bodywork {
   bodywork: string;
 }
 
-// const bodyworks: Bodywork[] = [
-//   { id: 1, bodywork: "Baú" },
-//   { id: 2, bodywork: "Munck" },
-//   { id: 3, bodywork: "Grade baixa – Carga seca" },
-//   { id: 4, bodywork: "Grade alta – Graneleira" },
-//   { id: 5, bodywork: "Caçamba" },
-//   { id: 6, bodywork: "Prancha" },
-//   { id: 7, bodywork: "Plataforma" },
-//   { id: 8, bodywork: "Carroceria fechada" },
-//   { id: 9, bodywork: "Baú frigorífico" },
-//   { id: 10, bodywork: "Sider" },
-//   { id: 11, bodywork: "Carroceria especial" },
-//   { id: 12, bodywork: "Caçamba basculante" },
-//   { id: 13, bodywork: "Canavieira" },
-//   { id: 14, bodywork: "Florestal" },
-//   { id: 15, bodywork: "Boiadeira" },
-//   { id: 16, bodywork: "Tanque" },
-//   { id: 17, bodywork: "Poliguindaste" },
-// ];
-
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -98,10 +86,13 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function NewFreight() {
+  const { user } = useAuth();
+
   const navigate = useNavigate();
 
   const [bodyworks, setBodyworks] = useState<Bodywork[]>([]);
-
+  const [isDialogPost, openDialogPost, closeDialogPost, toggleDialogPost] =
+    useBoolean();
   const [value, setValue] = useState<Bodywork | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [avatarImage, setAvatarImage] = useState<string | null>(null);
@@ -109,9 +100,15 @@ export default function NewFreight() {
   const [truckImageTwo, setTruckImageTwo] = useState<string | null>(null);
 
   const [cep, setCep] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>(user ? user.name : "");
   const [description, setDescription] = useState<string>("");
-  const [phoneOne, setPhoneOne] = useState<string>("");
+  const [phoneOne, setPhoneOne] = useState<string>(
+    user && user.phone
+      ? user.phone
+          .replace(/^55/, "")
+          .replace(/(\d{2})(\d)(\d{4})(\d{4})/, "($1) $2 $3 - $4")
+      : ""
+  );
   const [phoneTwo, setPhoneTwo] = useState<string>("");
   const [linkFacebook, setLinkFacebook] = useState<string>("");
   const [linkInstagram, setLinkInstagram] = useState<string>("");
@@ -196,26 +193,29 @@ export default function NewFreight() {
   const postFreitch = () => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:3000/estudants",
-          {
-            id: uuidv4(),
-            avatar: faker.image.avatar(),
-            name: name,
-            address: googleMapsLink,
-            cityUF: cityUF,
-            hateHeart: faker.datatype.number(100),
-            hateShare: faker.datatype.number(100),
-            description: description,
-            typeWorkBody: 1,
-            imageTruckOne: faker.image.transport(),
-            imageTruckTwo: faker.image.transport(),
-            phone_number_one: phoneOne.replace(/[\(\)\s\-]/g, ""),
-            phone_number_two: phoneTwo.replace(/[\(\)\s\-]/g, ""),
-            facebook: linkFacebook,
-            instagram: linkInstagram,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/estudants", {
+          id: uuidv4(),
+          id_user: user?.id,
+          avatar: faker.image.avatar(),
+          name: name,
+          address: googleMapsLink,
+          cityUF: cityUF,
+          hateHeart: faker.datatype.number(100),
+          hateShare: faker.datatype.number(100),
+          description: description,
+          typeWorkBody: 1,
+          hate: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
+          comments: faker.datatype.number({ min: 6, max: 14}),
+          imageTruckOne: faker.image.transport(),
+          imageTruckTwo: faker.image.transport(),
+          phone_number_one: phoneOne?.replace(/[\(\)\s\-]/g, ""),
+          phone_number_two: phoneTwo.replace(/[\(\)\s\-]/g, ""),
+          facebook: linkFacebook,
+          instagram: linkInstagram,
+        });
+        if (response.status === 201) {
+          toggleDialogPost();
+        }
       } catch (error) {
         console.log(error);
       }
@@ -230,7 +230,6 @@ export default function NewFreight() {
         const response = await axios.get("http://localhost:3000/workbody");
         if (response.status === 200) {
           setBodyworks(response.data);
-          console.log(response.data);
         }
       } catch (error) {
         console.log(error);
@@ -270,7 +269,6 @@ export default function NewFreight() {
         <div className="col-span-12 ">
           <p className="font-semibold text-3xl opacity-80">Novo frete</p>
         </div>
-
         <div className="col-span-12 sm:col-span-6 grid grid-cols-12">
           <div className="col-span-12 flex flex-col  gap-3">
             <div className="w-full flex flex-col gap-2 items-center justify-center mb-5">
@@ -316,6 +314,7 @@ export default function NewFreight() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Nome completo"
+              defaultValue={user?.name}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -445,52 +444,80 @@ export default function NewFreight() {
               <p className="text-sm font-semibold opacity-50">Melhor contato</p>
             </Divider>
             <div className="w-full flex flex-col sm:flex-row gap-4">
-              <MaskedInput
-                value={phoneOne}
-                onChange={(event) => setPhoneOne(event.target.value)}
-                mask={[
-                  "(",
-                  /[0-9]/,
-                  /[0-9]/,
-                  ")",
-                  " ",
-                  /[0-9]/,
-                  " ",
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  " ",
-                  "-",
-                  " ",
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                ]}
-                render={(innerRef, props) => (
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start" className="flex">
-                          <p className="font-semibold opacity-30">+55</p>
-                        </InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <WhatsApp className="!text-black/30" />
-                        </InputAdornment>
-                      ),
-                    }}
-                    label="1° Número WhatsApp"
-                    placeholder="(99) 9 9999 - 9999"
-                    required
-                    {...props}
-                    inputRef={innerRef}
-                  />
+              <div className="w-full ">
+                <MaskedInput
+                  value={phoneOne}
+                  onChange={(event) => setPhoneOne(event.target.value)}
+                  mask={[
+                    "(",
+                    /[0-9]/,
+                    /[0-9]/,
+                    ")",
+                    " ",
+                    /[0-9]/,
+                    " ",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    " ",
+                    "-",
+                    " ",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                  ]}
+                  render={(innerRef, props) => (
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" className="flex">
+                            <p className="font-semibold opacity-30">+55</p>
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="start">
+                            <WhatsApp className="!text-black/30" />
+                          </InputAdornment>
+                        ),
+                      }}
+                      label="1° Número WhatsApp"
+                      placeholder="(99) 9 9999 - 9999"
+                      required
+                      {...props}
+                      inputRef={innerRef}
+                    />
+                  )}
+                />
+                {!phoneOne && (
+                  <Button
+                    onClick={() =>
+                      setPhoneOne(
+                        user?.phone ? user.phone.replace(/^55/, "") : ""
+                      )
+                    }
+                    size="small"
+                    variant="outlined"
+                    className="!normal-case flex gap-2 !mt-1"
+                    endIcon={<CheckCircle size={20} weight="bold" />}
+                  >
+                    <p>Usar atual</p>
+
+                    <p>
+                      {user && user.phone
+                        ? user.phone
+                            .replace(/^55/, "")
+                            .replace(
+                              /(\d{2})(\d)(\d{4})(\d{4})/,
+                              "($1) $2 $3 - $4"
+                            )
+                        : ""}
+                    </p>
+                  </Button>
                 )}
-              />
+              </div>
               <MaskedInput
                 value={phoneTwo}
                 onChange={(event) => setPhoneTwo(event.target.value)}
@@ -716,6 +743,8 @@ export default function NewFreight() {
             cityUF={address.localidade ? cityUF : ""}
             hateHeart={0}
             hateShare={0}
+            comments={0}
+            hate={faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 })}
             imageTruckOne={
               truckImageOne ? truckImageOne : faker.image.transport()
             }
@@ -724,13 +753,29 @@ export default function NewFreight() {
             }
             typeWorkBody={1}
             description={description ? description : "Descrição do seu frete"}
-            phone_number_one={phoneOne.replace(/[\(\)\s\-]/g, "")}
+            phone_number_one={
+              phoneOne ? phoneOne.replace(/[\(\)\s\-]/g, "") : ""
+            }
             phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, "")}
             facebook={linkFacebook}
             instagram={linkInstagram}
           />
         </div>
       </div>
+      <Dialog open={isDialogPost} onClose={closeDialogPost}>
+        <DialogTitle>Seu frete será publicado em breve!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Aguarde um dia para terminar nossa análise do frete
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialogPost}>OK</Button>
+          <Button onClick={closeDialogPost} autoFocus>
+            Esperar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
