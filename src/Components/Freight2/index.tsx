@@ -25,10 +25,10 @@ import Verifiqued from "../../assets/verifiqued.svg";
 import GoogleMapsIcon from "../../assets/google-maps_icon.svg";
 import Youtube from "../../assets/SocialMedia/Youtube.png";
 import Linkedin from "../../assets/SocialMedia/Linkedin.png";
-import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Tiktok from "../../assets/SocialMedia/TikTok.png";
 import Twitter from "../../assets/SocialMedia/twiter.svg";
 import Whatsapp from "../../assets/SocialMedia/whatsapp.svg";
+import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
 
 import Size_1 from "../../assets/Sizes/size_1.png";

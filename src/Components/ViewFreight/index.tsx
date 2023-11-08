@@ -62,7 +62,7 @@ export default function ViewFreight() {
         </p>
       </div>
       <Suspense fallback={<p>Loading</p>}>
-        {[0].map((e: any, index: number) => (
+        {[0,1,2 ].map((e: any, index: number) => (
           <FreightEdit />
           // <Freight2
           //   key={e.id}
