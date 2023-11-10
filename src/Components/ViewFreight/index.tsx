@@ -11,9 +11,8 @@ import { Suspense } from "react";
 import { useAuth } from "../../context/userLogin";
 import FreightEdit from "../FreightEdit";
 
-
 export default function ViewFreight() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const { data, isLoading, isError, error } = useQuery(
     "freights",
     async () => {
@@ -62,8 +61,26 @@ export default function ViewFreight() {
         </p>
       </div>
       <Suspense fallback={<p>Loading</p>}>
-        {[0,1,2 ].map((e: any, index: number) => (
-          <FreightEdit />
+        {[0, 1, 2].map((e: any, index: number) => (
+          <FreightEdit
+            id={""}
+            avatar={faker.image.avatar()}
+            name={faker.name.fullName()}
+            address={faker.address.country()}
+            cityUF={"Cáceres - MT"}
+            hateHeart={faker.datatype.number(100)}
+            hateShare={faker.datatype.number(100)}
+            description={"Faço frete na região"}
+            hate={faker.datatype.number(100)}
+            comments={faker.datatype.number(100)}
+            typeWorkBody={1}
+            imageTruckOne={faker.image.transport()}
+            imageTruckTwo={faker.image.transport()}
+            phone_number_one={"+55 9 99663 - 5840"}
+            phone_number_two={"+55 9 99663 - 5840"}
+            facebook={"https://www.facebook.com/luander.ilidio/"}
+            instagram={"https://www.instagram.com/luanderilidio/"}
+          />
           // <Freight2
           //   key={e.id}
           //   id={e.id}
@@ -82,7 +99,7 @@ export default function ViewFreight() {
           //   phone_number_one={e.phone_number_one}
           //   phone_number_two={e.phone_number_two}
           //   facebook={e.facebook}
-          //   instagram={e.instagram} 
+          //   instagram={e.instagram}
           // />
         ))}
       </Suspense>

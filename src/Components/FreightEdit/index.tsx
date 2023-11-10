@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import {
   Avatar,
+  AvatarGroup,
   Button,
   Divider,
   IconButton,
@@ -8,6 +9,7 @@ import {
   Link,
   Menu,
   MenuItem,
+  Rating,
   TextField,
 } from "@mui/material";
 import {
@@ -19,6 +21,7 @@ import {
   Phone,
   TrendUp,
   User,
+  GlobeSimple,
 } from "phosphor-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -33,6 +36,9 @@ import {
   VisibilityOffOutlined,
   InsightsRounded,
   LaunchOutlined,
+  LanguageOutlined,
+  AccountCircleOutlined,
+  StarBorderOutlined,
 } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -41,8 +47,30 @@ import "swiper/css/pagination";
 import "../Freight2/styles.css";
 import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
+import GoogleMapsIcon from "../../assets/google-maps_icon.svg";
+import Verifiqued from "../../assets/verifiqued.svg";
 
-export default function FreightEdit() {
+import { FreightProps } from "../Freight2";
+
+export default function FreightEdit({
+  id,
+  avatar,
+  name,
+  address,
+  description,
+  hate,
+  comments,
+  cityUF,
+  hateHeart,
+  hateShare,
+  typeWorkBody,
+  imageTruckOne,
+  imageTruckTwo,
+  phone_number_one,
+  phone_number_two,
+  facebook,
+  instagram,
+}: FreightProps) {
   const [anchorStatus, setAnchorStatus] = useState<null | HTMLElement>(null);
   const openStatus = Boolean(anchorStatus);
   const clickcToggleStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,11 +83,17 @@ export default function FreightEdit() {
   return (
     <div className="col-span-12 grid grid-cols-12 gap-3 border-1 border-black/10 p-5 rounded-2xl shadow-lg">
       <div className="col-span-4 flex flex-col justify-between">
+        <Divider textAlign="left" className="!mb-2">
+          <p className="text-xs font-semibold opacity-70 ">Dados Principais</p>
+        </Divider>
         <div className="flex gap-3">
-          <Avatar
-            src={faker.image.avatar()}
-            className="!w-14 !h-14 drop-shadow-xl border-3 border-custon-black"
-          />
+          <div className="relative h-fit">
+            <Avatar
+              src={faker.image.avatar()}
+              className="!w-14 !h-14 drop-shadow-xl border-3 border-custon-black"
+            />
+            <img className="absolute bottom-0 right-0" src={Verifiqued} />
+          </div>
           <div className="w-full">
             <div className="w-full flex justify-between items-center mb-1 ">
               <div className="flex items-center justify-start gap-1">
@@ -98,7 +132,7 @@ export default function FreightEdit() {
               <div />
             </div>
             <div className="flex items-start justify-start gap-1">
-              <MapPin size={15} weight="bold" />
+              <img src={GoogleMapsIcon} className="mr-[2.5px]" />
 
               <p className="text-[.8rem] font-normal opacity-80">
                 {faker.address.country()}, {faker.address.city()}
@@ -138,37 +172,42 @@ export default function FreightEdit() {
           </div>
         </div>
       </div>
-      <div className="col-span-2">
-        <div className=" rounded-lg drop-shadow-xl relative ">
-          <Swiper
-            spaceBetween={10}
-            pagination={{
-              dynamicBullets: true,
-            }}
-            modules={[Pagination]}
-            className="mySwiper"
-          >
-            <SwiperSlide className="rounded-2xl">
-              <div className="overflow-hidden rounded-lg  w-full ">
-                <img
-                  className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-lg  "
-                  src={faker.image.transport()}
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="rounded-2xl">
-              <div className="overflow-hidden rounded-lg w-full  ">
-                <img
-                  className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-lg  "
-                  src={faker.image.transport()}
-                />
-              </div>
-            </SwiperSlide>
-          </Swiper>
+      <div className="col-span-2 ">
+        <Divider className="!mb-2">
+          <p className="text-xs font-semibold opacity-70 ">Frete</p>
+        </Divider>
+        <div>
+          <div className=" rounded-lg drop-shadow-xl relative ">
+            <Swiper
+              spaceBetween={10}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+              className="mySwiper"
+            >
+              <SwiperSlide className="rounded-2xl">
+                <div className="overflow-hidden rounded-lg  w-full ">
+                  <img
+                    className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-lg  "
+                    src={faker.image.transport()}
+                  />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide className="rounded-2xl">
+                <div className="overflow-hidden rounded-lg w-full  ">
+                  <img
+                    className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-lg  "
+                    src={faker.image.transport()}
+                  />
+                </div>
+              </SwiperSlide>
+            </Swiper>
+          </div>
         </div>
       </div>
 
-      <div className="col-span-2 flex flex-col gap-2 ">
+      <div className="col-span-2 flex flex-col gap-2 hidden">
         <Divider>
           <p className="text-xs font-semibold opacity-70">Redes Sociais</p>
         </Divider>
@@ -234,56 +273,125 @@ export default function FreightEdit() {
           />
         </div>
       </div>
-      <div className="col-span-2 flex flex-col gap-2">
+      <div className="col-span-3 flex flex-col gap-2">
         <Divider>
           <p className="text-xs font-semibold opacity-70">Engajamento</p>
         </Divider>
-        <div className="flex items-center gap-1">
-          <WhatsApp fontSize="small" className="text-green-500" />
-          <p className="text-xs">
-            <span className="font-semibold">124</span> Clicks
-          </p>
-          <TrendUp size={10} className="text-green-500" weight="bold" />
-        </div>
-        <div className="flex items-center gap-1">
-          <FavoriteBorderOutlined fontSize="small" className="text-red-500" />
-          <p className="text-xs">
-            <span className="font-semibold">124</span> Likes
-          </p>
-          <TrendUp size={10} className="text-green-500" weight="bold" />
-        </div>
-        <div className="flex items-center gap-1">
-          <ShareOutlined fontSize="small" className="text-gray-500" />
-          <p className="text-xs">
-            <span className="font-semibold">124</span> Shares
-          </p>
-          <TrendUp size={10} className="text-green-500" weight="bold" />
+        <div className="flex justify-around">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1">
+              <FavoriteBorderOutlined
+                fontSize="small"
+                className="text-red-500"
+              />
+              <p className="text-xs">
+                <span className="font-semibold">124</span> Likes
+              </p>
+              <TrendUp size={10} className="text-green-500" weight="bold" />
+            </div>
+            <div className="flex items-center gap-1">
+              <ShareOutlined fontSize="small" className="text-gray-500" />
+              <p className="text-xs">
+                <span className="font-semibold">124</span> Shares
+              </p>
+              <TrendUp size={10} className="text-green-500" weight="bold" />
+            </div>
+            <div className="flex items-center justify-between">
+              <Chat
+                fontSize="small"
+                className="text-custon-black"
+              />
+              <AvatarGroup>
+                <Avatar
+                  sx={{ width: 15, height: 15 }}
+                  alt="Travis Howard"
+                  src={faker.image.avatar()}
+                />
+                <Avatar
+                  sx={{ width: 15, height: 15 }}
+                  alt="Cindy Baker"
+                  src={faker.image.avatar()}
+                />
+                <Avatar
+                  sx={{ width: 15, height: 15 }}
+                  alt="Agnes Walker"
+                  src={faker.image.avatar()}
+                />
+                <Avatar
+                  sx={{ width: 15, height: 15 }}
+                  alt="Trevor Henderson"
+                  src={faker.image.avatar()}
+                />
+              </AvatarGroup>
+              <p className="underline text-[0.6rem] opacity-70 decoration-black/70 font-semibold">
+                +14
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1">
+              <WhatsApp fontSize="small" className="text-green-500" />
+              <p className="text-xs">
+                <span className="font-semibold text-custon-black">124</span>{" "}
+                Clicks
+              </p>
+              <TrendUp size={10} className="text-green-500" weight="bold" />
+            </div>
+            <div className="flex items-center gap-1">
+              <LanguageOutlined
+                fontSize="small"
+                className="text-custon-black"
+              />
+              <p className="text-xs">
+                <span className="font-semibold">124</span> Access
+              </p>
+              <TrendUp size={10} className="text-green-500" weight="bold" />
+            </div>
+            <div className="flex items-center gap-1">
+              <StarBorderOutlined
+                fontSize="small"
+                className="text-yellow-500"
+              />
+              <p className="font-semibold italic text-sm text-custon-black">
+                4.6
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="col-span-2 flex flex-col gap-2 ">
-        <div className="flex justify-evenly">
-          <IconButton color="secondary">
-            <DriveFileRenameOutline />
-          </IconButton>
-          <IconButton color="error">
-            <DeleteForeverOutlined />
-          </IconButton>
+        <Divider>
+          <p className="text-xs font-semibold opacity-70">Engajamento</p>
+        </Divider>
+        <div className="h-full flex flex-col justify-between">
+          <div>
+            <div className="flex justify-evenly">
+              <IconButton color="secondary">
+                <DriveFileRenameOutline />
+              </IconButton>
+              <IconButton color="error">
+                <DeleteForeverOutlined />
+              </IconButton>
+            </div>
+            <Button
+              fullWidth
+              size="small"
+              color="warning"
+              variant="contained"
+              endIcon={<InsightsRounded />}
+            >
+              <p className="!font-bold normal-case">Tornar Exclusivo</p>
+            </Button>
+          </div>
+          <div>
+            <p className=" text-center font-semibold text-[.6rem] normal-case leading-none">
+              Criado em
+            </p>
+            <p className="text-center font-normal text-[.6rem] normal-case leading-none">
+              Nov 8, 2023 10:00 AM
+            </p>
+          </div>
         </div>
-        <Button
-          fullWidth
-          size="small"
-          color="warning"
-          variant="outlined"
-          endIcon={<InsightsRounded />}
-        >
-          <p className="!font-bold normal-case">Tornar Exclusivo</p>
-        </Button>
-        <p className=" text-center font-semibold text-[.6rem] normal-case leading-none">
-          Criado em
-        </p>
-        <p className="text-center font-normal text-[.6rem] normal-case leading-none">
-          Nov 8, 2023 10:00 AM
-        </p>
         {/* <Button
           fullWidth
           size="large"

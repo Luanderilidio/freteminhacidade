@@ -202,16 +202,27 @@ export default function NewFreight() {
           cityUF: cityUF,
           hateHeart: faker.datatype.number(100),
           hateShare: faker.datatype.number(100),
+          hateClick: faker.datatype.number(100),
+          hateSite: faker.datatype.number(100),
+          hateComments: faker.datatype.number(100),
+          hateAvatar: [
+            { id: uuidv4(), avatar: faker.image.avatar() },
+            { id: uuidv4(), avatar: faker.image.avatar() },
+            { id: uuidv4(), avatar: faker.image.avatar() },
+            { id: uuidv4(), avatar: faker.image.avatar() },
+          ],
           description: description,
           typeWorkBody: 1,
           hate: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
-          comments: faker.datatype.number({ min: 6, max: 14}),
+          comments: faker.datatype.number({ min: 6, max: 14 }),
           imageTruckOne: faker.image.transport(),
           imageTruckTwo: faker.image.transport(),
           phone_number_one: phoneOne?.replace(/[\(\)\s\-]/g, ""),
           phone_number_two: phoneTwo.replace(/[\(\)\s\-]/g, ""),
           facebook: linkFacebook,
           instagram: linkInstagram,
+          status: true,
+          exclusive: false,
         });
         if (response.status === 201) {
           toggleDialogPost();

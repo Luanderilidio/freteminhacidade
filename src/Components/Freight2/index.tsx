@@ -52,7 +52,7 @@ import { useBoolean } from "react-hooks-shareable";
 import { useNavigate } from "react-router-dom";
 import { Phone, WhatsApp } from "@mui/icons-material";
 
-interface FreightProps {
+export interface FreightProps {
   id: string;
   avatar: string;
   name: string;
