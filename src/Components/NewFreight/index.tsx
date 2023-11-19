@@ -14,31 +14,18 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  InputLabel,
-  Link,
-  MenuItem,
-  OutlinedInput,
-  OutlinedTextFieldProps,
-  Select,
-  SelectChangeEvent,
-  StandardTextFieldProps,
   TextField,
-  TextFieldVariants,
-  Typography,
 } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 
 import {
-  Clipboard,
-  Copy,
   FolderSimplePlus,
   Image,
   PencilSimpleLine,
   UploadSimple,
   PresentationChart,
-  WhatsappLogo,
   X,
   PencilLine,
   CheckCircle,
@@ -59,8 +46,9 @@ import Freight2 from "../Freight2";
 import axios from "axios";
 import { useAuth } from "../../context/userLogin";
 import { useBoolean } from "react-hooks-shareable";
+import moment from "moment";
 
-interface address {
+export interface address {
   cep: string;
   logradouro: string;
   bairro: string;
@@ -199,12 +187,20 @@ export default function NewFreight() {
           avatar: faker.image.avatar(),
           name: name,
           address: googleMapsLink,
+          address2: {
+            cep: cep,
+            uf: address?.uf,
+            city: address?.localidade,
+            neighborhood: address?.bairro,
+            street: address?.logradouro,
+          } ,
           cityUF: cityUF,
           hateHeart: faker.datatype.number(100),
           hateShare: faker.datatype.number(100),
           hateClick: faker.datatype.number(100),
           hateSite: faker.datatype.number(100),
           hateComments: faker.datatype.number(100),
+          hateWhatsapp:faker.datatype.number(100), 
           hateAvatar: [
             { id: uuidv4(), avatar: faker.image.avatar() },
             { id: uuidv4(), avatar: faker.image.avatar() },
@@ -213,7 +209,7 @@ export default function NewFreight() {
           ],
           description: description,
           typeWorkBody: 1,
-          hate: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
+          hateFreight: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
           comments: faker.datatype.number({ min: 6, max: 14 }),
           imageTruckOne: faker.image.transport(),
           imageTruckTwo: faker.image.transport(),
@@ -223,6 +219,8 @@ export default function NewFreight() {
           instagram: linkInstagram,
           status: true,
           exclusive: false,
+          update_as: moment().format(),
+          save_as: moment().format(),
         });
         if (response.status === 201) {
           toggleDialogPost();
@@ -754,8 +752,11 @@ export default function NewFreight() {
             cityUF={address.localidade ? cityUF : ""}
             hateHeart={0}
             hateShare={0}
+            hateClick={0}
+            hateSite={0}
             comments={0}
-            hate={faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 })}
+            hateFreight={0.0}
+            hateAvatar={[]}            
             imageTruckOne={
               truckImageOne ? truckImageOne : faker.image.transport()
             }
@@ -770,6 +771,8 @@ export default function NewFreight() {
             phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, "")}
             facebook={linkFacebook}
             instagram={linkInstagram}
+            exclusive={false}
+           
           />
         </div>
       </div>

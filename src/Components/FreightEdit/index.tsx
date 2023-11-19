@@ -56,13 +56,18 @@ export default function FreightEdit({
   id,
   avatar,
   name,
-  address,
+  address2,
   description,
-  hate,
+  hateFreight,
   comments,
-  cityUF,
   hateHeart,
   hateShare,
+  hateClick,
+  hateSite,
+  hateInstagram,
+  hateFacebook,
+  hateWhatsapp,
+  hateAvatar,
   typeWorkBody,
   imageTruckOne,
   imageTruckTwo,
@@ -70,6 +75,7 @@ export default function FreightEdit({
   phone_number_two,
   facebook,
   instagram,
+  exclusive,
 }: FreightProps) {
   const [anchorStatus, setAnchorStatus] = useState<null | HTMLElement>(null);
   const openStatus = Boolean(anchorStatus);
@@ -80,6 +86,8 @@ export default function FreightEdit({
     setAnchorStatus(null);
   };
 
+  console.log(address2);
+
   return (
     <div className="col-span-12 grid grid-cols-12 gap-3 border-1 border-black/10 p-5 rounded-2xl shadow-lg">
       <div className="col-span-4 flex flex-col justify-between">
@@ -89,7 +97,7 @@ export default function FreightEdit({
         <div className="flex gap-3">
           <div className="relative h-fit">
             <Avatar
-              src={faker.image.avatar()}
+              src={avatar}
               className="!w-14 !h-14 drop-shadow-xl border-3 border-custon-black"
             />
             <img className="absolute bottom-0 right-0" src={Verifiqued} />
@@ -100,7 +108,7 @@ export default function FreightEdit({
                 <User size={15} weight="fill" />
 
                 <p className="text-[.9rem] font-semibold opacity-80">
-                  {faker.name.fullName()}
+                  {name.substring(0, 14)}...
                 </p>
               </div>
               <Button
@@ -134,15 +142,20 @@ export default function FreightEdit({
             <div className="flex items-start justify-start gap-1">
               <img src={GoogleMapsIcon} className="mr-[2.5px]" />
 
-              <p className="text-[.8rem] font-normal opacity-80">
-                {faker.address.country()}, {faker.address.city()}
-              </p>
+              <div className="flex flex-col">
+                <p className="text-[.8rem] font-normal opacity-80">
+                  {address2?.city} - {address2?.uf}, {address2?.neighborhood},{" "}
+                </p>
+                <p className="text-[.8rem] font-normal opacity-80">
+                  {address2?.street}
+                </p>
+              </div>
             </div>
             <div className="flex items-start justify-start gap-1">
               <Chat size={15} weight="bold" />
 
               <p className="text-[.8rem] font-normal opacity-80">
-                Faço frete na cidade e região
+                {description}
               </p>
             </div>
           </div>
@@ -155,21 +168,29 @@ export default function FreightEdit({
             <div className="flex items-center justify-start gap-1">
               <Phone size={15} weight="fill" />
               <p className="text-[.9rem] font-semibold opacity-80 leading-none">
-                +55 9 9663-5843
+                {phone_number_one.replace(
+                  /^(\d{2})(\d)(\d{4})(\d{4})$/,
+                  "($1) $2 $3 - $4"
+                )}
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start gap-1 mb-1">
-            <p className="text-[.6rem] font-normal opacity-80 leading-none ">
-              Secundário
-            </p>
-            <div className="flex items-center justify-start gap-1">
-              <Phone size={15} weight="fill" />
-              <p className="text-[.9rem] font-semibold opacity-80 leading-none">
-                +55 9 9663-5843
+          {phone_number_two && (
+            <div className="flex flex-col items-start justify-start gap-1 mb-1">
+              <p className="text-[.6rem] font-normal opacity-80 leading-none ">
+                Secundário
               </p>
+              <div className="flex items-center justify-start gap-1">
+                <Phone size={15} weight="fill" />
+                <p className="text-[.9rem] font-semibold opacity-80 leading-none">
+                  {phone_number_two.replace(
+                    /^(\d{2})(\d)(\d{4})(\d{4})$/,
+                    "($1) $2 $3 - $4"
+                  )}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="col-span-2 ">
@@ -190,7 +211,7 @@ export default function FreightEdit({
                 <div className="overflow-hidden rounded-lg  w-full ">
                   <img
                     className="w-full hover:scale-110 transition duration-500 cursor-pointer object-cover rounded-lg  "
-                    src={faker.image.transport()}
+                    src={imageTruckOne}
                   />
                 </div>
               </SwiperSlide>
@@ -198,7 +219,7 @@ export default function FreightEdit({
                 <div className="overflow-hidden rounded-lg w-full  ">
                   <img
                     className="w-full hover:scale-110 transition duration-500 cursor-pointer !object-cover rounded-lg  "
-                    src={faker.image.transport()}
+                    src={imageTruckTwo}
                   />
                 </div>
               </SwiperSlide>
@@ -207,72 +228,6 @@ export default function FreightEdit({
         </div>
       </div>
 
-      <div className="col-span-2 flex flex-col gap-2 hidden">
-        <Divider>
-          <p className="text-xs font-semibold opacity-70">Redes Sociais</p>
-        </Divider>
-        <div className="flex flex-col justify-evenly h-full gap-2 ">
-          {/* <Link target="_blank" rel="noreferrer" underline="none" href="###">
-            <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-              <div className="flex justify-start items-center  gap-2">
-                <img src={Instagram} className="w-4" />
-                <p className="text-xs font-semibold opacity-80 !text-custon-black">
-                  Instagram
-                </p>
-              </div>
-            </div>
-          </Link> */}
-
-          <TextField
-            disabled
-            size="small"
-            value={faker.name.fullName()}
-            label="Instagram"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton>
-                    {/* <img src={Instagram} className="w-3" /> */}
-                    <InstagramLogo weight="bold" size={20} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <LaunchOutlined fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          <TextField
-            hiddenLabel
-            disabled
-            size="small"
-            value={faker.name.fullName()}
-            label="Facebook"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton>
-                    {/* <img src={Instagram} className="w-3" /> */}
-                    <FacebookLogo weight="bold" size={20} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <LaunchOutlined fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
-      </div>
       <div className="col-span-3 flex flex-col gap-2">
         <Divider>
           <p className="text-xs font-semibold opacity-70">Engajamento</p>
@@ -285,54 +240,52 @@ export default function FreightEdit({
                 className="text-red-500"
               />
               <p className="text-xs">
-                <span className="font-semibold">124</span> Likes
+                <span className="font-semibold">{hateHeart}</span> Likes
               </p>
               <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
             <div className="flex items-center gap-1">
               <ShareOutlined fontSize="small" className="text-gray-500" />
               <p className="text-xs">
-                <span className="font-semibold">124</span> Shares
+                <span className="font-semibold">{hateShare}</span> Shares
               </p>
               <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
             <div className="flex items-center justify-between">
-              <Chat
-                fontSize="small"
-                className="text-custon-black"
-              />
+              <Chat fontSize="small" className="text-custon-black" />
               <AvatarGroup>
-                <Avatar
-                  sx={{ width: 15, height: 15 }}
-                  alt="Travis Howard"
-                  src={faker.image.avatar()}
-                />
-                <Avatar
-                  sx={{ width: 15, height: 15 }}
-                  alt="Cindy Baker"
-                  src={faker.image.avatar()}
-                />
-                <Avatar
-                  sx={{ width: 15, height: 15 }}
-                  alt="Agnes Walker"
-                  src={faker.image.avatar()}
-                />
-                <Avatar
-                  sx={{ width: 15, height: 15 }}
-                  alt="Trevor Henderson"
-                  src={faker.image.avatar()}
-                />
+                {hateAvatar.map((e) => (
+                  <Avatar
+                    key={e.id}
+                    sx={{ width: 10, height: 10 }}
+                    alt="Travis Howard"
+                    src={e.avatar}
+                  />
+                ))}
               </AvatarGroup>
-              <p className="underline text-[0.6rem] opacity-70 decoration-black/70 font-semibold">
-                +14
+              <p className="underline text-xs opacity-70 decoration-black/70 font-semibold">
+                +{comments}
               </p>
+            </div>
+            <div className="flex items-center gap-1">
+              <InstagramLogo
+                size={15}
+                className="text-pink-500"
+                weight="bold"
+              />{" "}
+              <p className="text-xs">
+                <span className="font-semibold">{hateInstagram}</span> Redirect
+              </p>
+              <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1">
               <WhatsApp fontSize="small" className="text-green-500" />
               <p className="text-xs">
-                <span className="font-semibold text-custon-black">124</span>{" "}
+                <span className="font-semibold text-custon-black">
+                  {hateWhatsapp}
+                </span>{" "}
                 Clicks
               </p>
               <TrendUp size={10} className="text-green-500" weight="bold" />
@@ -343,7 +296,7 @@ export default function FreightEdit({
                 className="text-custon-black"
               />
               <p className="text-xs">
-                <span className="font-semibold">124</span> Access
+                <span className="font-semibold">{hateClick}</span> Access
               </p>
               <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
@@ -352,16 +305,29 @@ export default function FreightEdit({
                 fontSize="small"
                 className="text-yellow-500"
               />
-              <p className="font-semibold italic text-sm text-custon-black">
-                4.6
+              <p className="font-semibold italic text-xs text-custon-black">
+                {hateFreight}
               </p>
             </div>
+            <Link href={instagram}>
+              <div className="flex items-center gap-1">
+                <FacebookLogo
+                  size={15}
+                  className="text-blue-500"
+                  weight="bold"
+                />
+                <p className="text-xs">
+                  <span className="font-semibold">{hateFacebook}</span> Redirect
+                </p>
+                <TrendUp size={10} className="text-green-500" weight="bold" />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
       <div className="col-span-2 flex flex-col gap-2 ">
         <Divider>
-          <p className="text-xs font-semibold opacity-70">Engajamento</p>
+          <p className="text-xs font-semibold opacity-70">Ações</p>
         </Divider>
         <div className="h-full flex flex-col justify-between">
           <div>
@@ -376,11 +342,13 @@ export default function FreightEdit({
             <Button
               fullWidth
               size="small"
-              color="warning"
+              color={exclusive ? "success" : "warning"}
               variant="contained"
               endIcon={<InsightsRounded />}
             >
-              <p className="!font-bold normal-case">Tornar Exclusivo</p>
+              <p className="!font-bold normal-case">
+                {exclusive ? "Exclusivo" : "Tornar Exclusivo"}
+              </p>
             </Button>
           </div>
           <div>

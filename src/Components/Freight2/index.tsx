@@ -7,7 +7,7 @@ import {
   ShareNetwork,
   Star,
 } from "phosphor-react";
-import { AvatarGroup, useDisclosure } from "@nextui-org/react";
+import { AvatarGroup } from "@nextui-org/react";
 import {
   Avatar,
   IconButton,
@@ -23,10 +23,6 @@ import { faker } from "@faker-js/faker";
 
 import Verifiqued from "../../assets/verifiqued.svg";
 import GoogleMapsIcon from "../../assets/google-maps_icon.svg";
-import Youtube from "../../assets/SocialMedia/Youtube.png";
-import Linkedin from "../../assets/SocialMedia/Linkedin.png";
-import Tiktok from "../../assets/SocialMedia/TikTok.png";
-import Twitter from "../../assets/SocialMedia/twiter.svg";
 import Whatsapp from "../../assets/SocialMedia/whatsapp.svg";
 import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
@@ -51,18 +47,39 @@ import { Pagination } from "swiper/modules";
 import { useBoolean } from "react-hooks-shareable";
 import { useNavigate } from "react-router-dom";
 import { Phone, WhatsApp } from "@mui/icons-material";
+import axios from "axios";
+
+interface Avatar {
+  id: string;
+  avatar: string;
+}
+
+interface Address2 {
+  cep: string;
+  uf: string;
+  city: string;
+  neighborhood: string;
+  street: string;
+}
 
 export interface FreightProps {
   id: string;
   avatar: string;
   name: string;
   address: string;
+  address2?: Address2;
   cityUF: string;
   hateHeart: number;
   hateShare: number;
+  hateClick?: number;
+  hateSite?: number;
+  hateFreight: number;
+  hateInstagram?: number;
+  hateFacebook?: number;
+  hateWhatsapp?: number;
+  hateAvatar: Avatar[];
   description: string;
-  hate: number;
-  comments: number,
+  comments: number;
   typeWorkBody: number;
   imageTruckOne: string;
   imageTruckTwo: string;
@@ -70,6 +87,9 @@ export interface FreightProps {
   phone_number_two: string;
   facebook: string;
   instagram: string;
+  exclusive: boolean;
+  update_as?: Date;
+  save_as?: Date;
 }
 
 function Freight2({
@@ -78,11 +98,12 @@ function Freight2({
   name,
   address,
   description,
-  hate,
+  hateFreight,
   comments,
   cityUF,
   hateHeart,
   hateShare,
+  hateAvatar,
   typeWorkBody,
   imageTruckOne,
   imageTruckTwo,
@@ -90,10 +111,15 @@ function Freight2({
   phone_number_two,
   facebook,
   instagram,
+  exclusive,
 }: FreightProps): JSX.Element {
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-  const navigate = useNavigate();
+
+  const [heartCount, setHeartCount] = useState(hateHeart);
+  const [sharedCount, setSharedCount] = useState(hateShare);
 
   const [isHeart, openHeart, closeHeart, toggleHeart] = useBoolean(false);
   const [isShare, openShare, closeShare, toggleShare] = useBoolean(false);
@@ -118,11 +144,54 @@ function Freight2({
     setAnchorEl2(null);
   };
 
-  let number = faker.helpers.arrayElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const patchHeart = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { hateHeart: heartCount + 1}
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+  };
 
-  let name1 = faker.name.fullName();
+  const patchShare = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { hateShare: sharedCount + 1}
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+  };
 
-  let truck = faker.image.transport();
+  const handleClickHeart = () => {
+    openHeart();
+
+    if (!isHeart) {
+      setHeartCount((prevLikes) => prevLikes + 1);
+      patchHeart();
+    }
+  };
+
+  const handleClickShare = () => {
+    openShare();
+
+    if (!isShare) {
+      setSharedCount((prev) => prev + 1);
+      patchShare();
+    }
+  };
+
 
   return (
     <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
@@ -155,28 +224,28 @@ function Freight2({
         </Swiper>
         <div className="absolute top-3 right-2 z-50 ">
           <button
-            onClick={toggleHeart}
+            onClick={handleClickHeart}
             className={` ${
-              isHeart ? "text-red-500" : "text-white"
+              isHeart ? "text-red-500" : "text-red-500 opacity-80"
             } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
           >
             <Heart size={20} weight="fill" className="" />
-            <p className="font-semibold text-xs cursor-pointer">{hateHeart}</p>
+            <p className="font-semibold text-xs cursor-pointer">{heartCount}</p>
           </button>
           <button
-            onClick={toggleShare}
+            onClick={handleClickShare}
             className={`mt-2 ${
-              isShare ? "text-black" : "text-white"
+              isShare ? "text-white" : "text-white/60"
             } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
           >
             <ShareNetwork size={20} weight="fill" className=" " />
-            <p className="font-semibold text-xs cursor-pointer">{hateShare}</p>
+            <p className="font-semibold text-xs cursor-pointer">{sharedCount}</p>
           </button>
         </div>
         <p className="absolute bottom-3 right-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.6rem] font-semibold bg-[#25D366]/90 text-[#005A09] shadow-sm shadow-[#005A09]/50">
           {cityUF}
         </p>
-        {faker.datatype.boolean() && (
+        {exclusive && (
           <p className="flex items-center justify-center gap-1 absolute top-3 left-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.7rem] font-bold bg-yellow-400 shadow-md shadow-yellow-400/50 text-white">
             <CrownSimple size={13} weight="fill" />
             Recomendado
@@ -227,31 +296,21 @@ function Freight2({
           className="flex flex-col justify-start items-end gap-2"
         >
           <div className="w-fit flex items-center gap-1">
-            <p className="text-custon-black font-bold text-sm italic">{hate}</p>
+            <p className="text-custon-black font-bold text-sm italic">
+              {hateFreight}
+            </p>
             <Star className="text-yellow-500" weight="fill" />
           </div>
           <div className="flex flex-col items-end gap-1">
             <AvatarGroup>
-              <Avatar
-                sx={{ width: 10, height: 10 }}
-                alt="Travis Howard"
-                src={faker.image.avatar()}
-              />
-              <Avatar
-                sx={{ width: 10, height: 10 }}
-                alt="Cindy Baker"
-                src={faker.image.avatar()}
-              />
-              <Avatar
-                sx={{ width: 10, height: 10 }}
-                alt="Agnes Walker"
-                src={faker.image.avatar()}
-              />
-              <Avatar
-                sx={{ width: 10, height: 10 }}
-                alt="Trevor Henderson"
-                src={faker.image.avatar()}
-              />
+              {hateAvatar.map((e) => (
+                <Avatar
+                  key={e.id}
+                  sx={{ width: 10, height: 10 }}
+                  alt="Travis Howard"
+                  src={e.avatar}
+                />
+              ))}
             </AvatarGroup>
             <p className="underline text-[0.6rem] opacity-70 decoration-black/70 font-semibold">
               +{comments}

@@ -106,38 +106,20 @@ export default function Home() {
             name={e.name}
             address={e.address}
             cityUF={e.cityUF}
-            hateHeart={0}
-            hateShare={0}
+            hateHeart={e.hateHeart}
+            hateShare={e.hateShare}
             description={e.description}
             typeWorkBody={1}
-            hate={e.hate}
+            hateFreight={e.hateFreight}
+            hateAvatar={e.hateAvatar}
             comments={e.comments}
             imageTruckOne={e.imageTruckOne}
             imageTruckTwo={e.imageTruckTwo}
             phone_number_one={e.phone_number_one}
             phone_number_two={e.phone_number_two}
             facebook={e.facebook}
-            instagram={e.instagram} // id={uuidv4()}
-            // avatar={avatarImage ? avatarImage : faker.image.avatar()}
-            // name={name ? name : "Seu nome aqui"}
-            // address={googleMapsLink}
-            // cityUF={address.localidade ? cityUF : ""}
-            // hateHeart={0}
-            // hateShare={0}
-            // imageTruckOne={
-            //   truckImageOne ? truckImageOne : faker.image.transport()
-            // }
-            // imageTruckTwo={
-            //   truckImageTwo ? truckImageTwo : faker.image.transport()
-            // }
-            // typeWorkBody={1}
-            // description={description ? description : "Descrição do seu frete"}
-            // phone_number_one={
-            //   phoneOne ? phoneOne.replace(/[\(\)\s\-]/g, "") : ""
-            // }
-            // phone_number_two={phoneTwo.replace(/[\(\)\s\-]/g, "")}
-            // facebook={linkFacebook}
-            // instagram={linkInstagram}
+            instagram={e.instagram}
+            exclusive={e.exclusive}
           />
         ))}
       </Suspense>

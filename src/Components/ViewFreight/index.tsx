@@ -61,46 +61,34 @@ export default function ViewFreight() {
         </p>
       </div>
       <Suspense fallback={<p>Loading</p>}>
-        {[0, 1, 2].map((e: any, index: number) => (
+        {data?.map((e: any, index: number) => (
           <FreightEdit
-            id={""}
+            key={e.id}
+            id={e.id}
             avatar={faker.image.avatar()}
-            name={faker.name.fullName()}
-            address={faker.address.country()}
-            cityUF={"Cáceres - MT"}
-            hateHeart={faker.datatype.number(100)}
-            hateShare={faker.datatype.number(100)}
-            description={"Faço frete na região"}
-            hate={faker.datatype.number(100)}
-            comments={faker.datatype.number(100)}
+            name={e.name}
+            address={e.address}
+            address2={e.address2}
+            cityUF={e.cityUF}
+            hateHeart={e.hateHeart}
+            hateShare={e.hateShare}
+            hateWhatsapp={e.hateWhatsapp}
+            description={e.description}
             typeWorkBody={1}
-            imageTruckOne={faker.image.transport()}
-            imageTruckTwo={faker.image.transport()}
-            phone_number_one={"+55 9 99663 - 5840"}
-            phone_number_two={"+55 9 99663 - 5840"}
-            facebook={"https://www.facebook.com/luander.ilidio/"}
-            instagram={"https://www.instagram.com/luanderilidio/"}
+            hateAvatar={e.hateAvatar}
+            comments={e.comments}
+            imageTruckOne={e.imageTruckOne}
+            imageTruckTwo={e.imageTruckTwo}
+            phone_number_one={e.phone_number_one}
+            phone_number_two={e.phone_number_two}
+            facebook={e.facebook}
+            instagram={e.instagram}
+            exclusive={e.exclusive}
+            hateClick={e.hateClick}
+            hateSite={e.hateSite}
+            hateFreight={e.hateFreight}
+            save_as={e.save_as}
           />
-          // <Freight2
-          //   key={e.id}
-          //   id={e.id}
-          //   avatar={faker.image.avatar()}
-          //   name={e.name}
-          //   address={e.address}
-          //   cityUF={e.cityUF}
-          //   hateHeart={0}
-          //   hateShare={0}
-          //   description={e.description}
-          //   typeWorkBody={1}
-          //   hate={e.hate}
-          //   comments={e.comments}
-          //   imageTruckOne={e.imageTruckOne}
-          //   imageTruckTwo={e.imageTruckTwo}
-          //   phone_number_one={e.phone_number_one}
-          //   phone_number_two={e.phone_number_two}
-          //   facebook={e.facebook}
-          //   instagram={e.instagram}
-          // />
         ))}
       </Suspense>
     </div>
