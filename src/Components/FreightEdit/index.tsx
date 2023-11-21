@@ -3,6 +3,11 @@ import {
   Avatar,
   AvatarGroup,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   IconButton,
   InputAdornment,
@@ -39,6 +44,7 @@ import {
   LanguageOutlined,
   AccountCircleOutlined,
   StarBorderOutlined,
+  EmojiEvents,
 } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -51,6 +57,9 @@ import GoogleMapsIcon from "../../assets/google-maps_icon.svg";
 import Verifiqued from "../../assets/verifiqued.svg";
 
 import { FreightProps } from "../Freight2";
+import axios from "axios";
+import { useBoolean } from "react-hooks-shareable";
+import { Transition } from "../../utils/transition";
 
 export default function FreightEdit({
   id,
@@ -62,7 +71,6 @@ export default function FreightEdit({
   comments,
   hateHeart,
   hateShare,
-  hateClick,
   hateSite,
   hateInstagram,
   hateFacebook,
@@ -76,9 +84,26 @@ export default function FreightEdit({
   facebook,
   instagram,
   exclusive,
+  status,
 }: FreightProps) {
   const [anchorStatus, setAnchorStatus] = useState<null | HTMLElement>(null);
-  const openStatus = Boolean(anchorStatus);
+
+  const [isExclusive, openExclusive, closeExclusive, toggleExclusive] =
+    useBoolean(exclusive);
+
+  const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(status);
+
+  const [
+    isStatusDialog,
+    openStatusDialog,
+    closeStatusDialog,
+    toggleStatusDialog,
+  ] = useBoolean(false);
+
+  const [isTrashDialog, openTrashDialog, closeTrashDialog, toggleTrashDialog] =
+    useBoolean(false);
+
+  const openStatusMenu = Boolean(anchorStatus);
   const clickcToggleStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorStatus(event.currentTarget);
   };
@@ -88,8 +113,66 @@ export default function FreightEdit({
 
   console.log(address2);
 
+  const patchExclusive = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { exclusive: !isExclusive }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+    toggleTrashDialog()
+  };
+
+  const deleteFreight = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3000/estudants/${id}`
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+    closeTrashDialog()
+  };
+
+  const patchStatus = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { status: !isStatus }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+    toggleStatusDialog();
+  };
+
+  const handleClickExclusive = () => {
+    patchExclusive();
+    toggleExclusive();
+  };
+
+  const handleClickStatus = () => {
+    patchStatus();
+
+    toggleStatus();
+  };
+
   return (
-    <div className="col-span-12 grid grid-cols-12 gap-3 border-1 border-black/10 p-5 rounded-2xl shadow-lg">
+    <div className="col-span-12 grid grid-cols-12 gap-3 border-1 border-black/10 p-5 rounded-2xl shadow-lg ">
       <div className="col-span-4 flex flex-col justify-between">
         <Divider textAlign="left" className="!mb-2">
           <p className="text-xs font-semibold opacity-70 ">Dados Principais</p>
@@ -111,32 +194,58 @@ export default function FreightEdit({
                   {name.substring(0, 14)}...
                 </p>
               </div>
-              <Button
-                size="small"
-                variant="outlined"
-                color="success"
-                endIcon={<TaskAltOutlined />}
-                onClick={clickcToggleStatus}
-              >
-                <p className="!font-bold normal-case">Online</p>
-              </Button>
-              <Menu
+
+              {isStatus ? (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="success"
+                  endIcon={<TaskAltOutlined />}
+                  onClick={toggleStatusDialog}
+                >
+                  <p className="!font-bold normal-case">Online</p>
+                </Button>
+              ) : (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  endIcon={<VisibilityOffOutlined />}
+                  onClick={toggleStatusDialog}
+                >
+                  <p className="!font-bold normal-case">Desativado</p>
+                </Button>
+              )}
+              {/* <Menu
                 anchorEl={anchorStatus}
-                open={openStatus}
+                open={openStatusMenu}
                 onClose={handleCloseStatus}
               >
                 <MenuItem onClick={handleCloseStatus}>
-                  <Button
-                    fullWidth
-                    size="small"
-                    variant="outlined"
-                    color="inherit"
-                    endIcon={<VisibilityOffOutlined />}
-                  >
-                    <p className="!font-bold normal-case">Desativar</p>
-                  </Button>
+                {!isStatus ? (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="success"
+                  endIcon={<TaskAltOutlined />}
+                  onClick={clickcToggleStatus}
+                >
+                  <p className="!font-bold normal-case">Online</p>
+                </Button>
+              ) : (
+                <Button
+                  fullWidth
+                  size="small"
+                  variant="outlined"
+                  color="inherit"
+                  endIcon={<VisibilityOffOutlined />}
+                  onClick={clickcToggleStatus}
+                >
+                  <p className="!font-bold normal-case">Desativar</p>
+                </Button>
+              )}
                 </MenuItem>
-              </Menu>
+              </Menu> */}
               <div />
             </div>
             <div className="flex items-start justify-start gap-1">
@@ -296,7 +405,7 @@ export default function FreightEdit({
                 className="text-custon-black"
               />
               <p className="text-xs">
-                <span className="font-semibold">{hateClick}</span> Access
+                <span className="font-semibold">{hateSite}</span> Access
               </p>
               <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
@@ -335,21 +444,33 @@ export default function FreightEdit({
               <IconButton color="secondary">
                 <DriveFileRenameOutline />
               </IconButton>
-              <IconButton color="error">
+              <IconButton onClick={openTrashDialog} color="error">
                 <DeleteForeverOutlined />
               </IconButton>
             </div>
-            <Button
-              fullWidth
-              size="small"
-              color={exclusive ? "success" : "warning"}
-              variant="contained"
-              endIcon={<InsightsRounded />}
-            >
-              <p className="!font-bold normal-case">
-                {exclusive ? "Exclusivo" : "Tornar Exclusivo"}
-              </p>
-            </Button>
+            {isExclusive ? (
+              <Button
+                fullWidth
+                onClick={handleClickExclusive}
+                size="small"
+                color="success"
+                variant="contained"
+                endIcon={<EmojiEvents />}
+              >
+                <p className="!font-bold normal-case">Exclusivo</p>
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                size="small"
+                onClick={handleClickExclusive}
+                color="warning"
+                variant="contained"
+                endIcon={<InsightsRounded />}
+              >
+                <p className="!font-bold normal-case">Tornar Exclusivo</p>
+              </Button>
+            )}
           </div>
           <div>
             <p className=" text-center font-semibold text-[.6rem] normal-case leading-none">
@@ -360,65 +481,76 @@ export default function FreightEdit({
             </p>
           </div>
         </div>
-        {/* <Button
-          fullWidth
-          size="large"
-          variant="outlined"
-          color="secondary"
-          endIcon={<MoreVertRounded />}
-          onClick={clickcToggleOptions}
-        >
-          Opções
-        </Button> */}
-        {/* <Button
-          fullWidth
-          size="small"
-          variant="outlined"
-          color="secondary"
-          endIcon={<DriveFileRenameOutline />}
-        >
-           <p className="!font-bold normal-case">
-
-          Editar
-           </p>
-        </Button>
-        <Button
-          fullWidth
-          size="small"
-          variant="outlined"
-          color="error"
-          endIcon={<DeleteForeverOutlined />}
-        >
-           <p className="!font-bold normal-case">
-
-          Excluir
-           </p>
-        </Button>
-        <Button
-          fullWidth
-          size="small"
-          color="warning"
-          variant="outlined"
-          endIcon={<InsightsRounded />}
-        >
-           <p className="!font-bold normal-case">
-
-          Exclusivo
-           </p>
-        </Button>
-        <Button
-          fullWidth
-          size="small"
-          variant="outlined"
-          color="inherit"
-          endIcon={<VisibilityOffOutlined />}
-        >
-           <p className="!font-bold normal-case">
-
-          Desativar
-           </p>
-        </Button> */}
       </div>
+      <Dialog
+        open={isStatusDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={closeStatusDialog}
+      >
+        <DialogTitle>
+          {isStatus
+            ? "Tem certeza em desativar o Frete?"
+            : "Tornar visível seu Frete"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {isStatus ? (
+              <>
+                Você clicou em{" "}
+                <span className="font-bold text-red-600">desativar</span> seu
+                frete. Ele será oculto para seus clientes na plataforma. Deseja
+                continuar?
+              </>
+            ) : (
+              <>
+                Você clicou em <span className="font-bold">ativar</span> seu
+                frete. Ele a partir de agora será visível para seus clientes na
+                plataforma.
+              </>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            endIcon={isStatus ? <TaskAltOutlined /> : <VisibilityOffOutlined />}
+            variant="text"
+            color={isStatus ? "success" : "error"}
+            onClick={handleClickStatus}
+          >
+            {isStatus ? "Continuar Visível" : "Continuar Oculto"}
+          </Button>
+          <Button
+            endIcon={isStatus ? <VisibilityOffOutlined /> : <TaskAltOutlined />}
+            variant="contained"
+            color={isStatus ? "error" : "success"}
+            onClick={handleClickStatus}
+            autoFocus
+          >
+            {isStatus ? "Desativar meu Frete" : "Ativar meu frete"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={isTrashDialog} onClose={toggleTrashDialog}>
+        <DialogTitle>Tem certeza que deseja apagar seu Frete?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Essa ação poderá ser irreversível.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={toggleTrashDialog}>fechar</Button>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={deleteFreight}
+            autoFocus
+          >
+            Detelar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

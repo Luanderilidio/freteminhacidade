@@ -84,7 +84,7 @@ export default function ViewFreight() {
             facebook={e.facebook}
             instagram={e.instagram}
             exclusive={e.exclusive}
-            hateClick={e.hateClick}
+            status={e.status}
             hateSite={e.hateSite}
             hateFreight={e.hateFreight}
             save_as={e.save_as}

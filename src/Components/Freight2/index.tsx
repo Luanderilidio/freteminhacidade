@@ -71,7 +71,6 @@ export interface FreightProps {
   cityUF: string;
   hateHeart: number;
   hateShare: number;
-  hateClick?: number;
   hateSite?: number;
   hateFreight: number;
   hateInstagram?: number;
@@ -88,6 +87,7 @@ export interface FreightProps {
   facebook: string;
   instagram: string;
   exclusive: boolean;
+  status?: boolean;
   update_as?: Date;
   save_as?: Date;
 }
@@ -102,6 +102,8 @@ function Freight2({
   comments,
   cityUF,
   hateHeart,
+  hateSite,
+  hateWhatsapp,
   hateShare,
   hateAvatar,
   typeWorkBody,
@@ -149,7 +151,7 @@ function Freight2({
       try {
         const response = await axios.patch(
           `http://localhost:3000/estudants/${id}`,
-          { hateHeart: heartCount + 1}
+          { hateHeart: heartCount + 1 }
         );
         console.log(response.data);
       } catch (error) {
@@ -164,7 +166,7 @@ function Freight2({
       try {
         const response = await axios.patch(
           `http://localhost:3000/estudants/${id}`,
-          { hateShare: sharedCount + 1}
+          { hateShare: sharedCount + 1 }
         );
         console.log(response.data);
       } catch (error) {
@@ -192,12 +194,45 @@ function Freight2({
     }
   };
 
+  const patchWhats = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { hateWhatsapp: hateWhatsapp ? hateWhatsapp + 1 : hateWhatsapp }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+  };
+
+  const patchSite = () => {
+    const fecthData = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/estudants/${id}`,
+          { hateSite: hateSite ? hateSite + 1 : hateSite }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+  };
 
   return (
     <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
       <div className=" rounded-2xl drop-shadow-xl relative ">
         <Swiper
-          onClick={() => navigate(`/details/${id}`)}
+          onClick={() => {
+            navigate(`/details/${id}`)
+            patchSite()
+          } 
+        }
           spaceBetween={10}
           pagination={{
             dynamicBullets: true,
@@ -239,7 +274,9 @@ function Freight2({
             } transition ease-in-out active:scale-150 duration-100 flex flex-col items-center justify-center cursor-pointer`}
           >
             <ShareNetwork size={20} weight="fill" className=" " />
-            <p className="font-semibold text-xs cursor-pointer">{sharedCount}</p>
+            <p className="font-semibold text-xs cursor-pointer">
+              {sharedCount}
+            </p>
           </button>
         </div>
         <p className="absolute bottom-3 right-3 z-50 w-fit rounded-md px-2 py-2 leading-none text-[.6rem] font-semibold bg-[#25D366]/90 text-[#005A09] shadow-sm shadow-[#005A09]/50">
@@ -260,7 +297,10 @@ function Freight2({
         <div className="flex gap-2">
           <div className="relative h-fit">
             <img
-              onClick={() => navigate(`/details/${id}`)}
+              onClick={() => {
+                navigate(`/details/${id}`)
+                patchSite()
+              }}
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "
               src={avatar}
             />
@@ -268,7 +308,10 @@ function Freight2({
           </div>
           <div className="flex flex-col">
             <p
-              onClick={() => navigate(`/details/${id}`)}
+              onClick={() => {
+                navigate(`/details/${id}`)
+                patchSite()
+              }}
               className="text-sm font-semibold opacity-90"
             >
               {name}
@@ -283,7 +326,10 @@ function Freight2({
               </a>
             </div>
             <div
-              onClick={() => navigate(`/details/${id}`)}
+              onClick={() => {
+                navigate(`/details/${id}`)
+                patchSite()
+              }}
               className="flex justify-start gap-1 mt-[2px]"
             >
               <ChatDots className="opacity-70" weight="fill" size={12} />
@@ -292,7 +338,10 @@ function Freight2({
           </div>
         </div>
         <div
-          onClick={() => navigate(`/details/${id}`)}
+          onClick={() => {
+            navigate(`/details/${id}`)
+            patchSite()
+          }}
           className="flex flex-col justify-start items-end gap-2"
         >
           <div className="w-fit flex items-center gap-1">
@@ -383,6 +432,7 @@ function Freight2({
                 "_blank"
               );
             }
+            patchWhats();
           }}
           className="col-span-8  font-bold flex items-center justify-evenly  rounded-full text-xs leading-none py-3 text-white border-2 border-custon-black bg-[#25D366] transition ease-in-out hover:bg-[#36fd68] active:scale-95 shadow-md shadow-[#25D366]/30"
         >

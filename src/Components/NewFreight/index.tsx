@@ -197,7 +197,6 @@ export default function NewFreight() {
           cityUF: cityUF,
           hateHeart: faker.datatype.number(100),
           hateShare: faker.datatype.number(100),
-          hateClick: faker.datatype.number(100),
           hateSite: faker.datatype.number(100),
           hateComments: faker.datatype.number(100),
           hateWhatsapp:faker.datatype.number(100), 
@@ -752,7 +751,6 @@ export default function NewFreight() {
             cityUF={address.localidade ? cityUF : ""}
             hateHeart={0}
             hateShare={0}
-            hateClick={0}
             hateSite={0}
             comments={0}
             hateFreight={0.0}

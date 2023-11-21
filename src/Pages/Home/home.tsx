@@ -112,6 +112,8 @@ export default function Home() {
             typeWorkBody={1}
             hateFreight={e.hateFreight}
             hateAvatar={e.hateAvatar}
+            hateSite={e.hateSite}
+            hateWhatsapp={e.hateWhatsapp}
             comments={e.comments}
             imageTruckOne={e.imageTruckOne}
             imageTruckTwo={e.imageTruckTwo}
