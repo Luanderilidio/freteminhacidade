@@ -304,7 +304,7 @@ export default function FreightEdit({
       </div>
       <div className="col-span-2 ">
         <Divider className="!mb-2">
-          <p className="text-xs font-semibold opacity-70 ">Frete</p>
+          <p className="text-xs font-semibold opacity-70 ">Ponto Gastronomico</p>
         </Divider>
         <div>
           <div className=" rounded-lg drop-shadow-xl relative ">
@@ -490,8 +490,8 @@ export default function FreightEdit({
       >
         <DialogTitle>
           {isStatus
-            ? "Tem certeza em desativar o Frete?"
-            : "Tornar visível seu Frete"}
+            ? "Tem certeza em desativar o Ponto Gastronomico?"
+            : "Tornar visível seu Ponto Gastronomico"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -499,13 +499,13 @@ export default function FreightEdit({
               <>
                 Você clicou em{" "}
                 <span className="font-bold text-red-600">desativar</span> seu
-                frete. Ele será oculto para seus clientes na plataforma. Deseja
+                Ponto Gastronomico. Ele será oculto para seus clientes na plataforma. Deseja
                 continuar?
               </>
             ) : (
               <>
                 Você clicou em <span className="font-bold">ativar</span> seu
-                frete. Ele a partir de agora será visível para seus clientes na
+                Ponto Gastronomico. Ele a partir de agora será visível para seus clientes na
                 plataforma.
               </>
             )}
@@ -527,13 +527,13 @@ export default function FreightEdit({
             onClick={handleClickStatus}
             autoFocus
           >
-            {isStatus ? "Desativar meu Frete" : "Ativar meu frete"}
+            {isStatus ? "Desativar meu Ponto Gastronomico" : "Ativar meu Ponto Gastronomico"}
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={isTrashDialog} onClose={toggleTrashDialog}>
-        <DialogTitle>Tem certeza que deseja apagar seu Frete?</DialogTitle>
+        <DialogTitle>Tem certeza que deseja apagar seu Ponto Gastronomico?</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Essa ação poderá ser irreversível.

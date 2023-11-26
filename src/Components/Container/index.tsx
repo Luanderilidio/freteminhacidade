@@ -3,6 +3,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import { MapTrifold } from "phosphor-react";
 import { useBoolean } from "react-hooks-shareable";
+import { useNavigate } from "react-router-dom";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -10,6 +11,10 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({ children, padding }) => {
+
+
+  const navigate = useNavigate()
+
   const buttonRef = useRef(null);
 
   const [isButton, openButton, closeButton, toggleButton] = useBoolean(true);
@@ -60,7 +65,7 @@ const Container: React.FC<ContainerProps> = ({ children, padding }) => {
 
   return (
     <div className="grid grid-cols-12 ">
-      <div className="col-span-12 z-50 relative">
+      <div className="col-span-12 hypertop relative">
         <Header />
       </div>
       <div
@@ -71,6 +76,7 @@ const Container: React.FC<ContainerProps> = ({ children, padding }) => {
         {children}
         {scrollPosition < documentHeight - windowHeight - 200 && (
           <button
+          onClick={()=> navigate('/map')}
             ref={buttonRef}
             className="flex items-center justify-center gap-2 py-2 px-4 w-fit text-white bg-custon-black rounded-full font-semibold fixed z-50 bottom-3 sm:bottom-7 left-1/2 transform -translate-x-1/2 -translate-y-1/2 leading-none drop-shadow-xl transition ease-in-out hover:scale-110 active:scale-95 animate__animated animate__animated animate__fadeIn animate__fast	"
           >

@@ -210,8 +210,8 @@ export default function NewFreight() {
           typeWorkBody: 1,
           hateFreight: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
           comments: faker.datatype.number({ min: 6, max: 14 }),
-          imageTruckOne: faker.image.transport(),
-          imageTruckTwo: faker.image.transport(),
+          imageTruckOne: "https://www.visitpantanal.com/media/cache/67/80/6780acb396f4e32084bf24a9bed842c5.jpg",
+          imageTruckTwo: "https://www.visitpantanal.com/media/cache/67/80/6780acb396f4e32084bf24a9bed842c5.jpg",
           phone_number_one: phoneOne?.replace(/[\(\)\s\-]/g, ""),
           phone_number_two: phoneTwo.replace(/[\(\)\s\-]/g, ""),
           facebook: linkFacebook,
@@ -269,13 +269,13 @@ export default function NewFreight() {
               <FolderSimplePlus size={16} weight="bold" />
 
               <p className="text-xs font-semibold hover:underline">
-                Novo Frete
+                Novo Ponto 
               </p>
             </button>
           </Breadcrumbs>
         </div>
         <div className="col-span-12 ">
-          <p className="font-semibold text-3xl opacity-80">Novo frete</p>
+          <p className="font-semibold text-3xl opacity-80">Novo Gastronomico</p>
         </div>
         <div className="col-span-12 sm:col-span-6 grid grid-cols-12">
           <div className="col-span-12 flex flex-col  gap-3">
@@ -407,7 +407,7 @@ export default function NewFreight() {
               />
             </div>
             <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Sobre o Frete</p>
+              <p className="text-sm font-semibold opacity-50">Sobre o Ponto</p>
             </Divider>
             <TextField
               required
@@ -417,7 +417,7 @@ export default function NewFreight() {
               onChange={(event) => setDescription(event.target.value)}
               fullWidth
               label="Descrição"
-              placeholder="Ex: faço frete na cidade e região"
+              placeholder="Ex: Ponto Gastronomico faz bolo de arroz"
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -445,7 +445,7 @@ export default function NewFreight() {
               options={bodyworks}
               getOptionLabel={(option) => option.bodywork}
               renderInput={(params) => (
-                <TextField required {...params} label="Tipo de Carroceria" />
+                <TextField required {...params} label="Seguimento Culinário" />
               )}
             />
             <Divider textAlign="left" className="!mt-8">
@@ -574,7 +574,7 @@ export default function NewFreight() {
               />
             </div>
             <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Foto do frete</p>
+              <p className="text-sm font-semibold opacity-50">Foto do Ponto Gastronomico</p>
             </Divider>
             <div className="grid grid-cols-2 gap-5">
               {truckImageOne ? (
@@ -737,7 +737,7 @@ export default function NewFreight() {
             <div className="flex items-center justify-between">
               <Button color="info">Cancelar</Button>
               <Button onClick={postFreitch} variant="contained" color="inherit">
-                Publicar frete
+                Publicar Ponto Gastronomico
               </Button>
             </div>
           </div>
@@ -756,13 +756,13 @@ export default function NewFreight() {
             hateFreight={0.0}
             hateAvatar={[]}            
             imageTruckOne={
-              truckImageOne ? truckImageOne : faker.image.transport()
+              truckImageOne ? truckImageOne : "https://www.visitpantanal.com/media/cache/67/80/6780acb396f4e32084bf24a9bed842c5.jpg"
             }
             imageTruckTwo={
-              truckImageTwo ? truckImageTwo : faker.image.transport()
+              truckImageTwo ? truckImageTwo : "https://www.visitpantanal.com/media/cache/67/80/6780acb396f4e32084bf24a9bed842c5.jpg"
             }
             typeWorkBody={1}
-            description={description ? description : "Descrição do seu frete"}
+            description={description ? description : "Descrição do seu Ponto Gastronomico"}
             phone_number_one={
               phoneOne ? phoneOne.replace(/[\(\)\s\-]/g, "") : ""
             }
@@ -775,10 +775,10 @@ export default function NewFreight() {
         </div>
       </div>
       <Dialog open={isDialogPost} onClose={closeDialogPost}>
-        <DialogTitle>Seu frete será publicado em breve!</DialogTitle>
+        <DialogTitle>Seu Ponto Gastronomico será publicado em breve!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Aguarde um dia para terminar nossa análise do frete
+            Aguarde um dia para terminar nossa análise do seu Ponto Gastronomico
           </DialogContentText>
         </DialogContent>
         <DialogActions>

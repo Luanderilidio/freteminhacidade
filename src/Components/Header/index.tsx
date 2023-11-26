@@ -15,6 +15,7 @@ import { Dialog, IconButton } from "@mui/material";
 import {
   CaretDown,
   CaretUp,
+  Fish,
   Image,
   List,
   MagnifyingGlass,
@@ -65,7 +66,7 @@ export default function Header() {
           <input
             onClick={() => setOpenDropDownCity(true)}
             onBlur={() => setOpenDropDownCity(false)}
-            placeholder="Digite a cidade"
+            placeholder="Tipo de Turismo"
             className="w-full focus:outline-none font-semibold "
           />
           {openDropDownCity && (
@@ -87,7 +88,7 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Comidas Caseiras</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
@@ -98,7 +99,7 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Bebidas Típicas</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
@@ -109,7 +110,7 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Feiras Livres</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
@@ -120,7 +121,7 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Restaurantes Tradicionais</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
@@ -133,10 +134,10 @@ export default function Header() {
         </div>
         <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-y-2 border-r-2 border-custon-black  rounded-r-full py-2 px-3 shadow-sm hover:shadow-md ">
           <div className="bg-custon-black p-2 rounded-full">
-            <Truck className="text-white" size={15} weight="bold" />
+            <Fish className="text-white" size={15} weight="bold" />
           </div>
           <input
-            placeholder="Tamanho do frete"
+            placeholder="Mais Visitados"
             onClick={() => setOpenDropDownSize(true)}
             onBlur={() => setOpenDropDownSize(false)}
             className="w-full focus:outline-none font-semibold "
@@ -160,7 +161,7 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Estabelecimento 1</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
@@ -171,33 +172,33 @@ export default function Header() {
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Estabelecimento 2</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
+                    +65
                   </p>
                 </div>
               </div>
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Estabelecimento 3</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
+                    +14{" "}
                   </p>
                 </div>
               </div>
               <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
                 <div className="flex justify-start items-center  gap-2">
                   <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres - MT</p>
+                  <p className="text-sm font-semibold ">Estabelecimento 4</p>
                 </div>
                 <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                   <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
+                    +33
                   </p>
                 </div>
               </div>
@@ -232,7 +233,7 @@ export default function Header() {
             <p className="text-center font-bold text-2xl">
               Aplique o filtro e encontre os melhores{" "}
               <span className="text-white bg-custon-black px-1 rounded-md mb-5">
-                Fretes
+                Pontos Gastronomicos
               </span>{" "}
               da sua região
             </p>
@@ -318,7 +319,7 @@ export default function Header() {
                 <Truck className="text-white" size={15} weight="bold" />
               </div>
               <input
-                placeholder="Tamanho do frete"
+                placeholder="Tipo de Ponto Gastronomico"
                 onClick={() => setOpenDropDownSize(true)}
                 onBlur={() => setOpenDropDownSize(false)}
                 className="w-full focus:outline-none font-semibold "
@@ -411,9 +412,9 @@ export default function Header() {
       </div>
       <div className="sm:col-span-3 hidden sm:block mr-3">
         <button className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-full border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
-          <p>Anuncie seu frete no Site</p>
+          <p>Anuncie seu Ponto</p>
           <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-            <p className="text-[#005A09] leading-none">Free</p>
+            <p className="text-[#005A09] leading-none">Agora</p>
             <img className="absolute -bottom-1 right-0" src={Star} />
             <img className="absolute -top-1 left-0" src={Star} />
           </div>
@@ -471,7 +472,9 @@ export default function Header() {
             >
               <div className="flex justify-start items-center  gap-2">
                 <Truck size={20} weight="regular" />
-                <p className="text-sm font-normal ">Anuncie seu frete</p>
+                <p className="text-sm font-normal ">
+                  Anuncie seu Ponto Gastronomico
+                </p>
               </div>
               <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
                 <p className="text-[#005A09] leading-none text-xs font-bold">

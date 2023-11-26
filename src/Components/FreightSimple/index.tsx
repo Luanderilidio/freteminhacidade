@@ -37,7 +37,7 @@ export default function FreightSimple() {
             <div className="flex justify-start gap-1 mt-[2px]">
               <ChatDots className="opacity-70" weight="fill" size={12} />
               <p className="text-left text-xs sm:text-[.6rem] font-medium opacity-70">
-                Faço frete na cidade e região
+                 Ponto Gastronomico na cidade e região
               </p>
             </div>
           </div>

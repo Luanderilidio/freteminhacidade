@@ -45,7 +45,7 @@ export default function Footer() {
         <div className="col-span-3 flex flex-col items-start justify-start gap-1">
           <button className="font-semibold ">Oportunidade</button>
           <button className="text-sm hover:underline mt-1">
-            Anuncie seu frete no Site
+            Anuncie seu Ponto Gastronomico no Site
           </button>
           <button className="text-sm hover:underline">
             Fórum da comunidade
@@ -69,7 +69,7 @@ export default function Footer() {
           </button>
         </div>
         <div className="col-span-9 flex gap-3 mt-3 text-xs">
-          <p>© 2023 Freteminhacidade, Inc.</p>
+          <p>© 2023 CaldeirãoDoPantanal, Inc.</p>
           <p>·</p>
           <p className="hover:underline">Privacidade</p>
           <p>·</p>
@@ -145,7 +145,7 @@ export default function Footer() {
         </AccordionSummary>
         <AccordionDetails className="flex flex-col items-start justify-start gap-3">
           <button className="text-sm hover:underline mt-1">
-            Anuncie seu frete no Site
+            Anuncie seu Ponto Gastronomico no Site
           </button>
           <button className="text-sm hover:underline">
             Fórum da comunidade

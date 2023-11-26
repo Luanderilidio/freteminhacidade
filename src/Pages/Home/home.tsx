@@ -43,17 +43,17 @@ export default function Home() {
   return (
     <Container padding={true}>
       <div className="col-span-12 place-self-center cursor-pointer">
-        <div className="flex items-center justify-center gap-3 text-md sm:text-3xl font-normal border-3 sm:border-5 border-black py-5 px-3 sm:px-8 rounded-full ">
+        <div className="flex flex-col sm:flex-row  items-center justify-center gap-3 text-md sm:text-3xl font-normal border-3 sm:border-5 border-black py-5 px-3 sm:px-8 rounded-full ">
           <MagnifyingGlass className="hidden sm:block" weight="bold" />
-          123 Fretes encontrados em
+          45 Pontos Gastronomicos encontrados em
           <span className="italic font-bold">Cáceres - MT</span>
           <MapPin className="hidden sm:block" weight="bold" />
         </div>
       </div>
-      <div className="col-span-12  rounded-2xl">
+      <div className="hidden col-span-12  rounded-2xl">
         <div className="flex items-center justify-between gap-2 mb-5">
           <p className="whitespace-nowrap font-semibold text-xs opacity-60">
-            Melhores fretes da sua cidade e região
+            Melhores Pontos Gastronomicos da sua cidade e região
           </p>
           <div className="w-full h-[1px] bg-gray-500/5" />
           <div className="flex gap-2">
@@ -89,7 +89,7 @@ export default function Home() {
 
       <div className="col-span-12 flex items-center justify-between gap-2">
         <p className="whitespace-nowrap font-semibold text-xs opacity-60">
-          Encontre o frete da sua preferência
+          Encontre o Pontos Gastronomicos da sua preferência
         </p>
         <div className="w-full h-[1px] bg-gray-500/5" />
 

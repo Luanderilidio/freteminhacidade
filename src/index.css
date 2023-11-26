@@ -19,3 +19,6 @@
   -webkit-text-size-adjust: 100%;
 } */
 
+.hypertop {
+  z-index: 99999;
+}

@@ -288,7 +288,7 @@ function Freight2({
             Recomendado
           </p>
         )}
-        {typeWorkBody === 1 && (
+        {typeWorkBody === 0 && (
           <img className="w-14 bottom-3 left-3 z-50 absolute" src={Size_3} />
         )}
       </div>
@@ -298,7 +298,7 @@ function Freight2({
           <div className="relative h-fit">
             <img
               onClick={() => {
-                navigate(`/details/${id}`)
+                navigate(`/details/`)
                 patchSite()
               }}
               className="!w-12 !h-12 object-cover rounded-full border-3 border-custon-black "

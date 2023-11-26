@@ -168,7 +168,7 @@ function Freight(props: any): JSX.Element {
             >
               <ChatDots className="opacity-70" weight="fill" size={12} />
               <p className="text-xs font-medium opacity-70">
-                Faço frete na cidade e região
+                Ponto Gastronomico na cidade e região
               </p>
             </div>
           </div>
