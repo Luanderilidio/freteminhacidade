@@ -152,7 +152,7 @@ export default function PersistentDrawerLeft() {
             <ListIcon size={25} weight="bold" />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Painel do Ponto Gastronomico
+            Painel do Freteiro
           </Typography>
           <IconButton onClick={clickOpenMenu}>
             <Avatar src={faker.image.avatar()} />
@@ -220,7 +220,7 @@ export default function PersistentDrawerLeft() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <p className="text-sm font-bold opacity-90">Novo Ponto</p>
+                  <p className="text-sm font-bold opacity-90">Novo Frete</p>
                 }
               />
             </ListItemButton>
@@ -241,7 +241,7 @@ export default function PersistentDrawerLeft() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <p className="text-sm font-bold opacity-90">Meus Pontos</p>
+                  <p className="text-sm font-bold opacity-90">Meus Fretes</p>
                 }
               />
             </ListItemButton>

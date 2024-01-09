@@ -6,47 +6,25 @@ module.exports = function () {
 
   var users = []
 
-  // var typesWorkBody = [
-  //   { id: uuidv4(), bodywork: "Baú" },
-  //   { id: uuidv4(), bodywork: "Munck" },
-  //   { id: uuidv4(), bodywork: "Grade baixa – Carga seca" },
-  //   { id: uuidv4(), bodywork: "Grade alta – Graneleira" },
-  //   { id: uuidv4(), bodywork: "Caçamba" },
-  //   { id: uuidv4(), bodywork: "Prancha" },
-  //   { id: uuidv4(), bodywork: "Plataforma" },
-  //   { id: uuidv4(), bodywork: "Carroceria fechada" },
-  //   { id: uuidv4(), bodywork: "Baú frigorífico" },
-  //   { id: uuidv4(), bodywork: "Sider" },
-  //   { id: uuidv4(), bodywork: "Carroceria especial" },
-  //   { id: uuidv4(), bodywork: "Caçamba basculante" },
-  //   { id: uuidv4(), bodywork: "Canavieira" },
-  //   { id: uuidv4(), bodywork: "Florestal" },
-  //   { id: uuidv4(), bodywork: "Boiadeira" },
-  //   { id: uuidv4(), bodywork: "Tanque" },
-  //   { id: uuidv4(), bodywork: "Poliguindaste" },
-  // ];
-
-
   var typesWorkBody = [
-    { id: uuidv4(), bodywork: "Bebida Tipica" },
-    { id: uuidv4(), bodywork: "Comida Caseira" },
-    { id: uuidv4(), bodywork: "Restaurante Tradicional" },
-    { id: uuidv4(), bodywork: "Comida do Campo" },
-    // { id: uuidv4(), bodywork: "Caçamba" },
-    // { id: uuidv4(), bodywork: "Prancha" },
-    // { id: uuidv4(), bodywork: "Plataforma" },
-    // { id: uuidv4(), bodywork: "Carroceria fechada" },
-    // { id: uuidv4(), bodywork: "Baú frigorífico" },
-    // { id: uuidv4(), bodywork: "Sider" },
-    // { id: uuidv4(), bodywork: "Carroceria especial" },
-    // { id: uuidv4(), bodywork: "Caçamba basculante" },
-    // { id: uuidv4(), bodywork: "Canavieira" },
-    // { id: uuidv4(), bodywork: "Florestal" },
-    // { id: uuidv4(), bodywork: "Boiadeira" },
-    // { id: uuidv4(), bodywork: "Tanque" },
-    // { id: uuidv4(), bodywork: "Poliguindaste" },
+    { id: uuidv4(), bodywork: "Baú" },
+    { id: uuidv4(), bodywork: "Munck" },
+    { id: uuidv4(), bodywork: "Grade baixa – Carga seca" },
+    { id: uuidv4(), bodywork: "Grade alta – Graneleira" },
+    { id: uuidv4(), bodywork: "Caçamba" },
+    { id: uuidv4(), bodywork: "Prancha" },
+    { id: uuidv4(), bodywork: "Plataforma" },
+    { id: uuidv4(), bodywork: "Carroceria fechada" },
+    { id: uuidv4(), bodywork: "Baú frigorífico" },
+    { id: uuidv4(), bodywork: "Sider" },
+    { id: uuidv4(), bodywork: "Carroceria especial" },
+    { id: uuidv4(), bodywork: "Caçamba basculante" },
+    { id: uuidv4(), bodywork: "Canavieira" },
+    { id: uuidv4(), bodywork: "Florestal" },
+    { id: uuidv4(), bodywork: "Boiadeira" },
+    { id: uuidv4(), bodywork: "Tanque" },
+    { id: uuidv4(), bodywork: "Poliguindaste" },
   ];
-
   
 
   return {

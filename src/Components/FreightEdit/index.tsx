@@ -276,12 +276,15 @@ export default function FreightEdit({
             </p>
             <div className="flex items-center justify-start gap-1">
               <Phone size={15} weight="fill" />
+              <Link target="_blank" rel="noopener" color="inherit" underline="hover" href={`https://api.whatsapp.com/send?phone=55${phone_number_one}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}>
+
               <p className="text-[.9rem] font-semibold opacity-80 leading-none">
                 {phone_number_one.replace(
                   /^(\d{2})(\d)(\d{4})(\d{4})$/,
                   "($1) $2 $3 - $4"
                 )}
               </p>
+              </Link>
             </div>
           </div>
           {phone_number_two && (
@@ -291,20 +294,23 @@ export default function FreightEdit({
               </p>
               <div className="flex items-center justify-start gap-1">
                 <Phone size={15} weight="fill" />
+                <Link target="_blank" rel="noopener" color="inherit" underline="hover" href={`https://api.whatsapp.com/send?phone=55${phone_number_two}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}>
+
                 <p className="text-[.9rem] font-semibold opacity-80 leading-none">
                   {phone_number_two.replace(
                     /^(\d{2})(\d)(\d{4})(\d{4})$/,
                     "($1) $2 $3 - $4"
                   )}
                 </p>
+                </Link>
               </div>
             </div>
           )}
         </div>
       </div>
-      <div className="col-span-2 ">
+      <div className=" col-span-2 ">
         <Divider className="!mb-2">
-          <p className="text-xs font-semibold opacity-70 ">Ponto Gastronomico</p>
+          <p className="text-xs font-semibold opacity-70 ">Frete</p>
         </Divider>
         <div>
           <div className=" rounded-lg drop-shadow-xl relative ">
@@ -361,7 +367,7 @@ export default function FreightEdit({
               <TrendUp size={10} className="text-green-500" weight="bold" />
             </div>
             <div className="flex items-center justify-between">
-              <Chat fontSize="small" className="text-custon-black" />
+              <Chat className="text-custon-black" />
               <AvatarGroup>
                 {hateAvatar.map((e) => (
                   <Avatar
@@ -376,17 +382,20 @@ export default function FreightEdit({
                 +{comments}
               </p>
             </div>
-            <div className="flex items-center gap-1">
-              <InstagramLogo
-                size={15}
-                className="text-pink-500"
-                weight="bold"
-              />{" "}
-              <p className="text-xs">
-                <span className="font-semibold">{hateInstagram}</span> Redirect
-              </p>
-              <TrendUp size={10} className="text-green-500" weight="bold" />
-            </div>
+            <Link target="_blank" rel="noopener" href='https://www.instagram.com/luanderilidio/'>
+              <div className="flex items-center gap-1">
+                <InstagramLogo
+                  size={15}
+                  className="text-pink-500"
+                  weight="bold"
+                />
+                <p className="text-xs">
+                  <span className="font-semibold text-pink-500">{hateFacebook}</span> Instagram
+                </p>
+                <TrendUp size={10} className="text-green-500" weight="bold" />
+              </div>
+            </Link>
+           
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1">
@@ -418,7 +427,7 @@ export default function FreightEdit({
                 {hateFreight}
               </p>
             </div>
-            <Link href={instagram}>
+            <Link target="_blank" rel="noopener" href='https://www.facebook.com/profile.php?id=100008626726422'>
               <div className="flex items-center gap-1">
                 <FacebookLogo
                   size={15}
@@ -426,7 +435,7 @@ export default function FreightEdit({
                   weight="bold"
                 />
                 <p className="text-xs">
-                  <span className="font-semibold">{hateFacebook}</span> Redirect
+                  <span className="font-semibold">{hateFacebook}</span> Facebook
                 </p>
                 <TrendUp size={10} className="text-green-500" weight="bold" />
               </div>
@@ -490,8 +499,8 @@ export default function FreightEdit({
       >
         <DialogTitle>
           {isStatus
-            ? "Tem certeza em desativar o Ponto Gastronomico?"
-            : "Tornar visível seu Ponto Gastronomico"}
+            ? "Tem certeza em desativar esse Frete?"
+            : "Tornar visível seu Frete"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -499,13 +508,13 @@ export default function FreightEdit({
               <>
                 Você clicou em{" "}
                 <span className="font-bold text-red-600">desativar</span> seu
-                Ponto Gastronomico. Ele será oculto para seus clientes na plataforma. Deseja
+                Frete. Ele será oculto para seus clientes na plataforma. Deseja
                 continuar?
               </>
             ) : (
               <>
                 Você clicou em <span className="font-bold">ativar</span> seu
-                Ponto Gastronomico. Ele a partir de agora será visível para seus clientes na
+                Frete. Ele a partir de agora será visível para seus clientes na
                 plataforma.
               </>
             )}
@@ -527,13 +536,13 @@ export default function FreightEdit({
             onClick={handleClickStatus}
             autoFocus
           >
-            {isStatus ? "Desativar meu Ponto Gastronomico" : "Ativar meu Ponto Gastronomico"}
+            {isStatus ? "Desativar meu Frete" : "Ativar meu Frete"}
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={isTrashDialog} onClose={toggleTrashDialog}>
-        <DialogTitle>Tem certeza que deseja apagar seu Ponto Gastronomico?</DialogTitle>
+        <DialogTitle>Tem certeza que deseja apagar seu Frete?</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Essa ação poderá ser irreversível.
@@ -547,7 +556,7 @@ export default function FreightEdit({
             onClick={deleteFreight}
             autoFocus
           >
-            Detelar
+            Apagar
           </Button>
         </DialogActions>
       </Dialog>

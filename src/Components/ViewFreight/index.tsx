@@ -48,13 +48,13 @@ export default function ViewFreight() {
           <button className="flex items-center justify-start gap-1">
             <FolderSimpleUser size={16} weight="bold" />
 
-            <p className="text-xs font-semibold hover:underline">Meus Pontos Gastronomicos</p>
+            <p className="text-xs font-semibold hover:underline">Meus Fretes</p>
           </button>
         </Breadcrumbs>
       </div>
       <div className="col-span-12 flex justify-between">
         <p className="font-semibold text-3xl opacity-80 leading-none">
-          Meus Pontos Gastronomicos{" "}
+          Visualizar Fretes{" "}
         </p>
         <p className="font-semibold text-3xl border-2 px-5 py-3 rounded-xl leading-none">
           {data ? data.length : 0}
