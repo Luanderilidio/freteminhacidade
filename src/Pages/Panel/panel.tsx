@@ -122,7 +122,7 @@ export default function PersistentDrawerLeft() {
       }
     );
 
-    console.log("lenght",data.length)
+    // console.log("lenght",data.length)
 
   function PageToggle(page: number) {
     switch (page) {

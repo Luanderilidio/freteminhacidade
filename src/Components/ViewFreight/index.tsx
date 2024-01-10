@@ -7,18 +7,24 @@ import { FolderSimpleUser, PresentationChart } from "phosphor-react";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Freight2 from "../Freight2";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useAuth } from "../../context/userLogin";
 import FreightEdit from "../FreightEdit";
 
 export default function ViewFreight() {
   const { user } = useAuth();
+  const [dataFreight, setDataFreight] = useState([]);
   const { data, isLoading, isError, error } = useQuery(
     "freights",
     async () => {
-      return axios
-        .get(`http://localhost:3000/estudants?id_user=${user?.id}`)
-        .then((response) => response.data);
+      const response = await axios.get(
+        `http://localhost:3000/estudants?id_user=${user?.id}`
+      );
+      setDataFreight(response.data);
+      // return response.data;
+      // return axios
+      //   .get(`http://localhost:3000/estudants?id_user=${user?.id}`)
+      //   .then((response) => response.data);
     },
     {
       retry: 3,
@@ -26,6 +32,12 @@ export default function ViewFreight() {
     }
   );
   const navigate = useNavigate();
+
+  const deleteDataFreightItem = (id: string) => {
+    // Filtra a lista removendo o objeto com o id correspondente
+    const newDataFreight = dataFreight.filter((item: any) => item.id !== id);
+    setDataFreight(newDataFreight);
+  };
 
   return (
     <div className="grid grid-cols-12 gap-5">
@@ -56,12 +68,12 @@ export default function ViewFreight() {
         <p className="font-semibold text-3xl opacity-80 leading-none">
           Visualizar Fretes{" "}
         </p>
-        <p className="font-semibold text-3xl border-2 px-5 py-3 rounded-xl leading-none">
-          {data ? data.length : 0}
-        </p>
+        {/* <p className="font-semibold text-3xl border-2 px-5 py-3 rounded-xl leading-none">
+          {dataFreight ? dataFreight.length : 0}
+        </p> */}
       </div>
       <Suspense fallback={<p>Loading</p>}>
-        {data?.map((e: any, index: number) => (
+        {dataFreight?.map((e: any, index: number) => (
           <FreightEdit
             key={e.id}
             id={e.id}
@@ -88,6 +100,7 @@ export default function ViewFreight() {
             hateSite={e.hateSite}
             hateFreight={e.hateFreight}
             save_as={e.save_as}
+            onDelete={deleteDataFreightItem}
           />
         ))}
       </Suspense>

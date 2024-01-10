@@ -27,6 +27,7 @@ import {
   TrendUp,
   User,
   GlobeSimple,
+  X,
 } from "phosphor-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -61,6 +62,10 @@ import axios from "axios";
 import { useBoolean } from "react-hooks-shareable";
 import { Transition } from "../../utils/transition";
 
+interface FreightPropsEdit extends FreightProps {
+  onDelete: (id: string) => void;
+}
+
 export default function FreightEdit({
   id,
   avatar,
@@ -85,11 +90,19 @@ export default function FreightEdit({
   instagram,
   exclusive,
   status,
-}: FreightProps) {
+  onDelete,
+}: FreightPropsEdit) {
   const [anchorStatus, setAnchorStatus] = useState<null | HTMLElement>(null);
 
   const [isExclusive, openExclusive, closeExclusive, toggleExclusive] =
     useBoolean(exclusive);
+
+  const [
+    isExclusiveDialog,
+    openExclusiveDialog,
+    closeExclusiveDialog,
+    toggleExclusiveDialog,
+  ] = useBoolean(false);
 
   const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(status);
 
@@ -126,7 +139,7 @@ export default function FreightEdit({
       }
     };
     fecthData();
-    toggleTrashDialog()
+    toggleExclusiveDialog();
   };
 
   const deleteFreight = () => {
@@ -141,7 +154,8 @@ export default function FreightEdit({
       }
     };
     fecthData();
-    closeTrashDialog()
+    closeTrashDialog();
+    DeleteFreightView()
   };
 
   const patchStatus = () => {
@@ -167,8 +181,11 @@ export default function FreightEdit({
 
   const handleClickStatus = () => {
     patchStatus();
-
     toggleStatus();
+  };
+
+  const DeleteFreightView = () => {
+    onDelete(id);
   };
 
   return (
@@ -276,14 +293,19 @@ export default function FreightEdit({
             </p>
             <div className="flex items-center justify-start gap-1">
               <Phone size={15} weight="fill" />
-              <Link target="_blank" rel="noopener" color="inherit" underline="hover" href={`https://api.whatsapp.com/send?phone=55${phone_number_one}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}>
-
-              <p className="text-[.9rem] font-semibold opacity-80 leading-none">
-                {phone_number_one.replace(
-                  /^(\d{2})(\d)(\d{4})(\d{4})$/,
-                  "($1) $2 $3 - $4"
-                )}
-              </p>
+              <Link
+                target="_blank"
+                rel="noopener"
+                color="inherit"
+                underline="hover"
+                href={`https://api.whatsapp.com/send?phone=55${phone_number_one}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}
+              >
+                <p className="text-[.9rem] font-semibold opacity-80 leading-none">
+                  {phone_number_one.replace(
+                    /^(\d{2})(\d)(\d{4})(\d{4})$/,
+                    "($1) $2 $3 - $4"
+                  )}
+                </p>
               </Link>
             </div>
           </div>
@@ -294,14 +316,19 @@ export default function FreightEdit({
               </p>
               <div className="flex items-center justify-start gap-1">
                 <Phone size={15} weight="fill" />
-                <Link target="_blank" rel="noopener" color="inherit" underline="hover" href={`https://api.whatsapp.com/send?phone=55${phone_number_two}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}>
-
-                <p className="text-[.9rem] font-semibold opacity-80 leading-none">
-                  {phone_number_two.replace(
-                    /^(\d{2})(\d)(\d{4})(\d{4})$/,
-                    "($1) $2 $3 - $4"
-                  )}
-                </p>
+                <Link
+                  target="_blank"
+                  rel="noopener"
+                  color="inherit"
+                  underline="hover"
+                  href={`https://api.whatsapp.com/send?phone=55${phone_number_two}&text=Ol%C3%A1,%20quero%20fazer%20um%20frete!`}
+                >
+                  <p className="text-[.9rem] font-semibold opacity-80 leading-none">
+                    {phone_number_two.replace(
+                      /^(\d{2})(\d)(\d{4})(\d{4})$/,
+                      "($1) $2 $3 - $4"
+                    )}
+                  </p>
                 </Link>
               </div>
             </div>
@@ -382,7 +409,11 @@ export default function FreightEdit({
                 +{comments}
               </p>
             </div>
-            <Link target="_blank" rel="noopener" href='https://www.instagram.com/luanderilidio/'>
+            <Link
+              target="_blank"
+              rel="noopener"
+              href="https://www.instagram.com/luanderilidio/"
+            >
               <div className="flex items-center gap-1">
                 <InstagramLogo
                   size={15}
@@ -390,12 +421,14 @@ export default function FreightEdit({
                   weight="bold"
                 />
                 <p className="text-xs">
-                  <span className="font-semibold text-pink-500">{hateFacebook}</span> Instagram
+                  <span className="font-semibold text-pink-500">
+                    {hateFacebook}
+                  </span>{" "}
+                  Instagram
                 </p>
                 <TrendUp size={10} className="text-green-500" weight="bold" />
               </div>
             </Link>
-           
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1">
@@ -427,7 +460,11 @@ export default function FreightEdit({
                 {hateFreight}
               </p>
             </div>
-            <Link target="_blank" rel="noopener" href='https://www.facebook.com/profile.php?id=100008626726422'>
+            <Link
+              target="_blank"
+              rel="noopener"
+              href="https://www.facebook.com/profile.php?id=100008626726422"
+            >
               <div className="flex items-center gap-1">
                 <FacebookLogo
                   size={15}
@@ -460,7 +497,7 @@ export default function FreightEdit({
             {isExclusive ? (
               <Button
                 fullWidth
-                onClick={handleClickExclusive}
+                onClick={openExclusiveDialog}
                 size="small"
                 color="success"
                 variant="contained"
@@ -472,7 +509,7 @@ export default function FreightEdit({
               <Button
                 fullWidth
                 size="small"
-                onClick={handleClickExclusive}
+                onClick={openExclusiveDialog}
                 color="warning"
                 variant="contained"
                 endIcon={<InsightsRounded />}
@@ -536,7 +573,7 @@ export default function FreightEdit({
             onClick={handleClickStatus}
             autoFocus
           >
-            {isStatus ? "Desativar meu Frete" : "Ativar meu Frete"}
+            {isStatus ? "Ocultar Frete" : "Ativar meu Frete"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -555,8 +592,77 @@ export default function FreightEdit({
             variant="contained"
             onClick={deleteFreight}
             autoFocus
+            endIcon={<DeleteForeverOutlined />}
           >
             Apagar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={isExclusiveDialog} onClose={toggleExclusive}>
+        <DialogTitle>
+          {isExclusive
+            ? "Tem certeza que quer deixar de ser Exclusivo?"
+            : "Tem certeza que deseja tornar exclusivo?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {isExclusive ? (
+              <>
+                Você clicou para deixar de ser{" "}
+                <span className="font-bold text-red-600"> exclusivo</span>. Seu
+                Frete deixará de ficar no topo das pesquisas. Deseja mesmo
+                continuar?
+              </>
+            ) : (
+              <>
+                Você clicou em{" "}
+                <span className="font-bold text-green-600">
+                  Tornar Exclusivo
+                </span>
+                . Seu frete aparecerá sempre no topo das pesquisas.
+              </>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {/* <Button
+            variant="outlined"
+            size="small"
+            startIcon={<X />}
+            onClick={toggleExclusiveDialog}
+          >
+            fechar
+          </Button>
+          <Button
+            size="small"
+            onClick={handleClickExclusive}
+            color="success"
+            variant="contained"
+            endIcon={<InsightsRounded />}
+          >
+            <p className="!font-bold normal-case">Tornar Exclusivo</p>
+          </Button> */}
+          <Button
+            size="small"
+            endIcon={
+              isExclusive ? <TaskAltOutlined /> : <VisibilityOffOutlined />
+            }
+            variant="outlined"
+            color={isExclusive ? "success" : "error"}
+            onClick={closeExclusiveDialog}
+          >
+            {isExclusive ? "Continuar Exclusivo" : "Continuar Normal"}
+          </Button>
+          <Button
+            size="small"
+            endIcon={isExclusive ? <X /> : <TaskAltOutlined />}
+            variant="contained"
+            color={isExclusive ? "error" : "success"}
+            onClick={handleClickExclusive}
+            autoFocus
+          >
+            {isExclusive ? "Deixar de ser exclusivo" : "Tornar Exclusivo"}
           </Button>
         </DialogActions>
       </Dialog>

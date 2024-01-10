@@ -783,7 +783,7 @@ export default function NewFreight() {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDialogPost}>OK</Button>
-          <Button color="success" onClick={closeDialogPost} autoFocus>
+          <Button color="success" variant="contained" onClick={closeDialogPost} autoFocus>
             Esperar
           </Button>
         </DialogActions>
