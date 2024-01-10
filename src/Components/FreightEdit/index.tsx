@@ -3,6 +3,8 @@ import {
   Avatar,
   AvatarGroup,
   Button,
+  CardContent,
+  Collapse,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,7 +17,9 @@ import {
   Menu,
   MenuItem,
   Rating,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import {
   Chat,
@@ -28,12 +32,12 @@ import {
   User,
   GlobeSimple,
   X,
+  Image,
 } from "phosphor-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 
 import {
-  WhatsApp,
   FavoriteBorderOutlined,
   ShareOutlined,
   DriveFileRenameOutline,
@@ -46,7 +50,12 @@ import {
   AccountCircleOutlined,
   StarBorderOutlined,
   EmojiEvents,
+  SaveAsOutlined,
+  Save,
+  Close,
 } from "@mui/icons-material";
+import { WhatsApp } from "@mui/icons-material";
+
 import { useState } from "react";
 
 import "swiper/css";
@@ -60,7 +69,7 @@ import Verifiqued from "../../assets/verifiqued.svg";
 import { FreightProps } from "../Freight2";
 import axios from "axios";
 import { useBoolean } from "react-hooks-shareable";
-import { Transition } from "../../utils/transition";
+import { Transition, VisuallyHiddenInput } from "../../utils/transition";
 
 interface FreightPropsEdit extends FreightProps {
   onDelete: (id: string) => void;
@@ -103,6 +112,8 @@ export default function FreightEdit({
     closeExclusiveDialog,
     toggleExclusiveDialog,
   ] = useBoolean(false);
+
+  const [isEdit, openEdit, closeEdit, toggleEdit] = useBoolean(false);
 
   const [isStatus, openStatus, closeStatus, toggleStatus] = useBoolean(status);
 
@@ -155,7 +166,7 @@ export default function FreightEdit({
     };
     fecthData();
     closeTrashDialog();
-    DeleteFreightView()
+    DeleteFreightView();
   };
 
   const patchStatus = () => {
@@ -292,7 +303,7 @@ export default function FreightEdit({
               Principal
             </p>
             <div className="flex items-center justify-start gap-1">
-              <Phone size={15} weight="fill" />
+              <WhatsApp color="success" />
               <Link
                 target="_blank"
                 rel="noopener"
@@ -315,7 +326,7 @@ export default function FreightEdit({
                 Secundário
               </p>
               <div className="flex items-center justify-start gap-1">
-                <Phone size={15} weight="fill" />
+              <WhatsApp color="success" />
                 <Link
                   target="_blank"
                   rel="noopener"
@@ -488,7 +499,7 @@ export default function FreightEdit({
           <div>
             <div className="flex justify-evenly">
               <IconButton color="secondary">
-                <DriveFileRenameOutline />
+                <DriveFileRenameOutline onClick={toggleEdit} />
               </IconButton>
               <IconButton onClick={openTrashDialog} color="error">
                 <DeleteForeverOutlined />
@@ -666,6 +677,119 @@ export default function FreightEdit({
           </Button>
         </DialogActions>
       </Dialog>
+      <Collapse
+        className="col-span-12 "
+        in={isEdit}
+        timeout="auto"
+        unmountOnExit
+      >
+        <CardContent className="grid grid-cols-12 gap-3">
+          <div className="col-span-12">
+            <p className="text-xl font-bold">Editar Frete</p>
+            <Typography paragraph>
+              Heat 1/2 cup of the broth in a pot until simmering, add saffron
+              and set aside for 10 minutes.
+            </Typography>
+          </div>
+          <div className="col-span-4">
+            <Stack spacing={2}>
+              <TextField
+                // value={address?.localidade}
+                className="col-span-3"
+                label="Nome"
+                size="small"
+              />
+              <TextField
+                // value={address?.localidade}
+                className="col-span-3"
+                label="CEP"
+                size="small"
+              />
+              <TextField
+                // value={address?.localidade}
+                className="col-span-3"
+                label="Descrição"
+                size="small"
+              />
+            </Stack>
+          </div>
+          <div className="col-span-4">
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="outlined"
+                component="label"
+                className="w-full h-20 flex flex-col "
+              >
+                <VisuallyHiddenInput
+                  type="file"
+                  accept="image/*"
+                  // onChange={handleImageChangeTruckOne}
+                  id="image-upload"
+                />
+                <Image size={25} weight="bold" />
+                <p className="text-xs font-semibold">Upload </p>
+              </Button>
+              <Button
+                variant="outlined"
+                component="label"
+                className="w-full h-20 flex flex-col "
+              >
+                <VisuallyHiddenInput
+                  type="file"
+                  accept="image/*"
+                  // onChange={handleImageChangeTruckOne}
+                  id="image-upload"
+                />
+                <Image size={25} weight="bold" />
+                <p className="text-xs font-semibold">Upload </p>
+              </Button>
+            </Stack>
+          </div>
+          <div className="col-span-4">
+            <Stack spacing={2}>
+              <TextField
+                // value={address?.localidade}
+                className="col-span-3"
+                label="Whatsapp 1"
+                size="small"
+              />
+              <TextField
+                // value={address?.localidade}
+                className="col-span-3"
+                label="Whatsapp 2"
+                size="small"
+              />
+              <Stack direction="row" spacing={2}>
+                <TextField
+                  // value={address?.localidade}
+                  className="col-span-3"
+                  label="Instagram"
+                  size="small"
+                />
+                <TextField
+                  // value={address?.localidade}
+                  className="col-span-3"
+                  label="Facebook"
+                  size="small"
+                />
+              </Stack>
+            </Stack>
+          </div>
+          <div className="col-span-12 flex justify-end gap-3 mt-2">
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={toggleEdit}
+              startIcon={<Close />}
+            >
+              Fechar
+            </Button>
+            <Button variant="contained" endIcon={<Save />}>
+              Salvar
+            </Button>
+          </div>
+        </CardContent>
+      </Collapse>
     </div>
   );
 }

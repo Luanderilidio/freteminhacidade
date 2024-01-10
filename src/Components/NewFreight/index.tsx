@@ -17,7 +17,6 @@ import {
   TextField,
 } from "@mui/material";
 
-import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 
 import {
@@ -47,6 +46,7 @@ import axios from "axios";
 import { useAuth } from "../../context/userLogin";
 import { useBoolean } from "react-hooks-shareable";
 import moment from "moment";
+import { VisuallyHiddenInput } from "../../utils/transition";
 
 export interface address {
   cep: string;
@@ -61,17 +61,7 @@ interface Bodywork {
   bodywork: string;
 }
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+
 
 export default function NewFreight() {
   const { user } = useAuth();
