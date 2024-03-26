@@ -1,13 +1,3 @@
-import { Avatar, Select, SelectItem } from "@nextui-org/react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-} from "@nextui-org/react";
 import Logo from "../../assets/Logos/freteminhacidade.svg";
 import Logo2 from "../../assets/Logos/logo.svg";
 import Star from "../../assets/star.png";
@@ -32,6 +22,7 @@ import { Transition } from "../../utils/transition";
 import { useBoolean } from "react-hooks-shareable";
 import SignIn from "../SignIn";
 import Login from "../Login";
+import SearchCity from "./SeachCity";
 
 export default function Header() {
   const [openDropDownCity, setOpenDropDownCity] = useState(false);
@@ -59,7 +50,8 @@ export default function Header() {
       </div>
       {/* <div className="col-span-1" /> */}
       <div className="col-span-9 sm:col-span-5 grid grid-cols-2 sm:mx-10 justify-self-center">
-        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-custon-black rounded-l-full py-2 px-3 shadow-sm hover:shadow-md ">
+        <SearchCity />
+        {/* <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-custon-black rounded-l-full py-2 px-3 shadow-sm hover:shadow-md ">
           <div className="bg-custon-black p-2 rounded-full">
             <MagnifyingGlass className="text-white" size={15} weight="bold" />
           </div>
@@ -67,8 +59,7 @@ export default function Header() {
             onClick={() => setOpenDropDownCity(true)}
             onBlur={() => setOpenDropDownCity(false)}
             placeholder="Cidade"
-            className="w-full focus:outline-none font-semibold "
-          />
+            className="w-full focus:outline-none font-semibold "/>
           {openDropDownCity && (
             <CaretDown
               size={15}
@@ -131,7 +122,7 @@ export default function Header() {
               </div>
             </div>
           )}
-        </div>
+        </div> */}
         <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-y-2 border-r-2 border-custon-black  rounded-r-full py-2 px-3 shadow-sm hover:shadow-md ">
           <div className="bg-custon-black p-2 rounded-full">
             <Truck className="text-white" size={15} weight="bold" />
