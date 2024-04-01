@@ -225,7 +225,7 @@ function Freight2({
   };
 
   return (
-    <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer">
+    <div className="col-span-3 cursor-pointer !font-Inter">
       <div className=" rounded-2xl drop-shadow-xl relative ">
         <Swiper
           onClick={() => {

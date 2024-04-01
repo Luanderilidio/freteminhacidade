@@ -40,6 +40,8 @@ import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
 import { WhatsApp } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import { useNavigate } from "react-router-dom";
 import Freight2 from "../Freight2";
 import axios from "axios";
@@ -47,6 +49,7 @@ import { useAuth } from "../../context/userLogin";
 import { useBoolean } from "react-hooks-shareable";
 import moment from "moment";
 import { VisuallyHiddenInput } from "../../utils/transition";
+import { styleSX } from "../../utils/InputStyled";
 
 export interface address {
   cep: string;
@@ -314,6 +317,7 @@ export default function NewFreight() {
               placeholder="Nome completo"
               defaultValue={user?.name}
               variant="outlined"
+              sx={styleSX}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
@@ -350,6 +354,7 @@ export default function NewFreight() {
                   required
                   {...props}
                   inputRef={innerRef}
+                  sx={styleSX}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="start">
@@ -369,6 +374,7 @@ export default function NewFreight() {
             <div className="grid grid-cols-11 gap-2">
               <TextField
                 disabled
+                sx={styleSX}
                 value={address?.localidade}
                 className="col-span-3"
                 label="Cidade"
@@ -376,6 +382,7 @@ export default function NewFreight() {
               />
               <TextField
                 disabled
+                sx={styleSX}
                 value={address?.bairro}
                 className="col-span-3"
                 label="Bairro"
@@ -383,6 +390,7 @@ export default function NewFreight() {
               />
               <TextField
                 disabled
+                sx={styleSX}
                 value={address?.logradouro}
                 className="col-span-3"
                 label="Rua"
@@ -390,6 +398,7 @@ export default function NewFreight() {
               />
               <TextField
                 disabled
+                sx={styleSX}
                 value={address?.uf}
                 className="col-span-2"
                 label="UF"
@@ -409,6 +418,7 @@ export default function NewFreight() {
               label="Descrição"
               placeholder="Ex: Faço frete para cidade e região"
               variant="outlined"
+              sx={styleSX}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
@@ -425,6 +435,7 @@ export default function NewFreight() {
             />
             <Autocomplete
               value={value}
+              sx={styleSX}
               onChange={(event, newValue) => {
                 setValue(newValue);
               }}
@@ -469,6 +480,7 @@ export default function NewFreight() {
                   render={(innerRef, props) => (
                     <TextField
                       fullWidth
+                      sx={styleSX}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start" className="flex">
@@ -542,6 +554,7 @@ export default function NewFreight() {
                 render={(innerRef, props) => (
                   <TextField
                     fullWidth
+                    sx={styleSX}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -674,6 +687,7 @@ export default function NewFreight() {
             </Divider>
             <TextField
               value={linkFacebook}
+              sx={styleSX}
               onChange={(event) => setLinkFacebook(event.target.value)}
               fullWidth
               label="Link do Facebook"
@@ -682,7 +696,7 @@ export default function NewFreight() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <img className="w-6" src={Facebook} />
+                    <FacebookIcon className="text-black" />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -700,6 +714,7 @@ export default function NewFreight() {
             />
             <TextField
               fullWidth
+              sx={styleSX}
               value={linkInstagram}
               onChange={(event) => setLinkInstagram(event.target.value)}
               label="Link do Instagram"
@@ -708,7 +723,7 @@ export default function NewFreight() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <img className="w-6" src={Instagram} />
+                    <InstagramIcon className="text-black" />
                   </InputAdornment>
                 ),
                 endAdornment: (

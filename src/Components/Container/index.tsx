@@ -65,12 +65,12 @@ const Container: React.FC<ContainerProps> = ({ children, padding }) => {
 
   return (
     <div className="grid grid-cols-12 ">
-      <div className="col-span-12 hypertop relative">
+      <div className="col-span-12 relative ">
         <Header />
       </div>
       <div
         className={`col-span-12 grid grid-cols-12 ${
-          padding && "px-4 py-4 sm:py-8 sm:px-8 mt-20 sm:mt-28 gap-8"
+          padding && "px-4 pb-10 sm:px-8 gap-8"
         } relative`}
       >
         {children}

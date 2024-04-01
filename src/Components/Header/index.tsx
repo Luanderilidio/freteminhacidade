@@ -1,14 +1,11 @@
 import Logo from "../../assets/Logos/freteminhacidade.svg";
 import Logo2 from "../../assets/Logos/logo.svg";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 import Star from "../../assets/star.png";
 import { Dialog, IconButton } from "@mui/material";
 import {
-  CaretDown,
-  CaretUp,
-  Fish,
-  Image,
   List,
-  MagnifyingGlass,
   Question,
   Truck,
   UserCircle,
@@ -23,6 +20,7 @@ import { useBoolean } from "react-hooks-shareable";
 import SignIn from "../SignIn";
 import Login from "../Login";
 import SearchCity from "./SeachCity";
+import SearchBody from "./SeachBody";
 
 export default function Header() {
   const [openDropDownCity, setOpenDropDownCity] = useState(false);
@@ -43,367 +41,20 @@ export default function Header() {
   const [isOpenDialog, onOpenDialog, onCloseDialog, toggleDialog] =
     useBoolean(false);
   return (
-    <div className="grid grid-cols-11 px-4 py-4 sm:py-6 sm:px-8 border-b-[1px] border-custon-black/10 bg-white fixed">
-      <div className="col-span-1 sm:col-span-2 self-center">
-        <img className="hidden sm:flex w-[500px]" src={Logo} />
-        <img className="flex sm:hidden " src={Logo2} />
+    <div className="grid grid-cols-12 px-4 py-4 gap-2 ">
+      <div className="col-span-2 flex items-center">
+        <img className="" src={Logo} />
       </div>
-      {/* <div className="col-span-1" /> */}
-      <div className="col-span-9 sm:col-span-5 grid grid-cols-2 sm:mx-10 justify-self-center">
+      <div className="col-span-2">
         <SearchCity />
-        {/* <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-custon-black rounded-l-full py-2 px-3 shadow-sm hover:shadow-md ">
-          <div className="bg-custon-black p-2 rounded-full">
-            <MagnifyingGlass className="text-white" size={15} weight="bold" />
-          </div>
-          <input
-            onClick={() => setOpenDropDownCity(true)}
-            onBlur={() => setOpenDropDownCity(false)}
-            placeholder="Cidade"
-            className="w-full focus:outline-none font-semibold "/>
-          {openDropDownCity && (
-            <CaretDown
-              size={15}
-              weight="bold"
-              className=" animate__animated animate__fadeIn animate__faster"
-            />
-          )}
-          {!openDropDownCity && (
-            <CaretUp
-              size={15}
-              weight="bold"
-              className=" animate__animated animate__fadeIn animate__faster"
-            />
-          )}
-          {openDropDownCity && (
-            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-custon-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster scrollbar-hide">
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Cáceres</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Sapezal</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Mirassol</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Restaurantes Tradicionais</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div> */}
-        <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-y-2 border-r-2 border-custon-black  rounded-r-full py-2 px-3 shadow-sm hover:shadow-md ">
-          <div className="bg-custon-black p-2 rounded-full">
-            <Truck className="text-white" size={15} weight="bold" />
-          </div>
-          <input
-            placeholder="Tipo de Frete"
-            onClick={() => setOpenDropDownSize(true)}
-            onBlur={() => setOpenDropDownSize(false)}
-            className="w-full focus:outline-none font-semibold "
-          />
-          {openDropDownSize && (
-            <CaretDown
-              size={15}
-              weight="bold"
-              className=" animate__animated animate__fadeIn animate__faster"
-            />
-          )}
-          {!openDropDownSize && (
-            <CaretUp
-              size={15}
-              weight="bold"
-              className=" animate__animated animate__fadeIn animate__faster"
-            />
-          )}
-          {openDropDownSize && (
-            <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-custon-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster scrollbar-hide">
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Muck</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +315
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">4x4</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +65
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">3 eixos</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +14{" "}
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                <div className="flex justify-start items-center  gap-2">
-                  <Image size={20} weight="bold" />
-                  <p className="text-sm font-semibold ">Bitren</p>
-                </div>
-                <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                  <p className="text-[#005A09] leading-none text-xs font-bold">
-                    +33
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        <button
-          onClick={onOpenDialog}
-          className="col-span-2 w-fit flex justify-evenly gap-4 px-4 py-2 sm:hidden border-2 border-custon-black rounded-full items-center"
-        >
-          <div className="flex items-center gap-2">
-            <div className="bg-custon-black p-1 rounded-full">
-              <MagnifyingGlass className="text-white" size={10} weight="bold" />
-            </div>
-            <p className="font-bold text-sm">Cáceres - MT</p>
-          </div>
-          <div className="flex items-center gap-2 ">
-            <div className="bg-custon-black p-1 rounded-full">
-              <Truck className="text-white" size={10} weight="bold" />
-            </div>
-            <p className="font-bold text-sm">Médio</p>
-          </div>
-        </button>
-
-        <Dialog
-          fullScreen
-          open={isOpenDialog}
-          onClose={onCloseDialog}
-          TransitionComponent={Transition}
-        >
-          <div className="px-4 py-6 flex flex-col gap-5">
-            <p className="text-center font-bold text-2xl">
-              Aplique o filtro e encontre os melhores{" "}
-              <span className="text-white bg-custon-black px-1 rounded-md mb-5">
-                Pontos Gastronomicos
-              </span>{" "}
-              da sua região
-            </p>
-            <div className="w-full relative flex items-center gap-2 border-2 border-custon-black rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
-              <div className="bg-custon-black p-2 rounded-full">
-                <MagnifyingGlass
-                  className="text-white"
-                  size={15}
-                  weight="bold"
-                />
-              </div>
-              <input
-                onClick={() => setOpenDropDownCity(true)}
-                onBlur={() => setOpenDropDownCity(false)}
-                placeholder="Digite a cidade"
-                className="w-full focus:outline-none font-semibold "
-              />
-              {openDropDownCity && (
-                <CaretDown
-                  size={15}
-                  weight="bold"
-                  className=" animate__animated animate__fadeIn animate__faster"
-                />
-              )}
-              {!openDropDownCity && (
-                <CaretUp
-                  size={15}
-                  weight="bold"
-                  className=" animate__animated animate__fadeIn animate__faster"
-                />
-              )}
-              {openDropDownCity && (
-                <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-custon-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster">
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="w-full relative flex items-center gap-2 border-y-2 border-2 border-custon-black  rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
-              <div className="bg-custon-black p-2 rounded-full">
-                <Truck className="text-white" size={15} weight="bold" />
-              </div>
-              <input
-                placeholder="Tipo de Ponto Gastronomico"
-                onClick={() => setOpenDropDownSize(true)}
-                onBlur={() => setOpenDropDownSize(false)}
-                className="w-full focus:outline-none font-semibold "
-              />
-              {openDropDownSize && (
-                <CaretDown
-                  size={15}
-                  weight="bold"
-                  className=" animate__animated animate__fadeIn animate__faster"
-                />
-              )}
-              {!openDropDownSize && (
-                <CaretUp
-                  size={15}
-                  weight="bold"
-                  className=" animate__animated animate__fadeIn animate__faster"
-                />
-              )}
-              {openDropDownSize && (
-                <div className="h-[200px] overflow-y-auto absolute -bottom-52 z-10 w-full bg-white border-1 border-custon-black/10 left-0 shadow-lg rounded-2xl animate__animated animate__fadeIn animate__faster">
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-5 border-b-[1px] border-custon-black/10 transition ease-in-out hover:bg-gray-200 cursor-pointer	">
-                    <div className="flex justify-start items-center  gap-2">
-                      <Image size={20} weight="bold" />
-                      <p className="text-sm font-semibold ">Cáceres - MT</p>
-                    </div>
-                    <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
-                      <p className="text-[#005A09] leading-none text-xs font-bold">
-                        +315
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="w-full flex justify-between">
-              <button
-                onClick={onCloseDialog}
-                className="flex items-center gap-2 font-semibold text-white bg-custon-black px-3 py-2 rounded-md shadow-md transition ease-in-out active:scale-95"
-              >
-                <X className="text-white" size={20} weight="bold" />
-                Fechar
-              </button>
-              <button
-                onClick={onCloseDialog}
-                className="flex items-center gap-2 font-semibold text-white bg-blue-500 px-3 py-2 rounded-md shadow-md transition ease-in-out active:scale-95"
-              >
-                <MagnifyingGlass
-                  className="text-white"
-                  size={20}
-                  weight="bold"
-                />
-                Filtrar
-              </button>
-            </div>
-          </div>
-        </Dialog>
       </div>
-      <div className="sm:col-span-3 hidden sm:block mr-3">
-        <button className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-full border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
-          <p>Anuncie seu Frete</p>
+      <div className="col-span-2">
+        <SearchBody />
+      </div>
+      <div className="col-span-2 ">
+        <button onClick={toggleDialogSignIn} className="w-full h-full  border-2 px-3 flex items-center justify-center gap-3  rounded-2xl border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
+          <LocalShippingIcon />
+          <p>Anuncie</p>
           <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
             <p className="text-[#005A09] leading-none">Gratís</p>
             <img className="absolute -bottom-1 right-0" src={Star} />
@@ -411,13 +62,19 @@ export default function Header() {
           </div>
         </button>
       </div>
-      <div className="col-span-1 place-self-center sm:justify-self-end relative">
-        {/* <button className="flex sm:hidden">
-          <List size={30} weight="bold" />
-        </button> */}
+      <div className="col-span-2 opacity-50">
+        <button  className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-2xl border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
+          <Inventory2Icon />
+          <p>Encomendas</p>
+          <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
+            <p className="text-[#005A09] leading-none">+13</p>
+          </div>
+        </button>
+      </div>
+      <div className="col-span-2 place-self-center sm:justify-self-end relative">
         <button
           onMouseEnter={onOpenAccount}
-          className=" marker:w-fit py-2 px-3 flex justify-center items-center  sm:border-2 border-custon-black rounded-full gap-4 transition ease-in-out hover:scale-105 active:scale-100 "
+          className=" marker:w-fit py-3 px-3 flex justify-center items-center  sm:border-2 border-custon-black rounded-2xl gap-4 transition ease-in-out hover:scale-105 active:scale-100 "
         >
           <List size={30} weight="bold" className="" />
           <UserCircle className="hidden sm:flex" size={30} weight="fill" />
@@ -485,6 +142,7 @@ export default function Header() {
           </div>
         )}
       </div>
+
       <SignIn isDialog={isDialogSignIn} closeDialog={closeDialogSignIn} />
       <Login isDialog={isDialogLogin} closeDialog={closeDialogLogin} />
     </div>

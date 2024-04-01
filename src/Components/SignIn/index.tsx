@@ -1,18 +1,17 @@
-import { Dialog, Divider } from "@mui/material";
 import {
-  ArrowRight,
-  Eye,
-  EyeClosed,
-  EyeSlash,
-  Image,
-  Info,
-  Lock,
-  MagnifyingGlass,
-  Phone,
-  UserCircle,
-  X,
-} from "phosphor-react";
+  Dialog,
+  Divider,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import { ArrowRight, Eye, EyeSlash, Info, Lock, X } from "phosphor-react";
+import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InputMask from "react-input-mask";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconGoogle from "../../assets/Logos/IconGoogle.png";
 import { v4 as uuidv4 } from "uuid";
 import { useBoolean } from "react-hooks-shareable";
@@ -20,6 +19,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/userLogin";
+import { styleSX } from "../../utils/InputStyled";
+import MaskedInput from "react-text-mask";
+import { Visibility } from "@mui/icons-material";
 
 export default function SignIn({
   isDialog,
@@ -62,9 +64,8 @@ export default function SignIn({
           password: password,
         });
 
-        console.log(response.data)
+        console.log(response.data);
 
-       
         setUser({
           id: response.data.id,
           name: response.data.name,
@@ -75,7 +76,7 @@ export default function SignIn({
         console.log(error);
       }
     };
-    
+
     fetchData();
   };
 
@@ -93,7 +94,6 @@ export default function SignIn({
       console.log(error);
     }
   };
-
 
   return (
     <Dialog onClose={closeDialog} open={isDialog}>
@@ -115,62 +115,93 @@ export default function SignIn({
           </div>
         )}
         <form className="flex flex-col gap-3 sm:mx-5">
-          <div className="w-full relative flex items-center gap-2 border-2 border-custon-black rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
-            <div className="bg-custon-black p-2 rounded-full">
-              <UserCircle className="text-white" size={15} weight="fill" />
-            </div>
+          <TextField
+            label="Nome Completo"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircleIcon className="text-black" />
+                </InputAdornment>
+              ),
+            }}
+            sx={styleSX}
+          />
 
-            <input
-              placeholder="Seu nome"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              className="w-full focus:outline-none font-semibold "
-            />
-          </div>
-          <div className="w-full relative flex items-center gap-2 border-2 border-custon-black rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
-            <div className="bg-custon-black p-2 rounded-full">
-              <Phone className="text-white" size={15} weight="bold" />
-            </div>
-            <p className="font-semibold opacity-50">+55</p>
-
-            <InputMask
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              mask="(99) 9 9999 - 9999"
-              placeholder="(99) 9 9999 - 9999"
-              id="phone"
-              className="w-full focus:outline-none font-semibold "
-              name="phone"
-            />
-          </div>
-          <div className="w-full relative flex items-center gap-2 border-2 border-custon-black rounded-full py-2 px-3 shadow-lg hover:shadow-md ">
-            <div className="bg-custon-black p-2 rounded-full">
-              <Lock className="text-white" size={15} weight="fill" />
-            </div>
-
-            <input
-              placeholder="Senha"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              type={viewPass ? "text" : "password"}
-              className="w-full focus:outline-none font-semibold"
-            />
-            {viewPass ? (
-              <EyeSlash
-                onClick={togglePass}
-                className="text-black"
-                size={30}
-                weight="bold"
-              />
-            ) : (
-              <Eye
-                onClick={togglePass}
-                className="text-black"
-                size={30}
-                weight="bold"
+          <MaskedInput
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            mask={[
+              "(",
+              /[0-9]/,
+              /[0-9]/,
+              ")",
+              " ",
+              /[0-9]/,
+              " ",
+              /[0-9]/,
+              /[0-9]/,
+              /[0-9]/,
+              /[0-9]/,
+              " ",
+              "-",
+              " ",
+              /[0-9]/,
+              /[0-9]/,
+              /[0-9]/,
+              /[0-9]/,
+            ]}
+            render={(innerRef, props) => (
+              <TextField
+                label="Telefone"
+                placeholder="Digite aqui seu melhor número"
+                required
+                sx={styleSX}
+                {...props}
+                inputRef={innerRef}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <WhatsAppIcon className="text-black" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton></IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             )}
-          </div>
+          />
+
+          <TextField
+            label="Senha"
+            type={viewPass ? "text" : "password"}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon className="text-black" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton onClick={togglePass}>
+                    {viewPass ? (
+                      <VisibilityIcon className="text-black" />
+                    ) : (
+                      <VisibilityOffIcon className="text-black" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={styleSX}
+          />
+
           <button
             type="button"
             onClick={handleCadastro}
@@ -182,8 +213,8 @@ export default function SignIn({
             <ArrowRight size={25} weight="bold" />
           </button>
           <p className="text-[.7rem] leading-none text-justify">
-            Ao clicar no botão, você concorda com nossos{" "}
-            <span className="font-bold">Termos de Serviço</span> e{" "}
+            Ao clicar no botão, você concorda com nossos
+            <span className="font-bold">Termos de Serviço</span> e
             <span className="font-bold">Política de Privacidade</span>.
           </p>
         </form>
@@ -194,7 +225,7 @@ export default function SignIn({
           <div />
         </button>
         <button>
-          Já tem uma conta?{" "}
+          Já tem uma conta?
           <span className="font-bold text-green-500">Entrar</span>
         </button>
       </div>
