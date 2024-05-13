@@ -18,6 +18,13 @@ import {
 } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+
 
 import {
   FolderSimplePlus,
@@ -40,8 +47,8 @@ import Instagram from "../../assets/SocialMedia/Instagram.png";
 import Facebook from "../../assets/SocialMedia/Facebook.png";
 import { WhatsApp } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import { useNavigate } from "react-router-dom";
 import Freight2 from "../Freight2";
 import axios from "axios";
@@ -63,8 +70,6 @@ interface Bodywork {
   id: string;
   bodywork: string;
 }
-
-
 
 export default function NewFreight() {
   const { user } = useAuth();
@@ -186,13 +191,13 @@ export default function NewFreight() {
             city: address?.localidade,
             neighborhood: address?.bairro,
             street: address?.logradouro,
-          } ,
+          },
           cityUF: cityUF,
           hateHeart: faker.datatype.number(100),
           hateShare: faker.datatype.number(100),
           hateSite: faker.datatype.number(100),
           hateComments: faker.datatype.number(100),
-          hateWhatsapp:faker.datatype.number(100), 
+          hateWhatsapp: faker.datatype.number(100),
           hateAvatar: [
             { id: uuidv4(), avatar: faker.image.avatar() },
             { id: uuidv4(), avatar: faker.image.avatar() },
@@ -201,7 +206,11 @@ export default function NewFreight() {
           ],
           description: description,
           typeWorkBody: 1,
-          hateFreight: faker.datatype.float({ min: 3.8, max: 5, precision: 0.1 }),
+          hateFreight: faker.datatype.float({
+            min: 3.8,
+            max: 5,
+            precision: 0.1,
+          }),
           comments: faker.datatype.number({ min: 6, max: 14 }),
           imageTruckOne: faker.image.transport(),
           imageTruckTwo: faker.image.transport(),
@@ -262,16 +271,16 @@ export default function NewFreight() {
               <FolderSimplePlus size={16} weight="bold" />
 
               <p className="text-xs font-semibold hover:underline">
-                Novo Frete 
+                Novo Frete
               </p>
             </button>
           </Breadcrumbs>
         </div>
-        <div className="col-span-12 ">
+        <div className="col-span-12">
           <p className="font-semibold text-3xl opacity-80">Novo Frete</p>
         </div>
         <div className="col-span-12 sm:col-span-6 grid grid-cols-12">
-          <div className="col-span-12 flex flex-col  gap-3">
+          <div className="col-span-12 flex flex-col gap-3">
             <div className="w-full flex flex-col gap-2 items-center justify-center mb-5">
               <Avatar
                 src={avatarImage || faker.image.avatar()}
@@ -305,155 +314,163 @@ export default function NewFreight() {
                 />
               </Button>
             </div>
-            <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Como localizar</p>
-            </Divider>
-            <TextField
-              required
-              fullWidth
-              label="Nome"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Nome completo"
-              defaultValue={user?.name}
-              variant="outlined"
-              sx={styleSX}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <IconButton onClick={() => setName("")}>
-                      <CloseIcon
-                        className={`!text-black/30 ${
-                          name ? "block" : "invisible"
-                        }`}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            78200-069
-            <MaskedInput
-              value={cep}
-              onBlur={handleCepChange}
-              mask={[
-                /[0-9]/,
-                /[0-9]/,
-                /[0-9]/,
-                /[0-9]/,
-                /[0-9]/,
-                // "-",
-                /[0-9]/,
-                /[0-9]/,
-                /[0-9]/,
-              ]}
-              render={(innerRef, props) => (
+            <div className="flex flex-col gap-4 bg-gray-100/50 border p-5 rounded-xl shadow-md">
+              <h1 className="text-md font-bold flex gap-1">
+                <PlaceOutlinedIcon />
+                Como localizar
+              </h1>
+              <TextField
+                required
+                fullWidth
+                label="Nome"
+                value={name}
+                
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Nome completo"
+                defaultValue={user?.name}
+                variant="outlined"
+                sx={styleSX}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton onClick={() => setName("")}>
+                        <CloseIcon
+                          className={`!text-black/30 ${
+                            name ? "block" : "invisible"
+                          }`}
+                        />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <MaskedInput
+                value={cep}
+                onBlur={handleCepChange}
+                mask={[
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                  // "-",
+                  /[0-9]/,
+                  /[0-9]/,
+                  /[0-9]/,
+                ]}
+                render={(innerRef, props) => (
+                  <TextField
+                    label="CEP"
+                    placeholder="CEP da sua rua"
+                    required
+                    {...props}
+                    inputRef={innerRef}
+                    sx={styleSX}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <IconButton onClick={() => setCep("")}>
+                            <CloseIcon
+                              className={`!text-black/30 ${
+                                cep ? "block" : "invisible"
+                              }`}
+                            />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+              <div className="grid grid-cols-11 gap-2">
                 <TextField
-                  label="CEP"
-                  placeholder="CEP da sua rua"
-                  required
-                  {...props}
-                  inputRef={innerRef}
+                  disabled
                   sx={styleSX}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <IconButton onClick={() => setCep("")}>
-                          <CloseIcon
-                            className={`!text-black/30 ${
-                              cep ? "block" : "invisible"
-                            }`}
-                          />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+                  value={address?.localidade}
+                  className="col-span-3"
+                  label="Cidade"
+                  size="small"
                 />
-              )}
-            />
-            <div className="grid grid-cols-11 gap-2">
+                <TextField
+                  disabled
+                  sx={styleSX}
+                  value={address?.bairro}
+                  className="col-span-3"
+                  label="Bairro"
+                  size="small"
+                />
+                <TextField
+                  disabled
+                  sx={styleSX}
+                  value={address?.logradouro}
+                  className="col-span-3"
+                  label="Rua"
+                  size="small"
+                />
+                <TextField
+                  disabled
+                  sx={styleSX}
+                  value={address?.uf}
+                  className="col-span-2"
+                  label="UF"
+                  size="small"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 bg-gray-100/50 border p-5 rounded-xl shadow-md ">
+              <h1 className="text-md font-bold flex gap-1">
+                <InfoOutlinedIcon />
+                Sobre o Frete
+              </h1>
               <TextField
-                disabled
+                required
+                multiline
+                rows={2}
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                fullWidth
+                label="Descrição"
+                placeholder="Ex: Faço frete para cidade e região"
+                variant="outlined"
                 sx={styleSX}
-                value={address?.localidade}
-                className="col-span-3"
-                label="Cidade"
-                size="small"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton onClick={() => setDescription("")}>
+                        <CloseIcon
+                          className={`!text-black/30 ${
+                            description ? "block" : "invisible"
+                          }`}
+                        />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-              <TextField
-                disabled
+              <Autocomplete
+                value={value}
                 sx={styleSX}
-                value={address?.bairro}
-                className="col-span-3"
-                label="Bairro"
-                size="small"
-              />
-              <TextField
-                disabled
-                sx={styleSX}
-                value={address?.logradouro}
-                className="col-span-3"
-                label="Rua"
-                size="small"
-              />
-              <TextField
-                disabled
-                sx={styleSX}
-                value={address?.uf}
-                className="col-span-2"
-                label="UF"
-                size="small"
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+                inputValue={inputValue}
+                onInputChange={(event, newInputValue) => {
+                  setInputValue(newInputValue);
+                }}
+                options={bodyworks}
+                getOptionLabel={(option) => option.bodywork}
+                renderInput={(params) => (
+                  <TextField required {...params} label="Tipo de Carroceria" />
+                )}
               />
             </div>
-            <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Sobre o Frete</p>
-            </Divider>
-            <TextField
-              required
-              multiline
-              rows={2}
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              fullWidth
-              label="Descrição"
-              placeholder="Ex: Faço frete para cidade e região"
-              variant="outlined"
-              sx={styleSX}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <IconButton onClick={() => setDescription("")}>
-                      <CloseIcon
-                        className={`!text-black/30 ${
-                          description ? "block" : "invisible"
-                        }`}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Autocomplete
-              value={value}
-              sx={styleSX}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              options={bodyworks}
-              getOptionLabel={(option) => option.bodywork}
-              renderInput={(params) => (
-                <TextField required {...params} label="Tipo de Carroceria" />
-              )}
-            />
-            <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Melhor contato</p>
-            </Divider>
-            <div className="w-full flex flex-col sm:flex-row gap-4">
-              <div className="w-full ">
+
+            <div className="flex flex-col gap-4 bg-gray-100/50 border p-5 rounded-xl shadow-md ">
+              <h1 className="text-md font-bold flex gap-1">
+                <LocalPhoneOutlinedIcon />
+                Melhor Contato
+              </h1>
+              <div className="w-full flex flex-col sm:flex-row gap-4">
                 <MaskedInput
                   value={phoneOne}
                   onChange={(event) => setPhoneOne(event.target.value)}
@@ -487,11 +504,6 @@ export default function NewFreight() {
                             <p className="font-semibold opacity-30">+55</p>
                           </InputAdornment>
                         ),
-                        endAdornment: (
-                          <InputAdornment position="start">
-                            <WhatsApp className="!text-black/30" />
-                          </InputAdornment>
-                        ),
                       }}
                       label="1° Número WhatsApp"
                       placeholder="(99) 9 9999 - 9999"
@@ -501,190 +513,166 @@ export default function NewFreight() {
                     />
                   )}
                 />
-                {!phoneOne && (
-                  <Button
-                    onClick={() =>
-                      setPhoneOne(
-                        user?.phone ? user.phone.replace(/^55/, "") : ""
-                      )
-                    }
-                    size="small"
-                    variant="outlined"
-                    className="!normal-case flex gap-2 !mt-1"
-                    endIcon={<CheckCircle size={20} weight="bold" />}
-                  >
-                    <p>Usar atual</p>
+                <MaskedInput
+                  value={phoneTwo}
+                  onChange={(event) => setPhoneTwo(event.target.value)}
+                  mask={[
+                    "(",
+                    /[0-9]/,
+                    /[0-9]/,
+                    ")",
+                    " ",
+                    /[0-9]/,
+                    " ",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    " ",
+                    "-",
+                    " ",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                  ]}
+                  render={(innerRef, props) => (
+                    <TextField
+                      fullWidth
+                      sx={styleSX}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <p className="font-semibold opacity-30">+55</p>
+                          </InputAdornment>
+                        ),
+                      }}
+                      label="2° Número WhatsApp"
+                      placeholder="(99) 9 9999 - 9999"
+                      required
+                      {...props}
+                      inputRef={innerRef}
+                    />
+                  )}
+                />
+              </div>
+            </div>
 
-                    <p>
-                      {user && user.phone
-                        ? user.phone
-                            .replace(/^55/, "")
-                            .replace(
-                              /(\d{2})(\d)(\d{4})(\d{4})/,
-                              "($1) $2 $3 - $4"
-                            )
-                        : ""}
-                    </p>
+            <div className="flex flex-col gap-4 bg-gray-100/50 border p-5 rounded-xl shadow-md ">
+              <h1 className="text-md font-bold flex gap-1">
+                <PhotoLibraryOutlinedIcon />
+                Fotos do Frete
+              </h1>
+              <div className="grid grid-cols-2 gap-5">
+                {truckImageOne ? (
+                  <div>
+                    <img
+                      className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
+                      src={truckImageOne}
+                    />
+                    <div className="flex justify-evenly mt-2">
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        component="label"
+                        startIcon={<PencilLine size={15} weight="bold" />}
+                      >
+                        <VisuallyHiddenInput
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChangeTruckOne}
+                          id="image-upload"
+                        />
+
+                        <p className="text-xs font-semibold">Mudar</p>
+                      </Button>
+                      <Button
+                        size="small"
+                        onClick={() => setTruckImageOne(null)}
+                        color="error"
+                        variant="outlined"
+                        startIcon={<X size={15} />}
+                      >
+                        Retirar
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    className="w-full h-36 flex flex-col "
+                  >
+                    <VisuallyHiddenInput
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChangeTruckOne}
+                      id="image-upload"
+                    />
+                    <Image size={25} weight="bold" />
+                    <p className="text-xs font-semibold">Upload </p>
+                  </Button>
+                )}
+                {truckImageTwo ? (
+                  <div>
+                    <img
+                      className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
+                      src={truckImageTwo}
+                    />
+                    <div className="flex justify-evenly mt-2">
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        component="label"
+                        startIcon={<PencilLine size={15} weight="bold" />}
+                      >
+                        <VisuallyHiddenInput
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChangeTruckTwo}
+                          id="image-upload"
+                        />
+
+                        <p className="text-xs font-semibold">Mudar</p>
+                      </Button>
+                      <Button
+                        size="small"
+                        onClick={() => setTruckImageTwo(null)}
+                        color="error"
+                        variant="outlined"
+                        startIcon={<X size={15} />}
+                      >
+                        Retirar
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    className="w-full h-36 flex flex-col "
+                  >
+                    <VisuallyHiddenInput
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChangeTruckTwo}
+                      id="image-upload"
+                    />
+                    <Image size={25} weight="bold" />
+                    <p className="text-xs font-semibold">Upload </p>
                   </Button>
                 )}
               </div>
-              <MaskedInput
-                value={phoneTwo}
-                onChange={(event) => setPhoneTwo(event.target.value)}
-                mask={[
-                  "(",
-                  /[0-9]/,
-                  /[0-9]/,
-                  ")",
-                  " ",
-                  /[0-9]/,
-                  " ",
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  " ",
-                  "-",
-                  " ",
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                  /[0-9]/,
-                ]}
-                render={(innerRef, props) => (
-                  <TextField
-                    fullWidth
-                    sx={styleSX}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <p className="font-semibold opacity-30">+55</p>
-                        </InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <WhatsApp className="!text-black/30" />
-                        </InputAdornment>
-                      ),
-                    }}
-                    label="1° Número WhatsApp"
-                    placeholder="(99) 9 9999 - 9999"
-                    required
-                    {...props}
-                    inputRef={innerRef}
-                  />
-                )}
-              />
             </div>
-            <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">Foto do Ponto Gastronomico</p>
-            </Divider>
-            <div className="grid grid-cols-2 gap-5">
-              {truckImageOne ? (
-                <div>
-                  <img
-                    className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
-                    src={truckImageOne}
-                  />
-                  <div className="flex justify-evenly mt-2">
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      component="label"
-                      startIcon={<PencilLine size={15} weight="bold" />}
-                    >
-                      <VisuallyHiddenInput
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChangeTruckOne}
-                        id="image-upload"
-                      />
+           
+            <div className="flex flex-col gap-4 bg-gray-100/50 border p-5 rounded-xl shadow-md ">
 
-                      <p className="text-xs font-semibold">Mudar</p>
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => setTruckImageOne(null)}
-                      color="error"
-                      variant="outlined"
-                      startIcon={<X size={15} />}
-                    >
-                      Retirar
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Button
-                  variant="outlined"
-                  component="label"
-                  className="w-full h-36 flex flex-col "
-                >
-                  <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChangeTruckOne}
-                    id="image-upload"
-                  />
-                  <Image size={25} weight="bold" />
-                  <p className="text-xs font-semibold">Upload </p>
-                </Button>
-              )}
-              {truckImageTwo ? (
-                <div>
-                  <img
-                    className="w-full h-36 rounded-lg drop-shadow-lg object-cover"
-                    src={truckImageTwo}
-                  />
-                  <div className="flex justify-evenly mt-2">
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      component="label"
-                      startIcon={<PencilLine size={15} weight="bold" />}
-                    >
-                      <VisuallyHiddenInput
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChangeTruckTwo}
-                        id="image-upload"
-                      />
+              <h1 className="text-md font-bold flex gap-1">
+                <FavoriteBorderOutlinedIcon />
+                
+                Redes sociais
+              </h1>
 
-                      <p className="text-xs font-semibold">Mudar</p>
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => setTruckImageTwo(null)}
-                      color="error"
-                      variant="outlined"
-                      startIcon={<X size={15} />}
-                    >
-                      Retirar
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Button
-                  variant="outlined"
-                  component="label"
-                  className="w-full h-36 flex flex-col "
-                >
-                  <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChangeTruckTwo}
-                    id="image-upload"
-                  />
-                  <Image size={25} weight="bold" />
-                  <p className="text-xs font-semibold">Upload </p>
-                </Button>
-              )}
-            </div>
-            <Divider textAlign="left" className="!mt-8">
-              <p className="text-sm font-semibold opacity-50">
-                {" "}
-                Rede social (opcional)
-              </p>
-            </Divider>
             <TextField
               value={linkFacebook}
               sx={styleSX}
@@ -739,6 +727,7 @@ export default function NewFreight() {
                 ),
               }}
             />
+            </div>
             <div className="flex items-center justify-between">
               <Button color="info">Cancelar</Button>
               <Button onClick={postFreitch} variant="contained" color="inherit">
@@ -747,7 +736,11 @@ export default function NewFreight() {
             </div>
           </div>
         </div>
-        <div className="col-span-12 sm:col-span-6">
+        <div className="col-span-12 sm:col-span-6 p-5">
+          <h1 className="font-bold mb-5 flex gap-1">
+            <VisibilityOutlinedIcon />
+            Prévia do Feed do Frete
+          </h1>
           <Freight2
             id={uuidv4()}
             avatar={avatarImage ? avatarImage : faker.image.avatar()}
@@ -759,7 +752,7 @@ export default function NewFreight() {
             hateSite={0}
             comments={0}
             hateFreight={0.0}
-            hateAvatar={[]}            
+            hateAvatar={[]}
             imageTruckOne={
               truckImageOne ? truckImageOne : faker.image.transport()
             }
@@ -767,7 +760,9 @@ export default function NewFreight() {
               truckImageTwo ? truckImageTwo : faker.image.transport()
             }
             typeWorkBody={1}
-            description={description ? description : "Faço frete na cidade e região"}
+            description={
+              description ? description : "Faço frete na cidade e região"
+            }
             phone_number_one={
               phoneOne ? phoneOne.replace(/[\(\)\s\-]/g, "") : ""
             }
@@ -775,7 +770,6 @@ export default function NewFreight() {
             facebook={linkFacebook}
             instagram={linkInstagram}
             exclusive={false}
-           
           />
         </div>
       </div>
@@ -788,7 +782,12 @@ export default function NewFreight() {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDialogPost}>OK</Button>
-          <Button color="success" variant="contained" onClick={closeDialogPost} autoFocus>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={closeDialogPost}
+            autoFocus
+          >
             Esperar
           </Button>
         </DialogActions>

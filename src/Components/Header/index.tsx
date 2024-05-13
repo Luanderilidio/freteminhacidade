@@ -45,16 +45,16 @@ export default function Header() {
       <div className="col-span-2 flex items-center">
         <img className="" src={Logo} />
       </div>
-      <div className="col-span-2">
+      <div className="col-span-2 hidden">
         <SearchCity />
       </div>
-      <div className="col-span-2">
+      <div className="col-span-2 invisible">
         <SearchBody />
       </div>
-      <div className="col-span-2 ">
+      <div className="col-span-3 ">
         <button onClick={toggleDialogSignIn} className="w-full h-full  border-2 px-3 flex items-center justify-center gap-3  rounded-2xl border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
           <LocalShippingIcon />
-          <p>Anuncie</p>
+          <p>Anuncie seu frete</p>
           <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
             <p className="text-[#005A09] leading-none">Gratís</p>
             <img className="absolute -bottom-1 right-0" src={Star} />
@@ -62,10 +62,10 @@ export default function Header() {
           </div>
         </button>
       </div>
-      <div className="col-span-2 opacity-50">
+      <div className="col-span-3 opacity-50">
         <button  className="w-full h-full px-6 border-2 flex items-center justify-center gap-3  rounded-2xl border-custon-black font-semibold transition ease-in-out hover:scale-105 active:scale-100 shadow-md hover:shadow-lg ">
           <Inventory2Icon />
-          <p>Encomendas</p>
+          <p>Encontrar Encomendas</p>
           <div className="bg-[#25D366]/50 py-[6px] px-2 rounded-md relative">
             <p className="text-[#005A09] leading-none">+13</p>
           </div>

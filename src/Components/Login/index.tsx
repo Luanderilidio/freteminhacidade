@@ -126,7 +126,7 @@ export default function Login({
             render={(innerRef, props) => (
               <TextField
                 label="Telefone"
-                placeholder="Digite aqui seu melhor número"
+                placeholder=""
                 required
                 sx={styleSX}
                 {...props}
@@ -144,6 +144,7 @@ export default function Login({
 
           <TextField
             label="Senha"
+            required
             type={viewPass ? "text" : "password"}
             value={password}
             onChange={(event) => setPassword(event.target.value)}

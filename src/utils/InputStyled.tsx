@@ -10,10 +10,10 @@ export const styleSX = {
     '& .MuiOutlinedInput-input': { // Estilizando o input de texto dentro do Autocomplete
       fontSize: '16px', // Definindo o tamanho da fonte
       fontWeight: 'bold',
-      borderRadius: '16px',
+      borderRadius: '12px',
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: '16px',
+      borderRadius: '12px',
       "& fieldset": {
         borderColor: "#222222", // Define a cor da borda
         borderWidth: 2,

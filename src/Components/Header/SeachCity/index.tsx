@@ -1,8 +1,14 @@
 // @ts-ignore
 
 import { AccountCircle } from "@mui/icons-material";
-import { Autocomplete, InputAdornment, TextField, ThemeProvider, createTheme } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import {
+  Autocomplete,
+  InputAdornment,
+  TextField,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 
 import { useState } from "react";
@@ -15,23 +21,18 @@ const theme = createTheme({
   },
 });
 
-
 export default function SearchCity() {
-
   const [openDropDownCity, setOpenDropDownCity] = useState(false);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState("");
   const [cities, setCities] = useState([]);
-
-
 
   const { data, isLoading, isError, error, refetch } = useQuery(
     "freights",
     async () => {
-
-      const response = await axios.get("http://localhost:3000/estudants")
-      let city = response.data.map((item: any) => item.cityUF)
-      setCities(city)
-      return response.data
+      const response = await axios.get("http://localhost:3000/estudants");
+      let city = response.data.map((item: any) => item.cityUF);
+      setCities(city);
+      return response.data;
     },
     {
       retry: 3,
@@ -40,13 +41,9 @@ export default function SearchCity() {
   );
 
   const handleInputClick = async () => {
-    setOpenDropDownCity(true)
-    refetch()
-  }
-
-
-
-
+    setOpenDropDownCity(true);
+    refetch();
+  };
 
   return (
     // <div className="hidden relative col-span-1 sm:flex items-center gap-2 border-2 border-custon-black rounded-l-full py-2 px-3 shadow-sm hover:shadow-md ">
@@ -124,17 +121,13 @@ export default function SearchCity() {
     //   )}
     // </div>
 
-      <Autocomplete
-        sx={{ zIndex: 1000 }}
-        options={cities}
-
-        renderInput={(params) => (
-          <TextField
-            sx={styleSX}
-            {...params} label="Cidades"
-
-          />
-        )}
-      />
-  )
+    <Autocomplete
+      sx={{ zIndex: 1000 }}
+      options={cities}
+      fullWidth
+      renderInput={(params) => (
+        <TextField sx={styleSX} {...params} label="Cidades" />
+      )}
+    />
+  );
 }

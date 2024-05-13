@@ -21,6 +21,7 @@ import {
   Stack,
   Eye,
 } from "phosphor-react";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Avatar, Badge, Menu, MenuItem } from "@mui/material";
 import NewFreight from "../../Components/NewFreight";
 import { faker } from "@faker-js/faker";
@@ -163,6 +164,19 @@ export default function PersistentDrawerLeft() {
             open={openMenu}
             onClose={clickCloseMenu}
           >
+            <MenuItem
+              // onClick={() => {
+              //   clickCloseMenu();
+              //   navigate("/");
+              // }}
+            >
+              <ListItemIcon>
+              
+                <PersonOutlineOutlinedIcon sx={{fontSize: 25}} />
+              </ListItemIcon>
+              <ListItemText>Usuário</ListItemText>
+              <Typography variant="body2" color="text.secondary"></Typography>
+            </MenuItem>
             <MenuItem
               onClick={() => {
                 clickCloseMenu();

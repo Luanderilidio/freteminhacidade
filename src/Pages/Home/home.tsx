@@ -17,6 +17,7 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import Freight2 from "../../Components/Freight2";
 import FilterBody from "../../Components/FilterBody";
+import SearchCity from "../../Components/Header/SeachCity";
 
 const FreightSimple = lazy(() => import("../../Components/FreightSimple"));
 const Freight = lazy(() => import("../../Components/Freight"));
@@ -52,8 +53,13 @@ export default function Home() {
           <Funnel size={15} className="opacity-60" weight="bold" />
         </IconButton>
       </div>
-      <div className=" col-span-12 rounded-2xl">
-        <FilterBody />
+      <div className="col-span-12 grid grid-cols-12 rounded-2xl">
+        <div className="col-span-10">
+          <FilterBody />
+        </div>
+        <div className="col-span-2 flex items-center">
+          <SearchCity />
+        </div>
       </div>
 
       <div className="col-span-12 flex items-center justify-between gap-2">
@@ -66,38 +72,44 @@ export default function Home() {
           <Funnel size={15} className="opacity-60" weight="bold" />
         </IconButton>
       </div>
-      <div className="col-span-9 grid grid-cols-9 gap-5">
-        <Suspense fallback={<p>Loading</p>}>
-          {data?.map((e: any, index: number) => (
-            <Freight2
-              key={e.id}
-              id={e.id}
-              avatar={faker.image.avatar()}
-              name={e.name}
-              address={e.address}
-              cityUF={e.cityUF}
-              hateHeart={e.hateHeart}
-              hateShare={e.hateShare}
-              description={e.description}
-              typeWorkBody={1}
-              hateFreight={e.hateFreight}
-              hateAvatar={e.hateAvatar}
-              hateSite={e.hateSite}
-              hateWhatsapp={e.hateWhatsapp}
-              comments={e.comments}
-              imageTruckOne={e.imageTruckOne}
-              imageTruckTwo={e.imageTruckTwo}
-              phone_number_one={e.phone_number_one}
-              phone_number_two={e.phone_number_two}
-              facebook={e.facebook}
-              instagram={e.instagram}
-              exclusive={e.exclusive}
-            />
-          ))}
-        </Suspense>
-      </div>
-      <div className="col-span-3">
-        <img src={Ads} alt="" />
+
+      <div className="col-span-12 grid grid-cols-13 gap-5">
+        <div className="col-span-2 ">
+          <img src={Ads} alt="" />
+        </div>
+        <div className="col-span-9 grid grid-cols-9 gap-5">
+          <Suspense fallback={<p>Loading</p>}>
+            {data?.map((e: any, index: number) => (
+              <Freight2
+                key={e.id}
+                id={e.id}
+                avatar={faker.image.avatar()}
+                name={e.name}
+                address={e.address}
+                cityUF={e.cityUF}
+                hateHeart={e.hateHeart}
+                hateShare={e.hateShare}
+                description={e.description}
+                typeWorkBody={1}
+                hateFreight={e.hateFreight}
+                hateAvatar={e.hateAvatar}
+                hateSite={e.hateSite}
+                hateWhatsapp={e.hateWhatsapp}
+                comments={e.comments}
+                imageTruckOne={e.imageTruckOne}
+                imageTruckTwo={e.imageTruckTwo}
+                phone_number_one={e.phone_number_one}
+                phone_number_two={e.phone_number_two}
+                facebook={e.facebook}
+                instagram={e.instagram}
+                exclusive={e.exclusive}
+              />
+            ))}
+          </Suspense>
+        </div>
+        <div className="col-span-2">
+          <img src={Ads} alt="" />
+        </div>
       </div>
     </Container>
   );
